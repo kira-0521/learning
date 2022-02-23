@@ -33,9 +33,9 @@ class HomeController extends Controller
             ->orderBy('updated_at', 'DESC')
             // 取得
             ->get();
-            dd($memos);
 
-        return view('create');
+            // compactメソッドに渡した値をbladeで使用する
+        return view('create', compact('memos'));
     }
 
     public function store(Request $request)
