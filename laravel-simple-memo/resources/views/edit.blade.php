@@ -2,7 +2,14 @@
 
 @section('content')
 <div class="card">
-    <div class="card-header">編集</div>
+    <div class="card-header">
+        メモ編集
+        <form action="{{ route('destroy') }}" class="card-body" method="POST">
+            @csrf
+            <input type="hidden" name="memo_id" value="{{ $edit_memo['id'] }}">
+            <button type="submit">削除</button>
+        </form>
+    </div>
     <form action="{{ route('update') }}" class="card-body" method="POST">
         @csrf
         <input type="hidden" name="memo_id" value="{{ $edit_memo['id'] }}">
