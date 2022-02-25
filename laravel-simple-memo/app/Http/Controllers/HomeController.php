@@ -37,8 +37,11 @@ class HomeController extends Controller
             // 取得
             ->get();
 
+        // TODO: タグの一覧が取得できない
+        $tags = Tag::where('user_id', '=', \Auth::id())->whereNull('deleted_at')->orderBy('id', 'DESC')->get();
+
             // compactメソッドに渡した値をbladeで使用する
-        return view('create', compact('memos'));
+        return view('create', compact('memos', 'tags'));
     }
 
     public function store(Request $request)
@@ -52,7 +55,6 @@ class HomeController extends Controller
             // TODO: メモが入力されていなかった場合、タグだけ入力された場合、何も入力されず保存が押された場合
             // Tagsテーブルからログインユーザーと同じuser_idを持つものを絞り込み、その中で入力と同じものがないかチェック
             $tag_exists = Tag::where('user_id', '=', \Auth::id())->where('name', '=', $posts['new_tag'])->exists();
-            dd($tag_exists);
             // 新規タグが入力されているか
             // すでにDBに同じタグが存在していないか
             if( !empty($posts['new_tag'] || $posts['new_tag'] === "0" && !$tag_exists )){
