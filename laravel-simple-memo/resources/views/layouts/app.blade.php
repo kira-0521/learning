@@ -81,6 +81,7 @@
                     <div class="card">
                         <div class="card-header">タグ一覧</div>
                         <div class="card-body">
+                            <a class="card-text d-block" href="/">メモを全て表示</a>
                             @foreach ($tags as $tag)
                                 <a class="card-text d-block" href="/?tag={{ $tag['id'] }}">{{ $tag['name'] }}</a>
                             @endforeach
