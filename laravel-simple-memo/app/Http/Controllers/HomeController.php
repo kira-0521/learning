@@ -47,14 +47,20 @@ class HomeController extends Controller
     public function store(Request $request)
     {
         $posts = $request->all();
+        // メモが入力されていなかった場合
+        if(empty($posts['content'])){
+            $ere_msg = 'Memo is not found';
+            return redirect()->route('home')->with(compact('ere_msg'));
+        }
 
         // ＝＝＝　トランザクション開始 ===
         DB::transaction(function () use($posts) {
             // メモをインサートした後にメモIDを取得
             $memo_id = Memo::insertGetId(['content' => $posts['content'], 'user_id' => \Auth::id()]);
-            // TODO: メモが入力されていなかった場合、タグだけ入力された場合、何も入力されず保存が押された場合
+
             // Tagsテーブルからログインユーザーと同じuser_idを持つものを絞り込み、その中で入力と同じものがないかチェック
             $tag_exists = Tag::where('user_id', '=', \Auth::id())->where('name', '=', $posts['new_tag'])->exists();
+
             // 新規タグが入力されているか
             // すでにDBに同じタグが存在していないか
             if( !empty($posts['new_tag'] || $posts['new_tag'] === "0" && !$tag_exists )){
@@ -63,10 +69,15 @@ class HomeController extends Controller
                 // memo_tagsにインサートして、メモとタグを紐付ける
                 MemoTag::insert(['memo_id' => $memo_id, 'tag_id' => $tag_id]);
             }
-            // 既存タグが紐づけられた場合->memo_tagsにインサート
-            foreach($posts['tags'] as $tag){
-                MemoTag::insert(['memo_id' => $memo_id, 'tag_id' => $tag]);
+
+            // タグが選択されなかった場合
+            if(!empty($posts['tags'])){
+                // 既存タグが紐づけられた場合->memo_tagsにインサート
+                foreach($posts['tags'] as $tag){
+                    MemoTag::insert(['memo_id' => $memo_id, 'tag_id' => $tag]);
+                }
             }
+
         });
         // === トランザクション終了 ===
 
