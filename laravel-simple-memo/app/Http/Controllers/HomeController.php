@@ -37,7 +37,6 @@ class HomeController extends Controller
             // 取得
             ->get();
 
-        // TODO: タグの一覧が取得できない
         $tags = Tag::where('user_id', '=', \Auth::id())->whereNull('deleted_at')->orderBy('id', 'DESC')->get();
 
             // compactメソッドに渡した値をbladeで使用する
@@ -86,6 +85,11 @@ class HomeController extends Controller
     }
 
     public function edit($id)
+    // 1. 表示用にメモ一覧を取得
+    // 2. 編集対象のメモを取得
+    // 3. 編集対象に紐づいているタグを取得
+    // 4. 全てのタグ一覧を取得
+    // 5. editビューに取得物を渡す
     {
         $memos = Memo::select('memos.*')
             // ログインユーザーであること
@@ -97,10 +101,43 @@ class HomeController extends Controller
             // 取得
             ->get();
 
-        $edit_memo = Memo::find($id);
+
+        // memosテーブルから全てのカラムを選択、tagsテーブルのidカラムはtags_idとして扱うよ
+        // memosテーブルのidとtagsテーブルのidの衝突を避けるためですよ。
+        $edit_memo = Memo::select('memos.*', 'tags.id AS tag_id')
+
+            // memo_tagsテーブルをジョインします。memo_tagsテーブルのmemo_idとmemosテーブルのidが一致していることが条件です。
+            ->leftJoin('memo_tags', 'memo_tags.memo_id', '=', 'memos.id')
+
+            // tagsテーブルをジョインします。memo_tagsテーブルのtag_idとtagsテーブルのidが一致していることが条件です。
+            ->leftJoin('tags', 'memo_tags.tag_id', '=', 'tags.id')
+
+            // memosテーブルのuser_idとログインユーザーのuser_idが一致している条件で絞り込みます。
+            ->where('memos.user_id', '=', \Auth::id())
+
+            // memosテーブルのidと引数のidが一致していることが条件です。
+            ->where('memos.id', '=', $id)
+
+            // memosテーブルのdeleted_atがnullなことが条件です。
+            ->whereNull('memos.deleted_at')
+
+            // タグが複数紐づいてる可能性があるため紐づいてるタグ分取得。
+            ->get();
+
+
+        // 含まれるタグだけを抽出したい
+        $include_tags = [];
+        foreach($edit_memo as $memo) {
+            array_push($include_tags, $memo['tag_id']);
+        }
+
+
+        // 全てのタグ一覧取得
+        $tags = Tag::where('user_id', '=', \Auth::id())->whereNull('deleted_at')->orderBy('id', 'DESC')->get();
+
 
             // compactメソッドに渡した値をbladeで使用する
-        return view('edit', compact('memos', 'edit_memo'));
+        return view('edit', compact('memos', 'edit_memo', 'include_tags', 'tags'));
     }
 
     public function update(Request $request)
