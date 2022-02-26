@@ -79,15 +79,17 @@
             <div class="row">
                 <div class="col-md-2 p-0">
                     <div class="card">
-                        <div class="card-header">Featured</div>
+                        <div class="card-header">タグ一覧</div>
                         <div class="card-body">
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            @foreach ($tags as $tag)
+                                <a class="card-text d-block" href="/?tag={{ $tag['id'] }}">{{ $tag['name'] }}</a>
+                            @endforeach
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 p-0">
                     <div class="card">
-                        <div class="card-header">Featured</div>
+                        <div class="card-header">メモ一覧</div>
                         <div class="card-body">
                             @foreach ($memos as $memo)
                                 <a class="card-text d-block" href="/edit/{{ $memo['id'] }}">{{ $memo['content'] }}</a>
