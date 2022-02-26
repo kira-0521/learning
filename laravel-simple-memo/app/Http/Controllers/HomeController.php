@@ -27,20 +27,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $memos = Memo::select('memos.*')
-            // ログインユーザーであること
-            ->where('user_id', '=', \Auth::id())
-            // 論理削除されてないこと
-            ->whereNull('deleted_at')
-            // 並び順
-            ->orderBy('updated_at', 'DESC')
-            // 取得
-            ->get();
-
         $tags = Tag::where('user_id', '=', \Auth::id())->whereNull('deleted_at')->orderBy('id', 'DESC')->get();
 
             // compactメソッドに渡した値をbladeで使用する
-        return view('create', compact('memos', 'tags'));
+        return view('create', compact('tags'));
     }
 
     public function store(Request $request)
@@ -85,23 +75,11 @@ class HomeController extends Controller
     }
 
     public function edit($id)
-    // 1. 表示用にメモ一覧を取得
-    // 2. 編集対象のメモを取得
-    // 3. 編集対象に紐づいているタグを取得
-    // 4. 全てのタグ一覧を取得
-    // 5. editビューに取得物を渡す
+    // 1. 編集対象のメモを取得
+    // 2. 編集対象に紐づいているタグを取得
+    // 3. 全てのタグ一覧を取得
+    // 4. editビューに取得物を渡す
     {
-        $memos = Memo::select('memos.*')
-            // ログインユーザーであること
-            ->where('user_id', '=', \Auth::id())
-            // 論理削除されてないこと
-            ->whereNull('deleted_at')
-            // 並び順
-            ->orderBy('updated_at', 'DESC')
-            // 取得
-            ->get();
-
-
         // memosテーブルから全てのカラムを選択、tagsテーブルのidカラムはtags_idとして扱うよ
         // memosテーブルのidとtagsテーブルのidの衝突を避けるためですよ。
         $edit_memo = Memo::select('memos.*', 'tags.id AS tag_id')
@@ -137,7 +115,7 @@ class HomeController extends Controller
 
 
             // compactメソッドに渡した値をbladeで使用する
-        return view('edit', compact('memos', 'edit_memo', 'include_tags', 'tags'));
+        return view('edit', compact('edit_memo', 'include_tags', 'tags'));
     }
 
     public function update(Request $request)
