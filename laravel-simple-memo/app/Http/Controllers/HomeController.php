@@ -62,7 +62,7 @@ class HomeController extends Controller
 
             // 新規タグが入力されているか
             // すでにDBに同じタグが存在していないか
-            if( !empty($posts['new_tag'] || $posts['new_tag'] === "0" && !$tag_exists )){
+            if( !empty($posts['new_tag']) || $posts['new_tag'] === "0" && !$tag_exists ){
                 // 新規タグがDBに存在しなければ、Tagsテーブルにインサート->ID取得
                 $tag_id = Tag::insertGetId(['user_id' => \Auth::id(), 'name' => $posts['new_tag']]);
                 // memo_tagsにインサートして、メモとタグを紐付ける
@@ -144,7 +144,31 @@ class HomeController extends Controller
     {
         $posts = $request->all();
 
-        Memo::where('id', $posts['memo_id'])->update(['content' => $posts['content']]);
+        DB::transaction(function () use($posts) {
+            // メモの内容をこうしん
+            Memo::where('id', $posts['memo_id'])->update(['content' => $posts['content']]);
+
+            // 一旦メモとタグの紐付けを解除 / memo_idがpostsのidと一致するもの
+            MemoTag::where('memo_id', '=', $posts['memo_id'])->delete();
+
+            // 再度メモとタグの紐付け
+            foreach($posts['tags'] as $tag){
+                // memotagsにmemo_idとtag_idを紐付けてインサート
+                MemoTag::insert(['memo_id' => $posts['memo_id'], 'tag_id' => $tag]);
+            }
+
+            // Tagsテーブルからログインユーザーと同じuser_idを持つものを絞り込み、その中で入力と同じものがないかチェック
+            $tag_exists = Tag::where('user_id', '=', \Auth::id())->where('name', '=', $posts['new_tag'])->exists();
+            // 新規タグが入力されているか
+            // すでにDBに同じタグが存在していないか
+            if( !empty($posts['new_tag']) || $posts['new_tag'] === "0" && !$tag_exists ){
+                // 新規タグがDBに存在しなければ、Tagsテーブルにインサート->ID取得
+                $tag_id = Tag::insertGetId(['user_id' => \Auth::id(), 'name' => $posts['new_tag']]);
+                // memo_tagsにインサートして、メモとタグを紐付ける
+                MemoTag::insert(['memo_id' => $posts['memo_id'], 'tag_id' => $tag_id]);
+            }
+        });
+
 
         // return無しでも動く
         return redirect( route('home') );
