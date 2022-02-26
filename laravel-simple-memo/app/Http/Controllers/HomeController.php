@@ -35,12 +35,10 @@ class HomeController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'content' => 'required'
+        ]);
         $posts = $request->all();
-        // メモが入力されていなかった場合
-        if(empty($posts['content'])){
-            $ere_msg = 'Memo is not found';
-            return redirect()->route('home')->with(compact('ere_msg'));
-        }
 
         // ＝＝＝　トランザクション開始 ===
         DB::transaction(function () use($posts) {
@@ -120,6 +118,9 @@ class HomeController extends Controller
 
     public function update(Request $request)
     {
+        $request->validate([
+            'content' => 'required'
+        ]);
         $posts = $request->all();
 
         DB::transaction(function () use($posts) {

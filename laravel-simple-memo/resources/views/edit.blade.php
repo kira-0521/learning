@@ -23,6 +23,11 @@
             {{-- メモ本文 --}}
             <textarea name="content" rows="3" class="form-control" placeholder="ここにメモを入力">{{ $edit_memo[0]['content'] }}</textarea>
 
+            {{-- エラーメッセージ --}}
+            @error('content')
+            <div class="alert alert-danger">メモ内容を入力してください！</div>
+            @enderror
+
             {{-- 既存タグ --}}
             @foreach($tags as $t)
                 <div class="form-check form-check-inline mb-3">
