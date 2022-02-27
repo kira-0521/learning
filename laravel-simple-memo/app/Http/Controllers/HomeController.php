@@ -38,12 +38,15 @@ class HomeController extends Controller
         $request->validate([
             'content' => 'required'
         ]);
-        $posts = $request->all();
+        $posts = $request->except('image_file');
+        $image_file = $request->file('image_file');
+        $image_name = $image_file->getClientOriginalName();
+        $image_file->storeAs('public/images', $image_name);
 
         // ＝＝＝　トランザクション開始 ===
-        DB::transaction(function () use($posts) {
+        DB::transaction(function () use($posts, $image_name) {
             // メモをインサートした後にメモIDを取得
-            $memo_id = Memo::insertGetId(['content' => $posts['content'], 'user_id' => \Auth::id()]);
+            $memo_id = Memo::insertGetId(['content' => $posts['content'], 'user_id' => \Auth::id(), 'image_path' => '/storage/images/' . $image_name]);
 
             // Tagsテーブルからログインユーザーと同じuser_idを持つものを絞り込み、その中で入力と同じものがないかチェック
             $tag_exists = Tag::where('user_id', '=', \Auth::id())->where('name', '=', $posts['new_tag'])->exists();

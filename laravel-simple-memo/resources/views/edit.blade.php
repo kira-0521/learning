@@ -27,6 +27,9 @@
             {{-- メモ本文 --}}
             <textarea name="content" rows="3" class="form-control" placeholder="ここにメモを入力">{{ $edit_memo[0]['content'] }}</textarea>
 
+            {{-- 画像 --}}
+            <img src="{{ $edit_memo[0]['image_path'] }}" style="height: 200px;" alt="">
+
             {{-- エラーメッセージ --}}
             @error('content')
             <div class="alert alert-danger">メモ内容を入力してください！</div>

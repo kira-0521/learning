@@ -3,13 +3,16 @@
 @section('content')
 <div class="card">
     <div class="card-header">新規作成</div>
-    <form action="{{ route('store') }}" class="card-body" method="POST">
+    <form action="{{ route('store') }}" class="card-body" method="POST" enctype="multipart/form-data">
         @csrf
 
         {{-- メモ内容入力 --}}
         <div class="form-group">
             <textarea name="content" rows="3" class="form-control" placeholder="ここにメモを入力"></textarea>
         </div>
+
+        {{-- 画像ファイル --}}
+        <input type="file" id="file" name="image_file" class="form-control">
 
         {{-- エラーメッセージ --}}
         @error('content')
@@ -30,5 +33,7 @@
         {{-- 保存 --}}
         <button class="btn btn-primary mt-2" type="submit">保存</button>
     </form>
+
+    <a href="/storage/images/テスト.jpg">アップロードファイル</a>
 </div>
 @endsection
