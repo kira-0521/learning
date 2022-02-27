@@ -124,11 +124,18 @@ class HomeController extends Controller
         $request->validate([
             'content' => 'required'
         ]);
-        $posts = $request->all();
+        // exceptで画像以外のpostデータを取得
+        $posts = $request->except('image_file');
+        // 画像データ取得
+        $image_file = $request->file('image_file');
+        // 画像名取得
+        $image_name = $image_file->getClientOriginalName();
+        // 任意の名前で画像を保存
+        $image_file->storeAs('public/images', $image_name);
 
-        DB::transaction(function () use($posts) {
+        DB::transaction(function () use($posts, $image_name) {
             // メモの内容をこうしん
-            Memo::where('id', $posts['memo_id'])->update(['content' => $posts['content']]);
+            Memo::where('id', $posts['memo_id'])->update(['content' => $posts['content'], 'image_path' => '/storage/images/' . $image_name]);
 
             // 一旦メモとタグの紐付けを解除 / memo_idがpostsのidと一致するもの
             MemoTag::where('memo_id', '=', $posts['memo_id'])->delete();

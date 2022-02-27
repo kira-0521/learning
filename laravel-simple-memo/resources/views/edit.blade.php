@@ -16,7 +16,7 @@
         </form>
 
     </div>
-    <form action="{{ route('update') }}" class="card-body" method="POST">
+    <form action="{{ route('update') }}" class="card-body" method="POST" enctype="multipart/form-data">
 
         {{-- 編集対象のID --}}
         @csrf
@@ -29,6 +29,7 @@
 
             {{-- 画像 --}}
             <img src="{{ $edit_memo[0]['image_path'] }}" style="height: 200px;" alt="">
+            <input type="file" id="file" name="image_file" class="form-control">
 
             {{-- エラーメッセージ --}}
             @error('content')
