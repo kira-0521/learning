@@ -1,6 +1,7 @@
 import Home from "@/pages/Home.vue";
 import Create from "@/pages/Create.vue";
 import Edit from "@/pages/Edit.vue";
+import Login from "@/pages/Login.vue";
 
 import { createRouter, createWebHistory } from "vue-router";
 
@@ -9,6 +10,11 @@ const routes = [
         path: "/",
         component: Home,
         children: [{ path: "/home", name: "Home", component: Home }],
+    },
+    {
+        path: "/login",
+        name: "Login",
+        component: Login,
     },
     {
         path: "/create",
