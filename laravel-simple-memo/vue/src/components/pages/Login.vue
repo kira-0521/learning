@@ -1,13 +1,41 @@
 <script lang="ts" setup>
+import axiosClient from "../../axios";
+import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+import axios from "axios";
+
+const router = useRouter();
+
 const form = reactive({
   email: "",
   password: "",
 });
+const errMsg = ref("");
+
+const login = () => {
+  axios
+    .get("http://localhost:8888/sanctum/csrf-cookie")
+    .then((res) => {
+      console.log("通ったよ", res.data);
+      axiosClient
+        .post("/login", form)
+        .then((res) => {
+          if (res.data.status_code === 200) {
+            router.push({ path: "home" });
+          }
+          errMsg.value = "ログインに失敗しました。";
+        })
+        .catch((err) => {
+          console.log(err);
+          errMsg.value = "ログインに失敗しました。";
+        });
+    })
+    .catch((err) => console.log(err));
+};
 </script>
 
 <script lang="ts">
 import { LockClosedIcon } from "@heroicons/vue/solid";
-import { reactive } from "vue";
 
 export default {
   components: {
@@ -30,6 +58,39 @@ export default {
     "
   >
     <div class="max-w-md w-full space-y-8">
+      <!-- トースト -->
+      <div
+        class="
+          bg-red-100
+          border border-red-400
+          text-red-700
+          px-4
+          py-3
+          rounded
+          relative
+          w-full
+          mx-auto
+          text-center
+        "
+        :class="{ invisible: !errMsg }"
+        role="alert"
+      >
+        <span class="block sm:inline">{{ errMsg }}</span>
+        <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+          <svg
+            class="fill-current h-6 w-6 text-red-500"
+            role="button"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+          >
+            <title>Close</title>
+            <path
+              d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"
+            />
+          </svg>
+        </span>
+      </div>
+
       <div>
         <img
           class="mx-auto h-12 w-auto"
@@ -40,7 +101,7 @@ export default {
           Sign in to your account
         </h2>
       </div>
-      <form class="mt-8 space-y-6" action="#" method="POST">
+      <form class="mt-8 space-y-6" @submit.prevent="login">
         <input type="hidden" name="remember" value="true" />
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
