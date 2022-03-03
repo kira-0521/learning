@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import axiosClient from "../../axios";
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
+import { useStore } from "vuex";
+import { key } from "../../store/index";
 
 const router = useRouter();
+const store = useStore(key);
 
 const form = reactive({
   email: "",
@@ -12,25 +13,10 @@ const form = reactive({
 });
 const errMsg = ref("");
 
-const login = () => {
-  axios
-    .get("http://localhost:8888/sanctum/csrf-cookie")
-    .then((res) => {
-      console.log("通ったよ", res.data);
-      axiosClient
-        .post("/login", form)
-        .then((res) => {
-          if (res.data.status_code === 200) {
-            router.push({ path: "home" });
-          }
-          errMsg.value = "ログインに失敗しました。";
-        })
-        .catch((err) => {
-          console.log(err);
-          errMsg.value = "ログインに失敗しました。";
-        });
-    })
-    .catch((err) => console.log(err));
+const userLogin = async () => {
+  console.log("login");
+  await store.dispatch("login", form);
+  router.push({ name: "Home" });
 };
 </script>
 
@@ -101,7 +87,7 @@ export default {
           Sign in to your account
         </h2>
       </div>
-      <form class="mt-8 space-y-6" @submit.prevent="login">
+      <div class="mt-8 space-y-6">
         <input type="hidden" name="remember" value="true" />
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
@@ -168,7 +154,8 @@ export default {
 
         <div>
           <button
-            type="submit"
+            type="button"
+            @click="userLogin"
             class="
               group
               relative
@@ -199,7 +186,7 @@ export default {
             ログイン
           </button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>

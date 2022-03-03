@@ -5,6 +5,9 @@ import Login from "@/pages/Login.vue";
 import Register from "@/pages/Register.vue";
 
 import { createRouter, createWebHistory } from "vue-router";
+import { useStore } from "vuex";
+import { key } from "../store/index";
+const store = useStore(key);
 
 const routes = [
     {
@@ -37,6 +40,17 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some((record) => record.meta.isAuthenticated)) {
+        if (!store.state.isAuth) {
+            next({ name: "Login" });
+        } else {
+            next();
+        }
+    }
+    next();
 });
 
 export default router;
