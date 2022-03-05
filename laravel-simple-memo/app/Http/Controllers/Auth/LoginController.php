@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -17,16 +18,15 @@ class LoginController extends Controller
         ]);
 
         if(Auth::attempt($credentials)){
-            return response(200)->json(['status_code' => 200,'message' => 'success']);
-        } else {
-            return response()->json(['status_code' => 500,'message' => 'Unauthorized']);
+            return response()->json(['status_code' => 200,'message' => 'Login Successful'], 200);
         }
+        return response()->json(['message' => 'User not found'], 422);
     }
 
     public function logout()
     {
         Auth::logout();
-        return response(200)->json(['status_code' => 200,'message' => 'Logged out']);
+        return response(200)->json(['message' => 'Logged out'], 200);
     }
 
 }

@@ -5,7 +5,7 @@ import axiosClient from "../../axios";
 const title = ref("メモ一覧");
 const posts = ref([]);
 axiosClient
-  .get("")
+  .get("/api/home")
   .then((res) => {
     posts.value = res;
   })

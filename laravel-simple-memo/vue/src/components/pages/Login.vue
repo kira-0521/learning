@@ -87,7 +87,7 @@ export default {
           Sign in to your account
         </h2>
       </div>
-      <div class="mt-8 space-y-6">
+      <form class="mt-8 space-y-6" @submit.prevent="userLogin">
         <input type="hidden" name="remember" value="true" />
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
@@ -154,8 +154,7 @@ export default {
 
         <div>
           <button
-            type="button"
-            @click="userLogin"
+            type="submit"
             class="
               group
               relative
@@ -186,7 +185,7 @@ export default {
             ログイン
           </button>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
