@@ -1,21 +1,15 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import { useMainStore } from './store/main'
+import { storeToRefs } from 'pinia'
+
+const main = useMainStore()
+const { counter, doubleCount } = storeToRefs(main)
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <div>COUNTER: {{ counter }}</div>
+  <div>DOUBLE_COUTE: {{ doubleCount }}</div>
+  <button @click="main.plusCount">+</button>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style scoped></style>
