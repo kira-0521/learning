@@ -1,16 +1,22 @@
-const test = () => {
-  console.log('Gi')
+const matte = (cb, seconds) => {
   setTimeout(() => {
-    console.log('zu')
-  }, 500)
+    console.log(`${seconds}秒経過`)
+    cb(seconds)
+  }, 1000)
 }
 
-const main = () => {
-  test()
-  // 秒数短縮すると下が先に呼ばれる
-  setTimeout(() => {
-    console.log('mo')
-  }, 500)
-}
-
-main()
+matte((seconds) => {
+  console.log(`${seconds++}秒待ったよ`)
+  matte((seconds) => {
+    console.log(`${seconds++}秒待ったよ`)
+    matte((seconds) => {
+      console.log(`${seconds++}秒待ったよ`)
+      matte((seconds) => {
+        console.log(`${seconds++}秒待ったよ`)
+        matte((seconds) => {
+          console.log(`${seconds++}秒待ったよ`)
+        }, seconds)
+      }, seconds)
+    }, seconds)
+  }, seconds)
+}, 1)
