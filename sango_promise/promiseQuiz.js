@@ -1,14 +1,34 @@
 // ❶どの順番で出力される？
+// new Promise((resolve) => {
+//   console.log('promise')
+
+//   setTimeout(() => {
+//     console.log('setTimeOut')
+//   })
+//   resolve('thenへ')
+// }).then((res) => {
+//   console.log(res)
+// })
+
+// console.log('global end')
+
+// EX問題
 new Promise((resolve) => {
   console.log('promise')
 
   setTimeout(() => {
     console.log('setTimeOut')
-    resolve('thenへ')
   })
-}).then((res) => {
-  console.log(res)
+
+  resolve('thenへ')
 })
+  .then((res) => {
+    console.log(res)
+    return res
+  })
+  .then((res) => {
+    console.log(res)
+  })
 
 console.log('global end')
 
