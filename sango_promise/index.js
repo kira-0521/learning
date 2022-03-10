@@ -5,9 +5,15 @@ const test = () => {
   }, 500)
 }
 
+const test2 = () => {
+  console.log('test2')
+}
+
 const main = () => {
   test()
   console.log('mo')
 }
 
+test()
+test2()
 main()
