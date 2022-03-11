@@ -1,6 +1,7 @@
 import { Home } from '../components/pages/Home'
 import { UserManagement } from '../components/pages/UserManagement'
 import { Setting } from '../components/pages/Setting'
+import { Page404 } from '../components/pages/404'
 
 export const homeRoutes = [
   {
@@ -17,5 +18,10 @@ export const homeRoutes = [
     path: '/setting',
     exact: false,
     children: <Setting />,
+  },
+  {
+    path: '*',
+    exact: false,
+    children: <Page404 />,
   },
 ]
