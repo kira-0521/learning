@@ -4,21 +4,11 @@ import {
   WrapItem,
   Spinner,
   Center,
-  Stack,
-  FormControl,
-  FormLabel,
-  Input,
   useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
 } from '@chakra-ui/react'
 import { UserCard } from '../organisms/user/UserCard'
 import { useAllUsers } from '../../hooks/useAllUsers'
+import { UserDetailModal } from '../organisms/user/UserDetailModa'
 
 export const UserManagement: VFC = memo(() => {
   const { getUsers, loading, users } = useAllUsers()
@@ -52,33 +42,7 @@ export const UserManagement: VFC = memo(() => {
           ))}
         </Wrap>
       )}
-      <Modal isOpen={isOpen} onClose={onClose} autoFocus={false}>
-        <ModalOverlay />
-        <ModalContent pb={6}>
-          <ModalHeader>ユーザー詳細</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody mx={4}>
-            <Stack spacing={4}>
-              <FormControl>
-                <FormLabel>名前</FormLabel>
-                <Input value='satoshi' isReadOnly />
-              </FormControl>
-              <FormControl>
-                <FormLabel>名前</FormLabel>
-                <Input value='satoshi' isReadOnly />
-              </FormControl>
-              <FormControl>
-                <FormLabel>名前</FormLabel>
-                <Input value='satoshi' isReadOnly />
-              </FormControl>
-              <FormControl>
-                <FormLabel>名前</FormLabel>
-                <Input value='satoshi' isReadOnly />
-              </FormControl>
-            </Stack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <UserDetailModal isOpen={isOpen} onClose={onClose} />
     </>
   )
 })
