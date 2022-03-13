@@ -7,14 +7,17 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { UserCard } from '../organisms/user/UserCard'
-import { useAllUsers } from '../../hooks/useAllUsers'
 import { UserDetailModal } from '../organisms/user/UserDetailModal'
+import { useAllUsers } from '../../hooks/useAllUsers'
 import { useSelectUser } from '../../hooks/useSelectUser'
+import { useLoginUser } from '../../hooks/useLoginUser'
 
 export const UserManagement: VFC = memo(() => {
   const { getUsers, loading, users } = useAllUsers()
   const { selectedUser, onSelectUser } = useSelectUser()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { loginUser } = useLoginUser()
+  console.log('loginUser', loginUser)
 
   const onClickUser = useCallback(
     (id: number) => {
@@ -53,6 +56,7 @@ export const UserManagement: VFC = memo(() => {
       )}
       <UserDetailModal
         isOpen={isOpen}
+        isAdmin={loginUser!.isAdmin}
         onClose={onClose}
         selectedUser={selectedUser!}
       />
