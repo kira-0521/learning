@@ -6,7 +6,8 @@ import { useMessage } from './useMessage'
 
 export const useAllUsers = () => {
   const { showMessage } = useMessage()
-  const [users, setUsers] = useState<Array<User>>()
+  // 何も指定しないとundefinedになる
+  const [users, setUsers] = useState<Array<User>>([])
   const [loading, setLoading] = useState(false)
 
   const getUsers = useCallback(async () => {
