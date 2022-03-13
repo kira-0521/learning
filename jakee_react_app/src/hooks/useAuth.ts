@@ -2,8 +2,10 @@ import { useCallback, useState } from 'react'
 import axios from 'axios'
 import { User } from '../types/api/user'
 import { useHistory } from 'react-router-dom'
+import { useMessage } from './useMessage'
 
 export const useAuth = () => {
+  const { showMessage } = useMessage()
   const history = useHistory()
   const [loading, setLoading] = useState(false)
 
@@ -16,15 +18,19 @@ export const useAuth = () => {
         )
         if (data) {
           history.push('/home')
+          showMessage({ title: 'ログインに成功しました。', status: 'success' })
         } else {
-          alert('ユーザーが見つかりません。')
+          showMessage({
+            title: 'ユーザーが見つかりません。',
+            status: 'warning',
+          })
         }
       } catch (err) {
-        alert('ログインできません。')
+        showMessage({ title: 'ログインできません。', status: 'error' })
       }
       setLoading(false)
     },
-    [history]
+    [history, showMessage]
   )
   return { login, loading }
 }

@@ -6,10 +6,10 @@ import { useAuth } from '../../hooks/useAuth'
 
 export const Login: VFC = memo(() => {
   const { login, loading } = useAuth()
+
   const [userId, setUserId] = useState('')
   const onChangeUserId = (e: ChangeEvent<HTMLInputElement>) =>
     setUserId(e.target.value)
-
   const onClickLogin = () => login(userId)
 
   return (
