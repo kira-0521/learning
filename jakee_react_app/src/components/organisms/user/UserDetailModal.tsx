@@ -12,7 +12,8 @@ import {
 
 import { User } from '../../../types/api/user'
 import { PrimaryButton } from '../../atoms/button/PrimaryButton'
-import { TextForm } from '../../molecules/form/TextForm'
+import { FormController } from '../../molecules/form/FormController'
+import { TextInput } from '../../atoms/form/TextInput'
 
 type Props = {
   isOpen: boolean
@@ -55,30 +56,38 @@ export const UserDetailModal: VFC<Props> = memo((props) => {
         <ModalCloseButton />
         <ModalBody mx={4}>
           <Stack spacing={4}>
-            <TextForm
-              value={name}
-              isReadOnly={!isAdmin}
-              onChange={onChangeName}>
-              名前
-            </TextForm>
-            <TextForm
-              value={userName}
-              isReadOnly={!isAdmin}
-              onChange={onChangeUserName}>
-              ニックネーム
-            </TextForm>
-            <TextForm
-              value={address}
-              isReadOnly={!isAdmin}
-              onChange={onChangeAddress}>
-              出身地
-            </TextForm>
-            <TextForm
-              value={phone}
-              isReadOnly={!isAdmin}
-              onChange={onChangePhone}>
-              電話番号
-            </TextForm>
+            <FormController htmlFor='name' labelText='名前'>
+              <TextInput
+                id='name'
+                value={name}
+                onChange={onChangeName}
+                isReadOnly={!isAdmin}
+              />
+            </FormController>
+            <FormController htmlFor='userName' labelText='ニックネーム'>
+              <TextInput
+                id='userName'
+                value={userName}
+                onChange={onChangeUserName}
+                isReadOnly={!isAdmin}
+              />
+            </FormController>
+            <FormController htmlFor='address' labelText='住所'>
+              <TextInput
+                id='address'
+                value={address}
+                onChange={onChangeAddress}
+                isReadOnly={!isAdmin}
+              />
+            </FormController>
+            <FormController htmlFor='phone' labelText='電話番号'>
+              <TextInput
+                id='phone'
+                value={phone}
+                onChange={onChangePhone}
+                isReadOnly={!isAdmin}
+              />
+            </FormController>
           </Stack>
         </ModalBody>
         {isAdmin && (
