@@ -3,10 +3,13 @@ import { memo, VFC, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import { MenuIconButton } from '../../atoms/button/MenuIconButton'
 import { MenuDrawer } from '../../molecules/MenuDrawer'
+import { PrimaryButton } from '../../atoms/button/PrimaryButton'
+import { useLoginUser } from '../../../hooks/useLoginUser'
 
 export const Header: VFC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const history = useHistory()
+  const { loginUser, setLoginUser } = useLoginUser()
 
   // 複数箇所で使用するため、不要な再レンダリングが走らないようにuseCallbackラップ
   const onClickHome = useCallback(() => history.push('/home'), [history])
@@ -18,6 +21,10 @@ export const Header: VFC = memo(() => {
     () => history.push('/home/setting'),
     [history]
   )
+  const onClickLogout = useCallback(() => {
+    setLoginUser(null)
+    history.push('/')
+  }, [])
 
   return (
     <>
@@ -46,7 +53,12 @@ export const Header: VFC = memo(() => {
           <Box pr={4}>
             <Link onClick={onClickUserManagement}>ユーザー一覧</Link>
           </Box>
-          <Link onClick={onClickSetting}>設定</Link>
+          <Link onClick={onClickSetting} pr={4}>
+            設定
+          </Link>
+          {loginUser && (
+            <PrimaryButton onClick={onClickLogout}>ログアウト</PrimaryButton>
+          )}
         </Flex>
         <MenuIconButton onOpen={onOpen} />
       </Flex>
