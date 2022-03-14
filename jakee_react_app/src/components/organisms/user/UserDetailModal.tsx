@@ -1,9 +1,6 @@
 import { memo, VFC, useState, useEffect, ChangeEvent } from 'react'
 import {
   Stack,
-  FormControl,
-  FormLabel,
-  Input,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -15,6 +12,7 @@ import {
 
 import { User } from '../../../types/api/user'
 import { PrimaryButton } from '../../atoms/button/PrimaryButton'
+import { TextForm } from '../../molecules/form/TextForm'
 
 type Props = {
   isOpen: boolean
@@ -57,38 +55,30 @@ export const UserDetailModal: VFC<Props> = memo((props) => {
         <ModalCloseButton />
         <ModalBody mx={4}>
           <Stack spacing={4}>
-            <FormControl>
-              <FormLabel>名前</FormLabel>
-              <Input
-                value={name}
-                onChange={onChangeName}
-                isReadOnly={!isAdmin}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>ニックネーム</FormLabel>
-              <Input
-                value={userName}
-                onChange={onChangeUserName}
-                isReadOnly={!isAdmin}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>出身地</FormLabel>
-              <Input
-                value={address}
-                onChange={onChangeAddress}
-                isReadOnly={!isAdmin}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>電話番号</FormLabel>
-              <Input
-                value={phone}
-                onChange={onChangePhone}
-                isReadOnly={!isAdmin}
-              />
-            </FormControl>
+            <TextForm
+              value={name}
+              isReadOnly={!isAdmin}
+              onChange={onChangeName}>
+              名前
+            </TextForm>
+            <TextForm
+              value={userName}
+              isReadOnly={!isAdmin}
+              onChange={onChangeUserName}>
+              ニックネーム
+            </TextForm>
+            <TextForm
+              value={address}
+              isReadOnly={!isAdmin}
+              onChange={onChangeAddress}>
+              出身地
+            </TextForm>
+            <TextForm
+              value={phone}
+              isReadOnly={!isAdmin}
+              onChange={onChangePhone}>
+              電話番号
+            </TextForm>
           </Stack>
         </ModalBody>
         {isAdmin && (
