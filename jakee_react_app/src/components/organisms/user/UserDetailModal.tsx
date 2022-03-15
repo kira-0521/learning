@@ -14,6 +14,7 @@ import { User } from '../../../types/api/user'
 import { PrimaryButton } from '../../atoms/button/PrimaryButton'
 import { FormController } from '../../molecules/form/FormController'
 import { TextInput } from '../../atoms/form/TextInput'
+import { useUpdateUser } from '../../../hooks/useUpdateUser'
 
 type Props = {
   isOpen: boolean
@@ -29,6 +30,7 @@ export const UserDetailModal: VFC<Props> = memo((props) => {
   const [userName, setUserName] = useState('')
   const [address, setAddress] = useState('')
   const [phone, setPhone] = useState('')
+  const { updateUser } = useUpdateUser()
 
   useEffect(() => {
     setName(selectedUser?.name ?? '')
@@ -46,7 +48,9 @@ export const UserDetailModal: VFC<Props> = memo((props) => {
   const onChangePhone = (e: ChangeEvent<HTMLInputElement>) =>
     setPhone(e.target.value)
 
-  const onClickUpdate = () => alert()
+  const onClickUpdate = async () => {
+    await updateUser({ id: selectedUser!.id, targetUser: selectedUser })
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} autoFocus={false}>
