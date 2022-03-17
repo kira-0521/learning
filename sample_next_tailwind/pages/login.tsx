@@ -7,7 +7,7 @@ const Login: NextPage = () => {
   const onChangeUserId = (e: ChangeEvent<HTMLInputElement>) =>
     setUserId(e.target.value)
 
-  const { login } = useAuth()
+  const { login, loading } = useAuth()
   const onClickLogin = () => {
     login(userId)
   }
@@ -28,11 +28,18 @@ const Login: NextPage = () => {
             className='rounded-md border border-indigo-500 focus:border-indigo-900 mt-2'
           />
         </div>
-        <button
-          onClick={onClickLogin}
-          className='border bg-indigo-300 hover:bg-indigo-100 rounded-md mt-4 block mx-auto px-4 py-2'>
-          ログイン
-        </button>
+        {loading ? (
+          <div className='flex justify-center mt-4'>
+            <div className='animate-spin h-10 w-10 border-4 border-indigo-500 rounded-full border-t-transparent'></div>
+          </div>
+        ) : (
+          <button
+            onClick={onClickLogin}
+            disabled={loading}
+            className='border bg-indigo-300 hover:bg-indigo-100 rounded-md mt-4 block mx-auto px-4 py-2'>
+            ログイン
+          </button>
+        )}
       </div>
     </div>
   )
