@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import Link from 'next/link'
+import { Header } from '../components/organisms/layouts/Header'
 
 type Props = {
   children?: ReactNode
@@ -8,14 +8,7 @@ type Props = {
 const Layout = ({ children }: Props) => {
   return (
     <div>
-      <nav className='flex py-2 px-8 bg-red-500 text-white font-bold'>
-        <Link href='/'>
-          <a className='pr-4'>Home</a>
-        </Link>
-        <Link href='/about'>
-          <a className='pr-4'>About </a>
-        </Link>
-      </nav>
+      <Header />
       {children}
     </div>
   )
