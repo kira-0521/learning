@@ -1,7 +1,7 @@
-import { VFC } from 'react'
+import { VFC, memo } from 'react'
 import Link from 'next/link'
 
-export const Header: VFC = () => {
+export const Header: VFC = memo(function header() {
   return (
     <header className='py-4 px-8 w-full bg-orange-400'>
       <nav className='mx-auto flex items-start'>
@@ -19,4 +19,4 @@ export const Header: VFC = () => {
       </nav>
     </header>
   )
-}
+})
