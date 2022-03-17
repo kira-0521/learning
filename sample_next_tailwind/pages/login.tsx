@@ -11,6 +11,7 @@ const Login: NextPage = () => {
   const onClickLogin = () => {
     login(userId)
   }
+
   return (
     <div className='flex items-center justify-center h-screen'>
       <div className='bg-orange-100 w-[400px] rounded-md shadow-current px-6 py-4'>
