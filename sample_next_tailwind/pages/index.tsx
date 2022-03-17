@@ -1,14 +1,41 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, useCallback, useEffect } from 'react'
+import axios from 'axios'
+
+import { Todo } from '../types/api/todo'
 
 const Home: NextPage = () => {
   const [todoName, setTodoName] = useState('')
   const [todoContent, setTodoContent] = useState('')
-  const onChangeTodoName = (e: ChangeEvent<HTMLInputElement>) =>
-    setTodoName(e.target.value)
-  const onChangeTodoContent = (e: ChangeEvent<HTMLTextAreaElement>) =>
-    setTodoContent(e.target.value)
+  const [todos, setTodos] = useState<Array<Todo>>([])
+  const onChangeTodoName = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => setTodoName(e.target.value),
+    []
+  )
+  const onChangeTodoContent = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => setTodoContent(e.target.value),
+    []
+  )
+  const getAllTodos = useCallback(async () => {
+    const { data } = await axios.get<{ todos: Array<Todo> }>(
+      'http://localhost:3000/api/todo'
+    )
+    setTodos(data.todos)
+    return data.todos
+  }, [])
+  const onClickTodoCreate = useCallback(async () => {
+    const todo = {
+      name: todoName,
+      content: todoContent,
+    }
+    await axios.post('http://localhost:3000/api/todo', todo)
+    await getAllTodos()
+  }, [todoName, todoContent, getAllTodos])
+
+  useEffect(() => {
+    getAllTodos()
+  }, [getAllTodos])
 
   return (
     <div>
@@ -18,6 +45,15 @@ const Home: NextPage = () => {
       <main className='p-6 '>
         <h1 className='text-2xl text-current'>Todo一覧</h1>
         <hr />
+        <ul>
+          {todos.map((todo) => (
+            <li key={todo.name}>
+              <span>{todo.name}</span>
+              <br />
+              <span>{todo.content}</span>
+            </li>
+          ))}
+        </ul>
         <div className='mt-4'>
           <div>
             <label htmlFor='todoName'>タイトル</label>
@@ -37,11 +73,12 @@ const Home: NextPage = () => {
               id='todoContent'
               value={todoContent}
               onChange={onChangeTodoContent}
-              className='block w-64 h-48 mt-2 rounded-sm border border-indigo-600 text-sm text-slate-500 focus:bg-indigo-100'></textarea>
-            {todoContent}
+              className='block w-64 h-32 mt-2 rounded-sm border border-indigo-600 text-sm text-slate-500 focus:bg-indigo-100'></textarea>
           </div>
           <div className='mt-4'>
-            <button className='rounded-full bg-indigo-300 py-2 px-6 hover:cursor-pointer hover:bg-indigo-200'>
+            <button
+              onClick={onClickTodoCreate}
+              className='rounded-full bg-indigo-300 py-2 px-6 hover:cursor-pointer hover:bg-indigo-200'>
               Todo追加
             </button>
           </div>

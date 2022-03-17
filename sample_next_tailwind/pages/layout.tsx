@@ -8,12 +8,12 @@ type Props = {
 const Layout = ({ children }: Props) => {
   return (
     <div>
-      <nav className='flex flex-rows p-2 bg-red-500 text-white font-bold'>
+      <nav className='flex py-2 px-8 bg-red-500 text-white font-bold'>
         <Link href='/'>
-          <a>Home</a>
+          <a className='pr-4'>Home</a>
         </Link>
         <Link href='/about'>
-          <a>About </a>
+          <a className='pr-4'>About </a>
         </Link>
       </nav>
       {children}
