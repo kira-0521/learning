@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { useState, ChangeEvent, useCallback, useEffect } from 'react'
+import { useState, ChangeEvent } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { PrimaryButton } from '../components/atoms/buttons/PrimaryButton'
 
