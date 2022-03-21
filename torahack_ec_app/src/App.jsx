@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import logo from './logo.svg'
 import './App.css'
+import { signInAction } from './reducks/users/actions'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,6 +18,13 @@ function App() {
         <p>
           <button type='button' onClick={() => setCount((count) => count + 1)}>
             count is: {count}
+          </button>
+          <button
+            type='button'
+            onClick={() =>
+              dispatch(signInAction({ uid: '00001', username: 'tanakakira' }))
+            }>
+            SIGN IN
           </button>
         </p>
         <p>
