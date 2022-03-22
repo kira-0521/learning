@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "apollo-boost": "0.1.16",
+    "dotenv": "^16.0.0",
     "graphql": "14.0.2",
     "react": "^17.0.2",
     "react-apollo": "2.1.11",
