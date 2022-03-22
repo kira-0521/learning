@@ -1,8 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { push } from 'connected-react-router'
 
-import { signInAction } from '../reducks/users/actions'
+import { signIn } from '../reducks/users/operations'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -10,13 +9,7 @@ const Login = () => {
   return (
     <div>
       <h2>ログインページ</h2>
-      <button
-        onClick={() => {
-          dispatch(signInAction({ uid: '00001', username: 'tanakakira' }))
-          dispatch(push('/'))
-        }}>
-        ログイン
-      </button>
+      <button onClick={() => dispatch(signIn())}>ログイン</button>
     </div>
   )
 }
