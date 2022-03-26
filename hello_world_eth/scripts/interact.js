@@ -24,5 +24,13 @@ const helloWorldContract = new ethers.Contract(
 async function main() {
   const message = await helloWorldContract.message()
   console.log('The message is: ' + message)
+
+  console.log('Updating the message...')
+  const tx = await helloWorldContract.update('This is the new message.')
+  // トランザクションオブジェクトを返す
+  await tx.wait()
+
+  const newMessage = await helloWorldContract.message()
+  console.log('The new message is: ' + newMessage)
 }
 main()
