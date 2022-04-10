@@ -20,39 +20,45 @@ const form_style = {
 }
 
 function App() {
-    const [webhookUrl, setWebhookUrl] = useState('');
+    const [channelId, setChannelId] = useState('');
+    const [channelName, setChannelName] = useState('');
     const [isError, setIsError] = useState(false);
     const [message, setMessage] = useState('');
 
-    const onChangeWebhookUrl = (e: ChangeEvent<HTMLInputElement>) => {
-        setWebhookUrl(e.target.value)
+    // チャンネル名取得
+    const getChannelName = async () => {
+        await axios.get(`http://localhost:3008/discord/${channelId}/`).then(res => {
+            setChannelName(res.data.channelName)
+        }).catch(err => console.log(err))
     }
+    useEffect(() => {
+        (async() =>{
+            if(!channelId) return
+            await getChannelName()
+        })()
+    }, [channelId]);
 
-    const getChannelId = async () => {
+    // webhookURLの入力にトリガー
+    const onChangeWebhookUrl = async (e: ChangeEvent<HTMLInputElement>) => {
+        // webhookUrl
+        const url = e.target.value as string
 
-        if (!webhookUrl) {
-            // TODO:　バリデーション
+        // url正しくないとき TODO:　バリデーション
+        if (!url) {
             setIsError(true)
             setMessage("入力形式が正しくありません。")
             return
         }
 
-        return await axios.get<WebHookObject>(webhookUrl).then(res => {
+        return await axios.get<WebHookObject>(url).then(async (res) => {
             // チャンネルID取得
             const chId = res.data.channel_id
-            console.log(chId)
-            return chId
+            setChannelId(chId)
         }).catch((err) => {
             setIsError(true)
             setMessage(err.message)
         })
     }
-
-    useEffect(() => {
-        (async() => {
-            await getChannelId()
-        })()
-    }, [webhookUrl]);
 
     return (
         <div style={wrapper_style}>
@@ -64,9 +70,9 @@ function App() {
                 ) : (null)
             }
             <div style={form_style}>
+                <h2>チャンネル名： {channelName}</h2>
                 <label htmlFor="webhookURL">webhookのURLを入力してください。</label>
-                <input type="text" id="webhookURL" value={webhookUrl}
-                       onChange={onChangeWebhookUrl}/>
+                <input type="text" id="webhookURL" onChange={onChangeWebhookUrl}/>
                 <button>チャンネル登録</button>
             </div>
         </div>
