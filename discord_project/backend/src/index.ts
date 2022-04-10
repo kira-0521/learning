@@ -1,9 +1,10 @@
 import express, {Application, Request, Response} from 'express'
 import config from 'config'
-import { client } from "./utils/initializeDiscord";
+import cors from 'cors'
+import {Message} from "discord.js";
 
 import discordRoute from './routes/discord'
-import {Message} from "discord.js";
+import { client } from "./utils/initializeDiscord";
 
 const initializeServer = async () => {
     const app: Application = express()
@@ -14,6 +15,9 @@ const initializeServer = async () => {
 
     // urlエンコード / body処理用
     app.use(express.urlencoded({extended: true}))
+
+    // cors対策
+    app.use(cors())
 
     // discord用ルーティング
     app.use('/discord', discordRoute)

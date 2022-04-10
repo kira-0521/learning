@@ -9,11 +9,13 @@
     "build:live": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "discord.js": "^13.6.0",
     "express": "^4.17.3"
   },
   "devDependencies": {
     "@types/config": "^0.0.41",
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.23",
     "config": "^3.3.7",
