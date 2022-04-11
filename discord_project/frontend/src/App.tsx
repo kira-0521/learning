@@ -2,58 +2,62 @@ import {ChangeEvent, useEffect, useState} from "react";
 import axios from "axios";
 import {WebHookObject} from "./types/api/discord";
 import {
-    Button, Flex, FormLabel, Heading, Input, Stack, Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton, useDisclosure, Box,
+    Button, Flex, FormLabel, Input, Stack,
+    useDisclosure, Box,
 } from "@chakra-ui/react";
-import { AddWebhookModal } from "./components/organisms/AddWebhookModal";
+import {AddWebhookModal} from "./components/organisms/AddWebhookModal";
 
 function App() {
-    const [channelId, setChannelId] = useState('');
+    const [webhookUrl, setWebhookUrl] = useState('');
     const [webhookName, setWebhookName] = useState('');
     const [isError, setIsError] = useState(false);
     const [message, setMessage] = useState('');
 
     // Modal用
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const {isOpen, onOpen, onClose} = useDisclosure()
 
-    // チャンネル名取得
-    const getChannelName = async () => {
-        await axios.get(`http://localhost:3008/discord/${channelId}/`).then(res => {
-            setWebhookName(res.data.channelName)
-        }).catch(err => console.log(err))
-    }
+    // url入力 TODO バリデーション
+    const onChangeWebhookUrl = (e: ChangeEvent<HTMLInputElement>) => setWebhookUrl(e.target.value)
+    // webhook名入力
+    const onChangeWebhookName = (e: ChangeEvent<HTMLInputElement>) => setWebhookName(e.target.value)
+
+    // チャンネル id & name ゲット
     useEffect(() => {
         (async () => {
-            if (!channelId) return
-            await getChannelName()
+            console.log('use effect')
+            if (!webhookUrl) return
+            await getChannelId().then(async (res: string | void) => {
+                if (!res) return
+                await getChannelName(res)
+            })
         })()
-    }, [channelId]);
+    }, [webhookUrl]);
 
     // webhookURLの入力にトリガー
-    const onChangeWebhookUrl = async (e: ChangeEvent<HTMLInputElement>) => {
-        // webhookUrl
-        const url = e.target.value as string
-
-        // url正しくないとき TODO:　バリデーション
-        if (!url) {
-            setIsError(true)
-            setMessage("入力形式が正しくありません。")
-            return
-        }
-
-        return await axios.get<WebHookObject>(url).then(async (res) => {
+    const getChannelId = async (): Promise<string | void> => {
+        return await axios.get<WebHookObject>(webhookUrl).then(async (res) => {
             // チャンネルID取得
             const chId = res.data.channel_id
-            setChannelId(chId)
+            if (!chId) {
+                // TODO: ちゃんと返ってこなかった時処理
+                return
+            }
+            console.log('get channel id : ' + chId)
+            return chId
         }).catch((err) => {
+            console.log('err')
             setIsError(true)
             setMessage(err.message)
         })
+    }
+
+    // チャンネル名取得
+    const getChannelName = async (chId: string): Promise<void> => {
+        await axios.get(`http://localhost:3008/discord/${chId}/`).then(res => {
+            const chName = res.data.channelName
+            console.log('get channel name : ' + chName)
+            setWebhookName(chName)
+        }).catch(err => console.log(err))
     }
 
     return (
@@ -70,7 +74,8 @@ function App() {
                 <Stack direction='column' spacing={4}>
                     <Box>
                         <FormLabel htmlFor="webhookName">webhook名</FormLabel>
-                        <Input type="text" id="webhookName" value={webhookName}/>
+                        <Input type="text" id="webhookName" value={webhookName}
+                               onChange={onChangeWebhookName}/>
                     </Box>
                     <Box>
                         <FormLabel htmlFor="webhookURL">webhookのURL</FormLabel>
