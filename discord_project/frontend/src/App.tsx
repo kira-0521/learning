@@ -10,6 +10,7 @@ import {
     ModalBody,
     ModalCloseButton, useDisclosure, Box,
 } from "@chakra-ui/react";
+import { AddWebhookModal } from "./components/organisms/AddWebhookModal";
 
 function App() {
     const [channelId, setChannelId] = useState('');
@@ -17,6 +18,7 @@ function App() {
     const [isError, setIsError] = useState(false);
     const [message, setMessage] = useState('');
 
+    // Modal用
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     // チャンネル名取得
@@ -64,32 +66,18 @@ function App() {
                 ) : null
             }
             <Button colorScheme='teal' size='md' w={32} p={4} onClick={onOpen}>Add Webhook</Button>
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay>
-                    <ModalContent>
-                        <ModalHeader>Add Webhook</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                            <Stack direction='column' spacing={4}>
-                                <Box>
-                                    <FormLabel htmlFor="webhookName">webhook名</FormLabel>
-                                    <Input type="text" id="webhookName" value={webhookName}/>
-                                </Box>
-                                <Box>
-                                    <FormLabel htmlFor="webhookURL">webhookのURL</FormLabel>
-                                    <Input type="text" id="webhookURL" onChange={onChangeWebhookUrl}/>
-                                </Box>
-                            </Stack>
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button colorScheme='blue' mr={3} onClick={onClose}>
-                                Close
-                            </Button>
-                            <Button variant='ghost'>Secondary Action</Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </ModalOverlay>
-            </Modal>
+            <AddWebhookModal onClose={onClose} isOpen={isOpen}>
+                <Stack direction='column' spacing={4}>
+                    <Box>
+                        <FormLabel htmlFor="webhookName">webhook名</FormLabel>
+                        <Input type="text" id="webhookName" value={webhookName}/>
+                    </Box>
+                    <Box>
+                        <FormLabel htmlFor="webhookURL">webhookのURL</FormLabel>
+                        <Input type="text" id="webhookURL" onChange={onChangeWebhookUrl}/>
+                    </Box>
+                </Stack>
+            </AddWebhookModal>
         </Flex>
     )
 }
