@@ -1,6 +1,16 @@
-import { useMemo, FC, CSSProperties } from 'react'
-import { Table, Thead, Tbody, Tr, Th, Td, chakra } from '@chakra-ui/react'
+import {
+  useMemo,
+  FC,
+  CSSProperties,
+  ReactNode,
+  useState,
+  useCallback,
+  ChangeEvent,
+} from 'react'
+import { Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react'
 import { useTable, Column, HeaderGroup, Row, Cell } from 'react-table'
+
+import { PrimaryCheckbox } from '../../atoms/Forms/PrimaryCheckbox'
 
 const tableStyle: CSSProperties = {
   minWidth: '1500px',
@@ -24,7 +34,7 @@ const tableCellStyle: CSSProperties = {
 }
 
 interface Data {
-  col1: string
+  col1: ReactNode
   col2: string
   col3: string
   col4: string
@@ -37,10 +47,32 @@ interface Data {
 }
 
 export const WalletListTableWithChakra: FC = () => {
+  const [checkLists, setCheckLists] = useState<string[]>([])
+  const onListClick = (e: ChangeEvent<HTMLInputElement>) => {
+    const targetValue = e.target.value
+    console.log('checkbox value: ', targetValue)
+    console.log('checkLists', checkLists)
+    const isInCheckLists = checkLists.includes(targetValue)
+    // チェックリストに値が含まれていれば取り除き、含まれていなければ追加
+    isInCheckLists
+      ? setCheckLists(checkLists.filter((val) => val !== targetValue))
+      : setCheckLists([...checkLists, targetValue])
+  }
+
   const data = useMemo(
     () => [
       {
-        col1: 'Hello',
+        col1: (
+          <PrimaryCheckbox
+            checked={checkLists.includes('hello')}
+            value='hello'
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onListClick(e)}
+            border='1px solid'
+            rounded='sm'
+            bg='red'
+            boxSizing='border-box'
+          />
+        ),
         col2: 'Worldfdsafdsfsdfsdfda',
         col3: 'Worldfdsafdsfsdfsdfda',
         col4: 'Hello',
@@ -52,7 +84,13 @@ export const WalletListTableWithChakra: FC = () => {
         col10: 'World',
       },
       {
-        col1: 'Hello',
+        col1: (
+          <PrimaryCheckbox
+            checked={checkLists.includes('こんにちは')}
+            value='こんにちは'
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onListClick(e)}
+          />
+        ),
         col2: 'World',
         col3: 'World',
         col4: 'Hello',
@@ -64,7 +102,13 @@ export const WalletListTableWithChakra: FC = () => {
         col10: 'World',
       },
       {
-        col1: 'Hello',
+        col1: (
+          <PrimaryCheckbox
+            checked={checkLists.includes('グッバイ')}
+            value='グッバイ'
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onListClick(e)}
+          />
+        ),
         col2: 'World',
         col3: 'World',
         col4: 'Hello',
