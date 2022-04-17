@@ -1,5 +1,4 @@
 import { useMemo, FC, CSSProperties, ChangeEvent, ReactNode } from 'react'
-import { useLocation } from 'react-router-dom'
 import { useTable, Column, HeaderGroup, Row, Cell } from 'react-table'
 import { Box } from '@chakra-ui/react'
 
@@ -48,8 +47,6 @@ interface Data {
 }
 
 export const WalletListTable: FC = () => {
-  const location = useLocation()
-  console.log('location', location)
   const onListClick = (e: ChangeEvent<HTMLInputElement>) => console.log(e)
   const data = useMemo(
     () => [
@@ -205,7 +202,6 @@ export const WalletListTable: FC = () => {
             <tr
               {...headerGroup.getHeaderGroupProps({ style: tableHeaderStyle })}>
               {headerGroup.headers.map((column: HeaderGroup<Data>) => {
-                console.log(column)
                 return (
                   // th ===> TableCommonProps型の属性を展開
                   <th

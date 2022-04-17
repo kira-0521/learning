@@ -1,11 +1,11 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, memo } from 'react'
 import { InputGroup, InputLeftElement, Input } from '@chakra-ui/react'
 
 type Props = {
   children: ReactNode
 }
 
-export const LeftIconInInput: FC<Props> = (props: Props) => {
+export const LeftIconInInput: FC<Props> = memo((props: Props) => {
   const { children } = props
   return (
     <InputGroup>
@@ -13,4 +13,4 @@ export const LeftIconInInput: FC<Props> = (props: Props) => {
       <Input />
     </InputGroup>
   )
-}
+})
