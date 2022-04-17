@@ -1,10 +1,6 @@
 import { FC, memo } from 'react'
-import { Input } from '@chakra-ui/react'
+import { Input, TextProps } from '@chakra-ui/react'
 
-type Props = {
-  variant?: 'filled' | 'flushed' | 'unstyled'
-}
-
-export const TextInput: FC<Props> = memo((props: Props) => {
+export const TextInput: FC<TextProps> = memo((props: TextProps) => {
   return <Input type='text' {...props} />
 })

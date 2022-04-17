@@ -1,6 +1,7 @@
 import { useMemo, FC, CSSProperties, ChangeEvent, ReactNode } from 'react'
 import { useTable, Column, HeaderGroup, Row, Cell } from 'react-table'
 import { Box } from '@chakra-ui/react'
+import _ from 'lodash'
 
 import { PrimaryCheckbox } from '../../atoms/Forms/PrimaryCheckbox'
 
@@ -33,7 +34,7 @@ const tableCellStyle: CSSProperties = {
   wordWrap: 'break-word',
 }
 
-interface Data {
+type Data = {
   col1: ReactNode
   col2: string
   col3: string
@@ -48,78 +49,33 @@ interface Data {
 
 export const WalletListTable: FC = () => {
   const onListClick = (e: ChangeEvent<HTMLInputElement>) => console.log(e)
-  const data = useMemo(
-    () => [
-      {
-        col1: (
-          <PrimaryCheckbox
-            checked={false}
-            value='hello'
-            onChange={(e: ChangeEvent<HTMLInputElement>) => onListClick(e)}
-            border='1px solid'
-            rounded='sm'
-            bg='red'
-            boxSizing='border-box'
-          />
-        ),
-        col2: 'Worldfdsafdsfsdfsdfda',
-        col3: 'Worldfdsafdsfsdfsdfda',
-        col4: 'Hello',
-        col5: 'Hello',
-        col6: 'Worldfdsafdsfsdfsdfda',
-        col7: 'Hello',
-        col8: 'Worldfdsafdsfsdfsdfda',
-        col9: 'Hello',
-        col10: 'World',
-      },
-      {
-        col1: (
-          <PrimaryCheckbox
-            checked={false}
-            value='hello'
-            onChange={(e: ChangeEvent<HTMLInputElement>) => onListClick(e)}
-            border='1px solid'
-            rounded='sm'
-            bg='red'
-            boxSizing='border-box'
-          />
-        ),
-        col2: 'World',
-        col3: 'World',
-        col4: 'Hello',
-        col5: 'Hello',
-        col6: 'World',
-        col7: 'Hello',
-        col8: 'World',
-        col9: 'Hello',
-        col10: 'World',
-      },
-      {
-        col1: (
-          <PrimaryCheckbox
-            checked={false}
-            value='hello'
-            onChange={(e: ChangeEvent<HTMLInputElement>) => onListClick(e)}
-            border='1px solid'
-            rounded='sm'
-            bg='red'
-            boxSizing='border-box'
-          />
-        ),
-        col2: 'World',
-        col3: 'World',
-        col4: 'Hello',
-        col5: 'Hello',
-        col6: 'World',
-        col7: 'Hello',
-        col8: 'World',
-        col9: 'Hello',
-        col10: 'World',
-      },
-    ],
-    []
-  )
 
+  // テーブル用のデータ
+  const arr = _.map(_.fill(Array(20), null), () => ({
+    col1: (
+      <PrimaryCheckbox
+        checked={false}
+        value='hello'
+        onChange={(e: ChangeEvent<HTMLInputElement>) => onListClick(e)}
+        border='1px solid'
+        rounded='sm'
+        bg='red'
+        boxSizing='border-box'
+      />
+    ),
+    col2: 'Worldfdsafdsfsdfsdfda',
+    col3: 'Worldfdsafdsfsdfsdfda',
+    col4: 'Hello',
+    col5: 'Hello',
+    col6: 'Worldfdsafdsfsdfsdfda',
+    col7: 'Hello',
+    col8: 'Worldfdsafdsfsdfsdfda',
+    col9: 'Hello',
+    col10: 'World',
+  }))
+  const data: Data[] = useMemo(() => arr, [])
+
+  // テーブル用のカラム
   const columns: Column<Data>[] = useMemo(
     () => [
       {
@@ -176,10 +132,12 @@ export const WalletListTable: FC = () => {
     []
   )
 
+  // カラムとデータを渡してテーブルリスト用のデータが格納されたオブジェクトをインスタンス化
   const tableInstance = useTable({ columns, data })
-
+  // テーブルインスタンスからデータ取得に必要なプロパティを取得
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance
+
   return (
     <Box
       overflowX='scroll'
@@ -197,11 +155,11 @@ export const WalletListTable: FC = () => {
       <h2 style={{ whiteSpace: 'pre-wrap' }}>{`改行\nしてみる`}</h2>
       <table {...getTableProps({ style: tableStyle })}>
         <thead>
-          {headerGroups.map((headerGroup: HeaderGroup<Data>) => (
+          {_.map(headerGroups, (headerGroup: HeaderGroup<Data>) => (
             // tr ===> TableCommonProps型の属性を展開
             <tr
               {...headerGroup.getHeaderGroupProps({ style: tableHeaderStyle })}>
-              {headerGroup.headers.map((column: HeaderGroup<Data>) => {
+              {_.map(headerGroup.headers, (column: HeaderGroup<Data>) => {
                 return (
                   // th ===> TableCommonProps型の属性を展開
                   <th
@@ -222,12 +180,12 @@ export const WalletListTable: FC = () => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row: Row<Data>) => {
+          {_.map(rows, (row: Row<Data>) => {
             // 表示する予定の行だけをレンダリングしてくれる
             prepareRow(row)
             return (
               <tr {...row.getRowProps({ style: tableBodyStyle })}>
-                {row.cells.map((cell: Cell<Data>) => {
+                {_.map(row.cells, (cell: Cell<Data>) => {
                   return (
                     <td
                       {...cell.getCellProps({

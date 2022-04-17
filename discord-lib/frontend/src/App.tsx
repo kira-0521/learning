@@ -8,7 +8,11 @@ import { List, ListItem } from '@chakra-ui/react'
 import _ from 'lodash'
 
 import { MainLayout } from './components/templates/Layouts/MainLayout'
-import { homeRoutes } from './routes/homeRoutes'
+import { homeRoutes, RouteType } from './routes/homeRoutes'
+import { WalletDetail } from './components/pages/WalletDetail'
+import { NotFound } from './components/pages/NotFound'
+import { WalletList } from './components/pages/WalletList'
+import { WalletAlert } from './components/pages/WalletAlert'
 
 function App() {
   return (
@@ -16,22 +20,18 @@ function App() {
       <BrowserRouter>
         <MainLayout>
           <List>
-            {['/', 'wallet_alert', 'watch_list'].map((route: string) => (
-              <ListItem key={route}>
-                <ReactLink to={route}>
-                  {route === '/' ? 'List' : route}
-                </ReactLink>
+            {_.map(homeRoutes, (route: RouteType) => (
+              <ListItem key={route.path}>
+                <ReactLink to={route.path}>{route.name}</ReactLink>
               </ListItem>
             ))}
           </List>
           <Routes>
-            {homeRoutes.map((route) => (
-              <Route
-                path={route.path}
-                element={route.element}
-                key={route.name}
-              />
-            ))}
+            <Route path='wallet_list' element={<WalletList />} />
+            <Route path='wallet_detail/:id' element={<WalletDetail />}></Route>
+            <Route path='wallet_alert' element={<WalletAlert />} />
+            <Route path='watch_list' element={<WalletList />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </MainLayout>
       </BrowserRouter>

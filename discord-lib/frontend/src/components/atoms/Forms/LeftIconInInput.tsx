@@ -1,11 +1,12 @@
 import { FC, ReactNode, memo } from 'react'
-import { InputGroup, InputLeftElement, Input } from '@chakra-ui/react'
+import {
+  InputGroup,
+  InputLeftElement,
+  Input,
+  InputProps,
+} from '@chakra-ui/react'
 
-type Props = {
-  children: ReactNode
-}
-
-export const LeftIconInInput: FC<Props> = memo((props: Props) => {
+export const LeftIconInInput: FC<InputProps> = memo((props: InputProps) => {
   const { children } = props
   return (
     <InputGroup>
