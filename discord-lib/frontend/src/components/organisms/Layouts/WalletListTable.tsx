@@ -1,8 +1,14 @@
-import { useMemo, FC, CSSProperties } from 'react'
+import { useMemo, FC, CSSProperties, ChangeEvent, ReactNode } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useTable, Column, HeaderGroup, Row, Cell } from 'react-table'
+import { Box } from '@chakra-ui/react'
+
+import { PrimaryCheckbox } from '../../atoms/Forms/PrimaryCheckbox'
 
 const tableStyle: CSSProperties = {
-  minWidth: '1500px',
+  width: '1500px', // 固定幅
+  tableLayout: 'fixed',
+  whiteSpace: 'nowrap',
 }
 
 const tableHeaderStyle: CSSProperties = {
@@ -13,17 +19,23 @@ const tableHeaderStyle: CSSProperties = {
   color: '#fff',
 }
 
+const tableHeaderCellStyle: CSSProperties = {
+  whiteSpace: 'pre-wrap',
+  padding: '0',
+  wordWrap: 'normal',
+}
+
 const tableBodyStyle: CSSProperties = {
   borderBottom: 'solid 1px gray',
   background: 'papayawhip',
 }
 
 const tableCellStyle: CSSProperties = {
-  padding: '10px',
+  wordWrap: 'break-word',
 }
 
 interface Data {
-  col1: string
+  col1: ReactNode
   col2: string
   col3: string
   col4: string
@@ -36,10 +48,23 @@ interface Data {
 }
 
 export const WalletListTable: FC = () => {
+  const location = useLocation()
+  console.log('location', location)
+  const onListClick = (e: ChangeEvent<HTMLInputElement>) => console.log(e)
   const data = useMemo(
     () => [
       {
-        col1: 'Hello',
+        col1: (
+          <PrimaryCheckbox
+            checked={false}
+            value='hello'
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onListClick(e)}
+            border='1px solid'
+            rounded='sm'
+            bg='red'
+            boxSizing='border-box'
+          />
+        ),
         col2: 'Worldfdsafdsfsdfsdfda',
         col3: 'Worldfdsafdsfsdfsdfda',
         col4: 'Hello',
@@ -51,7 +76,17 @@ export const WalletListTable: FC = () => {
         col10: 'World',
       },
       {
-        col1: 'Hello',
+        col1: (
+          <PrimaryCheckbox
+            checked={false}
+            value='hello'
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onListClick(e)}
+            border='1px solid'
+            rounded='sm'
+            bg='red'
+            boxSizing='border-box'
+          />
+        ),
         col2: 'World',
         col3: 'World',
         col4: 'Hello',
@@ -63,7 +98,17 @@ export const WalletListTable: FC = () => {
         col10: 'World',
       },
       {
-        col1: 'Hello',
+        col1: (
+          <PrimaryCheckbox
+            checked={false}
+            value='hello'
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onListClick(e)}
+            border='1px solid'
+            rounded='sm'
+            bg='red'
+            boxSizing='border-box'
+          />
+        ),
         col2: 'World',
         col3: 'World',
         col4: 'Hello',
@@ -83,22 +128,22 @@ export const WalletListTable: FC = () => {
       {
         Header: 'Column 1',
         accessor: 'col1', // accessor is the "key" in the data
-        width: '50px',
+        width: '100px',
       },
       {
         Header: 'Column 2',
         accessor: 'col2',
-        width: '30px',
+        width: '200px',
       },
       {
         Header: 'Column 3',
         accessor: 'col3', // accessor is the "key" in the data
-        width: '50px',
+        width: '350px',
       },
       {
         Header: 'Column 4',
         accessor: 'col4',
-        width: '30px',
+        width: '100px',
       },
       {
         Header: 'Column 5',
@@ -108,17 +153,17 @@ export const WalletListTable: FC = () => {
       {
         Header: 'Column 6',
         accessor: 'col6',
-        width: '30px',
+        width: '100px',
       },
       {
         Header: 'Column 7',
         accessor: 'col7', // accessor is the "key" in the data
-        width: '50px',
+        width: '150px',
       },
       {
         Header: 'Column 8',
         accessor: 'col8',
-        width: '30px',
+        width: '100px',
       },
       {
         Header: 'Column 9',
@@ -126,9 +171,9 @@ export const WalletListTable: FC = () => {
         width: '50px',
       },
       {
-        Header: 'Column 10',
+        Header: `Column\n10`,
         accessor: 'col10',
-        width: '30px',
+        width: '300px',
       },
     ],
     []
@@ -139,37 +184,75 @@ export const WalletListTable: FC = () => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance
   return (
-    <table {...getTableProps({ style: tableStyle })}>
-      <thead>
-        {headerGroups.map((headerGroup: HeaderGroup<Data>) => (
-          // tr ===> TableCommonProps型の属性を展開
-          <tr {...headerGroup.getHeaderGroupProps({ style: tableHeaderStyle })}>
-            {headerGroup.headers.map((column: HeaderGroup<Data>) => (
-              // th ===> TableCommonProps型の属性を展開
-              <th {...column.getHeaderProps()} style={{ width: column.width }}>
-                {column.render('Header')}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row: Row<Data>) => {
-          // 表示する予定の行だけをレンダリングしてくれる
-          prepareRow(row)
-          return (
-            <tr {...row.getRowProps({ style: tableBodyStyle })}>
-              {row.cells.map((cell: Cell<Data>) => {
+    <Box
+      overflowX='scroll'
+      sx={{
+        '&::-webkit-scrollbar': {
+          height: '8px',
+          borderRadius: '8px',
+          backgroundColor: `rgba(0, 0, 0, 0.05)`,
+        },
+        '&::-webkit-scrollbar-thumb': {
+          backgroundColor: `rgba(0, 0, 0, 0.05)`,
+          borderRadius: '30px',
+        },
+      }}>
+      <h2 style={{ whiteSpace: 'pre-wrap' }}>{`改行\nしてみる`}</h2>
+      <table {...getTableProps({ style: tableStyle })}>
+        <thead>
+          {headerGroups.map((headerGroup: HeaderGroup<Data>) => (
+            // tr ===> TableCommonProps型の属性を展開
+            <tr
+              {...headerGroup.getHeaderGroupProps({ style: tableHeaderStyle })}>
+              {headerGroup.headers.map((column: HeaderGroup<Data>) => {
+                console.log(column)
                 return (
-                  <td {...cell.getCellProps({ style: tableCellStyle })}>
-                    {cell.render('Cell')}
-                  </td>
+                  // th ===> TableCommonProps型の属性を展開
+                  <th
+                    {...column.getHeaderProps({ style: tableHeaderCellStyle })}
+                    style={
+                      column.Header === 'Column 3'
+                        ? {
+                            width: column.width,
+                            backgroundColor: '#fec058',
+                          }
+                        : { width: column.width }
+                    }>
+                    {column.render('Header')}
+                  </th>
                 )
               })}
             </tr>
-          )
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row: Row<Data>) => {
+            // 表示する予定の行だけをレンダリングしてくれる
+            prepareRow(row)
+            return (
+              <tr {...row.getRowProps({ style: tableBodyStyle })}>
+                {row.cells.map((cell: Cell<Data>) => {
+                  return (
+                    <td
+                      {...cell.getCellProps({
+                        style: tableCellStyle,
+                      })}
+                      style={
+                        cell.column.Header === 'Column 1'
+                          ? { paddingLeft: '15px' }
+                          : cell.column.Header === 'Column 3'
+                          ? { padding: 0, backgroundColor: '#fec058' }
+                          : { padding: 0 }
+                      }>
+                      {cell.render('Cell')}
+                    </td>
+                  )
+                })}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </Box>
   )
 }
