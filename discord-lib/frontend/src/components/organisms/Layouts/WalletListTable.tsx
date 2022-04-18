@@ -17,12 +17,19 @@ const tableHeaderStyle: CSSProperties = {
   borderRight: 'none',
   backgroundColor: '#707070',
   color: '#fff',
+  padding: '0 12px',
 }
 
-const tableHeaderCellStyle: CSSProperties = {
-  whiteSpace: 'pre-wrap',
-  padding: '0',
-  wordWrap: 'normal',
+const tableHeaderCellStyle = (
+  w: string | number | undefined,
+  isStickey = false
+) => {
+  const defaults = {
+    padding: '0 12px',
+    textAlign: 'center',
+    width: w,
+  }
+  return isStickey ? { ...defaults, position: 'sticky' } : defaults
 }
 
 const tableBodyStyle: CSSProperties = {
@@ -31,7 +38,7 @@ const tableBodyStyle: CSSProperties = {
 }
 
 const tableCellStyle: CSSProperties = {
-  wordWrap: 'break-word',
+  background: 'red',
 }
 
 type Data = {
@@ -163,14 +170,31 @@ export const WalletListTable: FC = () => {
                 return (
                   // th ===> TableCommonProps型の属性を展開
                   <th
-                    {...column.getHeaderProps({ style: tableHeaderCellStyle })}
+                    {...column.getHeaderProps()}
                     style={
                       column.Header === 'Column 3'
                         ? {
                             width: column.width,
                             backgroundColor: '#fec058',
+                            padding: '0 24px 0 0',
+                            boxSizing: 'content-box',
                           }
-                        : { width: column.width }
+                        : column.Header === 'Column 1'
+                        ? {
+                            ...tableHeaderCellStyle(column.width, true),
+                            left: 0,
+                          }
+                        : column.Header === 'Column 2'
+                        ? {
+                            ...tableHeaderCellStyle(column.width, true),
+                            left: '100px',
+                          }
+                        : column.Header === 'Column 3'
+                        ? {
+                            ...tableHeaderCellStyle(column.width, true),
+                            left: '300px',
+                          }
+                        : tableHeaderCellStyle(column.width)
                     }>
                     {column.render('Header')}
                   </th>
@@ -188,15 +212,13 @@ export const WalletListTable: FC = () => {
                 {_.map(row.cells, (cell: Cell<Data>) => {
                   return (
                     <td
-                      {...cell.getCellProps({
-                        style: tableCellStyle,
-                      })}
+                      {...cell.getCellProps({})}
                       style={
                         cell.column.Header === 'Column 1'
-                          ? { paddingLeft: '15px' }
+                          ? { textAlign: 'center' }
                           : cell.column.Header === 'Column 3'
-                          ? { padding: 0, backgroundColor: '#fec058' }
-                          : { padding: 0 }
+                          ? { backgroundColor: '#fec058' }
+                          : undefined
                       }>
                       {cell.render('Cell')}
                     </td>
