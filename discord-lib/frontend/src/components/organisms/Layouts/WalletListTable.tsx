@@ -22,14 +22,15 @@ const tableHeaderStyle: CSSProperties = {
 
 const tableHeaderCellStyle = (
   w: string | number | undefined,
-  isStickey = false
+  isFixed = false,
+  left?: string | number
 ) => {
   const defaults = {
     padding: '0 12px',
     textAlign: 'center',
     width: w,
   }
-  return isStickey ? { ...defaults, position: 'sticky' } : defaults
+  return isFixed ? { ...defaults, position: 'sticky', left } : defaults
 }
 
 const tableBodyStyle: CSSProperties = {
@@ -37,8 +38,13 @@ const tableBodyStyle: CSSProperties = {
   background: 'papayawhip',
 }
 
-const tableCellStyle: CSSProperties = {
-  background: 'red',
+const tableCellStyle = (isFixed = false, left?: number | string) => {
+  return isFixed
+    ? {
+        position: 'sticky',
+        left,
+      }
+    : undefined
 }
 
 type Data = {
@@ -98,22 +104,22 @@ export const WalletListTable: FC = () => {
       {
         Header: 'Column 3',
         accessor: 'col3', // accessor is the "key" in the data
-        width: '350px',
+        width: '100px',
       },
       {
         Header: 'Column 4',
         accessor: 'col4',
-        width: '100px',
+        width: '200px',
       },
       {
         Header: 'Column 5',
         accessor: 'col5', // accessor is the "key" in the data
-        width: '50px',
+        width: '150px',
       },
       {
         Header: 'Column 6',
         accessor: 'col6',
-        width: '100px',
+        width: '150px',
       },
       {
         Header: 'Column 7',
@@ -172,27 +178,19 @@ export const WalletListTable: FC = () => {
                   <th
                     {...column.getHeaderProps()}
                     style={
-                      column.Header === 'Column 3'
+                      column.Header === 'Column 1'
                         ? {
-                            width: column.width,
-                            backgroundColor: '#fec058',
-                            padding: '0 24px 0 0',
-                            boxSizing: 'content-box',
-                          }
-                        : column.Header === 'Column 1'
-                        ? {
-                            ...tableHeaderCellStyle(column.width, true),
-                            left: 0,
+                            ...tableHeaderCellStyle(column.width, true, 0),
                           }
                         : column.Header === 'Column 2'
                         ? {
-                            ...tableHeaderCellStyle(column.width, true),
-                            left: '100px',
+                            ...tableHeaderCellStyle(column.width, true, 100),
                           }
                         : column.Header === 'Column 3'
                         ? {
-                            ...tableHeaderCellStyle(column.width, true),
-                            left: '300px',
+                            ...tableHeaderCellStyle(column.width, true, 300),
+                            backgroundColor: '#fec058',
+                            padding: '0 24px 0 0',
                           }
                         : tableHeaderCellStyle(column.width)
                     }>
@@ -215,9 +213,14 @@ export const WalletListTable: FC = () => {
                       {...cell.getCellProps({})}
                       style={
                         cell.column.Header === 'Column 1'
-                          ? { textAlign: 'center' }
+                          ? { ...tableCellStyle(true, 0), textAlign: 'center' }
+                          : cell.column.Header === 'Column 2'
+                          ? tableCellStyle(true, 100)
                           : cell.column.Header === 'Column 3'
-                          ? { backgroundColor: '#fec058' }
+                          ? {
+                              ...tableCellStyle(true, 300),
+                              backgroundColor: '#fec058',
+                            }
                           : undefined
                       }>
                       {cell.render('Cell')}
