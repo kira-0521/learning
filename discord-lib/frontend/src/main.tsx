@@ -1,19 +1,30 @@
 import React from 'react'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import App from './App'
 import './index.css'
-import { WalletAlert } from './components/pages/WalletAlert'
-import { WatchList } from './components/pages/WatchList'
 
 const theme = extendTheme({
+  components: {
+    Checkbox: {
+      baseStyle: {
+        control: {
+          border: '1px solid #080808',
+          backgroundColor: '#c1c1c1',
+          _focus: {
+            boxShadow: 'none',
+          },
+        },
+      },
+    },
+  },
   styles: {
     global: {
       'html, body': {
-        color: '#000',
+        color: '#fff',
         fontSize: '14px',
+        backgroundColor: '#202020',
       },
       // グローバル設定では無理
       span: {
