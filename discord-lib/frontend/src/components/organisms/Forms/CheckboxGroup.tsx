@@ -1,14 +1,8 @@
 import { FC, memo } from 'react'
-import {
-  useCheckboxGroup,
-  Text,
-  Stack,
-  HStack,
-  Flex,
-  Image,
-} from '@chakra-ui/react'
+import { useCheckboxGroup, Text, Stack, HStack } from '@chakra-ui/react'
 
 import { CustomCheckbox } from '../../atoms/Forms/CustomCheckbox'
+import { SeparateImgTxt } from '../../atoms/Text/SeparateImgTxt'
 import ARROW_LEFT_UP from '../../../assets/svg/arrow_left_up.svg'
 import ARROW_LEFT_DOWN from '../../../assets/svg/arrow_left_down.svg'
 import ARROW_RIGHT_UP from '../../../assets/svg/arrow_right_up.svg'
@@ -32,72 +26,43 @@ export const CheckboxGroup: FC = memo(() => {
       <Text>The selected checkboxes are: {value.sort().join(' and ')}</Text>
       <HStack>
         <CustomCheckbox {...getCheckboxProps({ value: 'ARROW_LEFT_UP' })}>
-          <Flex>
-            <Image src={ARROW_LEFT_UP} />
-            <Text>{`Arrow\nLeftUp`}</Text>
-          </Flex>
+          <SeparateImgTxt imgSrc={ARROW_LEFT_UP} text={`Arrow\nLeftUp`} />
         </CustomCheckbox>
         <CustomCheckbox {...getCheckboxProps({ value: 'ARROW_LEFT_DOWN' })}>
-          <Flex>
-            <Image src={ARROW_LEFT_DOWN} />
-            <Text>{`Arrow\nLeftDown`}</Text>
-          </Flex>
+          <SeparateImgTxt imgSrc={ARROW_LEFT_DOWN} text={`Arrow\nLeftDown`} />
         </CustomCheckbox>
-      </HStack>
+      </HStack>{' '}
       <HStack>
         <CustomCheckbox {...getCheckboxProps({ value: 'ARROW_RIGHT_UP' })}>
-          <Flex>
-            <Image src={ARROW_RIGHT_UP} />
-            <Text>{`Arrow\nRightUp`}</Text>
-          </Flex>
+          <SeparateImgTxt imgSrc={ARROW_RIGHT_UP} text={`Arrow\nRightUp`} />
         </CustomCheckbox>
         <CustomCheckbox {...getCheckboxProps({ value: 'ARROW_RIGHT_DOWN' })}>
-          <Flex>
-            <Image src={ARROW_RIGHT_DOWN} />
-            <Text>{`Arrow\nRightUp`}</Text>
-          </Flex>
-        </CustomCheckbox>
+          <SeparateImgTxt imgSrc={ARROW_RIGHT_DOWN} text={`Arrow\nRightUp`} />
+        </CustomCheckbox>{' '}
       </HStack>
       <HStack>
         <CustomCheckbox {...getCheckboxProps({ value: 'WAVE_ARROW_UP' })}>
-          <Flex>
-            <Image src={WAVE_ARROW_UP} />
-            <Text>{`Wave\nArrowUp`}</Text>
-          </Flex>
+          <SeparateImgTxt imgSrc={WAVE_ARROW_UP} text={`Wave\nArrowUp`} />
         </CustomCheckbox>
         <CustomCheckbox {...getCheckboxProps({ value: 'WAVE_ARROW_DOWN' })}>
-          <Flex>
-            <Image src={WAVE_ARROW_DOWN} />
-            <Text>{`Wave\nArrowDown`}</Text>
-          </Flex>
+          {' '}
+          <SeparateImgTxt imgSrc={WAVE_ARROW_DOWN} text={`Wave\nArrowDown`} />
         </CustomCheckbox>
       </HStack>
       <HStack>
         <CustomCheckbox {...getCheckboxProps({ value: 'WAVE_ARROW_LEFT' })}>
-          <Flex>
-            <Image src={WAVE_ARROW_LEFT} />
-            <Text>{`Wave\nArrowLeft`}</Text>
-          </Flex>
-        </CustomCheckbox>
+          <SeparateImgTxt imgSrc={WAVE_ARROW_LEFT} text={`Wave\nArrowLeft`} />
+        </CustomCheckbox>{' '}
         <CustomCheckbox {...getCheckboxProps({ value: 'WAVE_ARROW_RIGHT' })}>
-          <Flex>
-            <Image src={WAVE_ARROW_RIGHT} />
-            <Text>{`Wave\nArrowRight`}</Text>
-          </Flex>
+          <SeparateImgTxt imgSrc={WAVE_ARROW_RIGHT} text={`Wave\nArrowRight`} />
         </CustomCheckbox>
       </HStack>
       <HStack>
         <CustomCheckbox {...getCheckboxProps({ value: 'MULTIPLY' })}>
-          <Flex>
-            <Image src={MULTIPLY} />
-            <Text>Multiply</Text>
-          </Flex>
+          <SeparateImgTxt imgSrc={MULTIPLY} text='Multiply' />
         </CustomCheckbox>
         <CustomCheckbox {...getCheckboxProps({ value: '1PLUS' })}>
-          <Flex>
-            <Image src={PLUS} />
-            <Text>Plus</Text>
-          </Flex>
+          <SeparateImgTxt imgSrc={PLUS} text='Plus' />
         </CustomCheckbox>
       </HStack>
     </Stack>
