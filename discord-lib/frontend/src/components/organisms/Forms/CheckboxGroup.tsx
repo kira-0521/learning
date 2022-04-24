@@ -26,35 +26,35 @@ export const CheckboxGroup: FC = memo(() => {
       <Text>The selected checkboxes are: {value.sort().join(' and ')}</Text>
       <HStack>
         <CustomCheckbox {...getCheckboxProps({ value: 'ARROW_LEFT_UP' })}>
-          <SeparateImgTxt imgSrc={ARROW_LEFT_UP} text={`Arrow\nLeftUp`} />
+          <SeparateImgTxt imgSrc={ARROW_LEFT_UP} text={`Arrow\nLeft`} />
         </CustomCheckbox>
         <CustomCheckbox {...getCheckboxProps({ value: 'ARROW_LEFT_DOWN' })}>
-          <SeparateImgTxt imgSrc={ARROW_LEFT_DOWN} text={`Arrow\nLeftDown`} />
+          <SeparateImgTxt imgSrc={ARROW_LEFT_DOWN} text={`Arrow\nLeft`} />
         </CustomCheckbox>
       </HStack>{' '}
       <HStack>
         <CustomCheckbox {...getCheckboxProps({ value: 'ARROW_RIGHT_UP' })}>
-          <SeparateImgTxt imgSrc={ARROW_RIGHT_UP} text={`Arrow\nRightUp`} />
+          <SeparateImgTxt imgSrc={ARROW_RIGHT_UP} text={`Arrow\nRight`} />
         </CustomCheckbox>
         <CustomCheckbox {...getCheckboxProps({ value: 'ARROW_RIGHT_DOWN' })}>
-          <SeparateImgTxt imgSrc={ARROW_RIGHT_DOWN} text={`Arrow\nRightUp`} />
+          <SeparateImgTxt imgSrc={ARROW_RIGHT_DOWN} text={`Arrow\nRight`} />
         </CustomCheckbox>{' '}
       </HStack>
       <HStack>
         <CustomCheckbox {...getCheckboxProps({ value: 'WAVE_ARROW_UP' })}>
-          <SeparateImgTxt imgSrc={WAVE_ARROW_UP} text={`Wave\nArrowUp`} />
+          <SeparateImgTxt imgSrc={WAVE_ARROW_UP} text={`Wave\nArrow`} />
         </CustomCheckbox>
         <CustomCheckbox {...getCheckboxProps({ value: 'WAVE_ARROW_DOWN' })}>
           {' '}
-          <SeparateImgTxt imgSrc={WAVE_ARROW_DOWN} text={`Wave\nArrowDown`} />
+          <SeparateImgTxt imgSrc={WAVE_ARROW_DOWN} text={`Wave\nArrow`} />
         </CustomCheckbox>
       </HStack>
       <HStack>
         <CustomCheckbox {...getCheckboxProps({ value: 'WAVE_ARROW_LEFT' })}>
-          <SeparateImgTxt imgSrc={WAVE_ARROW_LEFT} text={`Wave\nArrowLeft`} />
+          <SeparateImgTxt imgSrc={WAVE_ARROW_LEFT} text={`Wave\nArrow`} />
         </CustomCheckbox>{' '}
         <CustomCheckbox {...getCheckboxProps({ value: 'WAVE_ARROW_RIGHT' })}>
-          <SeparateImgTxt imgSrc={WAVE_ARROW_RIGHT} text={`Wave\nArrowRight`} />
+          <SeparateImgTxt imgSrc={WAVE_ARROW_RIGHT} text={`Wave\nArrow`} />
         </CustomCheckbox>
       </HStack>
       <HStack>

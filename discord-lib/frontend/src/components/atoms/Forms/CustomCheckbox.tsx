@@ -14,9 +14,10 @@ export const CustomCheckbox: FC<Props> = (props: Props) => {
       display='flex'
       flexDirection='row'
       alignItems='center'
-      justifyContent='center'
+      justifyContent='flex-start'
       w='96px'
       h='48px'
+      pl='8px'
       rounded='4px'
       cursor='pointer'
       bg={state.isChecked ? '#0f5999' : '#13212d'}
