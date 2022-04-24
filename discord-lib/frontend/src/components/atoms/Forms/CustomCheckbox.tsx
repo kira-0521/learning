@@ -15,7 +15,7 @@ export const CustomCheckbox: FC<Props> = (props: Props) => {
       flexDirection='row'
       alignItems='center'
       justifyContent='center'
-      w='100px'
+      w='96px'
       py='12px'
       px='8px'
       rounded='4px'
