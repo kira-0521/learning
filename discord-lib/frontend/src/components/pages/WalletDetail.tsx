@@ -1,7 +1,7 @@
 import { FC, useContext } from 'react'
 import { Heading, Box, Text } from '@chakra-ui/react'
 import { MoneyUnitContext } from '../../provider/MoneyUnitProvider'
-import { ToggleRadioButtons } from '../molecules/Forms/ToggleRadioButtons'
+import { ToggleRadioButtons } from '../organisms/Forms/ToggleRadioButtons'
 
 export const WalletDetail: FC = () => {
   const moneyUnit = useContext(MoneyUnitContext)
@@ -9,6 +9,7 @@ export const WalletDetail: FC = () => {
     <Box>
       <Heading>WalletDetail</Heading>
       <Text>{moneyUnit.unit}</Text>
+      <ToggleRadioButtons />
     </Box>
   )
 }
