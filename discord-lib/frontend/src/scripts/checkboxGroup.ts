@@ -13,6 +13,7 @@ export type TagFilterType = {
   id: number
   src: string[]
   text: string[]
+  value: string[]
 }
 
 export const TAG_FILTER_GROUP: TagFilterType[] = [
@@ -20,25 +21,30 @@ export const TAG_FILTER_GROUP: TagFilterType[] = [
     id: 1,
     src: [ARROW_LEFT_UP, ARROW_LEFT_DOWN],
     text: ['arLeft', `arLeft`],
+    value: ['alu', 'ald'],
   },
   {
     id: 2,
     src: [ARROW_RIGHT_UP, ARROW_RIGHT_DOWN],
-    text: [`Arrow\nRight`, `Arrow\nRight`],
+    text: [`Arrow\nUp`, `Arrow\nDown`],
+    value: ['aru', 'ard'],
   },
   {
     id: 3,
     src: [WAVE_ARROW_UP, WAVE_ARROW_DOWN],
-    text: [`Wave\nArrow`, `Wave\nArrow`],
+    text: [`Wave\nUp`, `Wave\nDown`],
+    value: ['wau', 'wad'],
   },
   {
     id: 4,
     src: [WAVE_ARROW_LEFT, WAVE_ARROW_RIGHT],
-    text: [`Wave\nArrow`, `Wave\nArrow`],
+    text: [`Wave\nLeft`, `Wave\nRight`],
+    value: ['wal', 'war'],
   },
   {
     id: 5,
     src: [MULTIPLY, PLUS],
     text: ['Multiply', 'Plus'],
+    value: ['multiply', 'plus'],
   },
 ]

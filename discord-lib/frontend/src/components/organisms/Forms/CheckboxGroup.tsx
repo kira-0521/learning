@@ -16,11 +16,10 @@ export const CheckboxGroup: FC = memo(() => {
       <Text>The selected checkboxes are: {value.sort().join(' and ')}</Text>
       {map(TAG_FILTER_GROUP, (filter: TagFilterType) => (
         <HStack key={filter.id}>
-          {/* TODO: 一意なバリュー */}
-          <CustomCheckbox {...getCheckboxProps({ value: filter.text[0] })}>
+          <CustomCheckbox {...getCheckboxProps({ value: filter.value[0] })}>
             <SeparateImgTxt imgSrc={filter.src[0]} text={filter.text[0]} />
           </CustomCheckbox>
-          <CustomCheckbox {...getCheckboxProps({ value: filter.text[1] })}>
+          <CustomCheckbox {...getCheckboxProps({ value: filter.value[1] })}>
             <SeparateImgTxt imgSrc={filter.src[1]} text={filter.text[1]} />
           </CustomCheckbox>
         </HStack>
