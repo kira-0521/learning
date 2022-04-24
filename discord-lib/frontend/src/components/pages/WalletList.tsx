@@ -5,6 +5,7 @@ import { WalletListTable } from '../organisms/Layouts/WalletListTable'
 import { WalletAccordionGroup } from '../organisms/Accordions/WalltAccordionGroup'
 import { DrawerExample } from '../molecules/Drawer'
 import { TagFilter } from '../organisms/TagFilter'
+import { CheckboxGroup } from '../organisms/Forms/CheckboxGroup'
 
 export const WalletList: FC = () => {
   return (
@@ -18,7 +19,9 @@ export const WalletList: FC = () => {
       </Box>
       <DrawerExample />
       <Box mt={24}>
-        <TagFilter />
+        <TagFilter>
+          <CheckboxGroup />
+        </TagFilter>
       </Box>
     </Box>
   )
