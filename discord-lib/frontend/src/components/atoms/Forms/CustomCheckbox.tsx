@@ -20,7 +20,8 @@ export const CustomCheckbox: FC<Props> = (props: Props) => {
       pl='8px'
       rounded='4px'
       cursor='pointer'
-      bg={state.isChecked ? '#0f5999' : '#13212d'}
+      bg={state.isChecked ? '#0f5999' : '#fff'}
+      color='#000'
       _hover={state.isChecked ? { bg: '#87accc' } : { bg: '#828b93' }}
       {...htmlProps}
       {...getCheckboxProps()}>
