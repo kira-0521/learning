@@ -13,14 +13,14 @@ export const MainLayout: FC<Props> = memo(({ children }) => {
   const location = useLocation()
   return (
     <Box p='40px'>
-      <PankuzuList
+      {/* <PankuzuList
         pageName={
           _.find(
             homeRoutes,
             (route: RouteType) => location.pathname === route.path
           )!.name
         }
-      />
+      /> */}
       <Flex maxW='1280px' direction='column'>
         {children}
       </Flex>

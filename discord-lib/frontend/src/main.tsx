@@ -1,5 +1,6 @@
 import React from 'react'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { DefaultChakraTheme } from '@chakra-ui/react'
 import ReactDOM from 'react-dom/client'
 
 import App from './App'
@@ -16,6 +17,11 @@ const theme = extendTheme({
             boxShadow: 'none',
           },
         },
+      },
+    },
+    Drawer: {
+      sizes: {
+        '2xl': { dialog: { maxW: '800px' } },
       },
     },
   },

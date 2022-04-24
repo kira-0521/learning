@@ -19,17 +19,15 @@ export const CheckboxGroup: FC = memo(() => {
     defaultValue: [],
   })
 
-  console.log(value)
-
   return (
     <Stack fontSize='12px' fontWeight='400'>
       <Text>The selected checkboxes are: {value.sort().join(' and ')}</Text>
       <HStack>
         <CustomCheckbox {...getCheckboxProps({ value: 'ARROW_LEFT_UP' })}>
-          <SeparateImgTxt imgSrc={ARROW_LEFT_UP} text={`Arrow\nLeft`} />
+          <SeparateImgTxt imgSrc={ARROW_LEFT_UP} text={`arLeft`} />
         </CustomCheckbox>
         <CustomCheckbox {...getCheckboxProps({ value: 'ARROW_LEFT_DOWN' })}>
-          <SeparateImgTxt imgSrc={ARROW_LEFT_DOWN} text={`Arrow\nLeft`} />
+          <SeparateImgTxt imgSrc={ARROW_LEFT_DOWN} text={`arLeft`} />
         </CustomCheckbox>
       </HStack>{' '}
       <HStack>

@@ -1,51 +1,14 @@
-import { useMemo, FC, CSSProperties, ChangeEvent, ReactNode } from 'react'
+import { useMemo, FC, ChangeEvent, ReactNode } from 'react'
 import { useTable, Column, HeaderGroup, Row, Cell } from 'react-table'
 import { Box } from '@chakra-ui/react'
 import _ from 'lodash'
 
 import { PrimaryCheckbox } from '../../atoms/Forms/PrimaryCheckbox'
-
-const tableStyle: CSSProperties = {
-  width: '1500px', // 固定幅
-  tableLayout: 'fixed',
-  whiteSpace: 'nowrap',
-}
-
-const tableHeaderStyle: CSSProperties = {
-  border: '1px solid black',
-  borderLeft: 'none',
-  borderRight: 'none',
-  backgroundColor: '#707070',
-  color: '#fff',
-  padding: '0 12px',
-}
-
-const tableHeaderCellStyle = (
-  w: string | number | undefined,
-  isFixed = false,
-  left?: string | number
-) => {
-  const defaults = {
-    padding: '0 12px',
-    textAlign: 'center',
-    width: w,
-  }
-  return isFixed ? { ...defaults, position: 'sticky', left } : defaults
-}
-
-const tableBodyStyle: CSSProperties = {
-  borderBottom: 'solid 1px gray',
-  background: 'papayawhip',
-}
-
-const tableCellStyle = (isFixed = false, left?: number | string) => {
-  return isFixed
-    ? {
-        position: 'sticky',
-        left,
-      }
-    : undefined
-}
+import {
+  tableStyle,
+  tableBodyStyle,
+  tableHeaderStyle,
+} from '../../../scripts/table'
 
 type Data = {
   col1: ReactNode
@@ -165,40 +128,33 @@ export const WalletListTable: FC = () => {
           borderRadius: '30px',
         },
       }}>
-      <h2 style={{ whiteSpace: 'pre-wrap' }}>{`改行\nしてみる`}</h2>
       <table {...getTableProps({ style: tableStyle })}>
         <thead>
           {_.map(headerGroups, (headerGroup: HeaderGroup<Data>) => (
             // tr ===> TableCommonProps型の属性を展開
-            <tr
-              {...headerGroup.getHeaderGroupProps({ style: tableHeaderStyle })}>
-              {_.map(headerGroup.headers, (column: HeaderGroup<Data>) => {
-                return (
-                  // th ===> TableCommonProps型の属性を展開
-                  <th
-                    {...column.getHeaderProps()}
-                    style={
-                      column.Header === 'Column 1'
-                        ? {
-                            ...tableHeaderCellStyle(column.width, true, 0),
-                          }
-                        : column.Header === 'Column 2'
-                        ? {
-                            ...tableHeaderCellStyle(column.width, true, 100),
-                          }
-                        : column.Header === 'Column 3'
-                        ? {
-                            ...tableHeaderCellStyle(column.width, true, 300),
-                            backgroundColor: '#fec058',
-                            padding: '0 24px 0 0',
-                          }
-                        : tableHeaderCellStyle(column.width)
-                    }>
-                    {column.render('Header')}
-                  </th>
-                )
-              })}
-            </tr>
+            <>
+              <div style={{ borderTop: '1px solid #fff' }}></div>
+              <tr
+                {...headerGroup.getHeaderGroupProps({
+                  style: tableHeaderStyle,
+                })}
+                className='table-header'>
+                {_.map(headerGroup.headers, (column: HeaderGroup<Data>) => {
+                  return (
+                    // th ===> TableCommonProps型の属性を展開
+                    <th
+                      {...column.getHeaderProps({
+                        style: {
+                          width: column.width,
+                          padding: 0,
+                        },
+                      })}>
+                      {column.render('Header')}
+                    </th>
+                  )
+                })}
+              </tr>
+            </>
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
@@ -206,28 +162,20 @@ export const WalletListTable: FC = () => {
             // 表示する予定の行だけをレンダリングしてくれる
             prepareRow(row)
             return (
-              <tr {...row.getRowProps({ style: tableBodyStyle })}>
-                {_.map(row.cells, (cell: Cell<Data>) => {
-                  return (
-                    <td
-                      {...cell.getCellProps({})}
-                      style={
-                        cell.column.Header === 'Column 1'
-                          ? { ...tableCellStyle(true, 0), textAlign: 'center' }
-                          : cell.column.Header === 'Column 2'
-                          ? tableCellStyle(true, 100)
-                          : cell.column.Header === 'Column 3'
-                          ? {
-                              ...tableCellStyle(true, 300),
-                              backgroundColor: '#fec058',
-                            }
-                          : undefined
-                      }>
-                      {cell.render('Cell')}
-                    </td>
-                  )
-                })}
-              </tr>
+              <>
+                <div
+                  style={{
+                    borderBottom: '1px solid #fff',
+                    width: '1800px',
+                  }}></div>
+                <tr {...row.getRowProps({ style: tableBodyStyle })}>
+                  {_.map(row.cells, (cell: Cell<Data>) => {
+                    return (
+                      <td {...cell.getCellProps({})}>{cell.render('Cell')}</td>
+                    )
+                  })}
+                </tr>
+              </>
             )
           })}
         </tbody>

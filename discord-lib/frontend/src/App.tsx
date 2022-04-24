@@ -28,7 +28,7 @@ function App() {
             ))}
           </List>
           <Routes>
-            <Route path='/' element={<WalletList />} />
+            <Route path='/wallet_list' element={<WalletList />} />
             <Route path='wallet_detail/:id' element={<WalletDetail />}></Route>
             <Route path='wallet_alert' element={<WalletAlert />} />
             <Route path='watch_list' element={<WalletList />} />
