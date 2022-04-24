@@ -1,13 +1,14 @@
-import { FC } from 'react'
-import { Heading, Box } from '@chakra-ui/react'
-import { useLocation } from 'react-router-dom'
+import { FC, useContext } from 'react'
+import { Heading, Box, Text } from '@chakra-ui/react'
+import { MoneyUnitContext } from '../../provider/MoneyUnitProvider'
+import { ToggleRadioButtons } from '../molecules/Forms/ToggleRadioButtons'
 
 export const WalletDetail: FC = () => {
-  const location = useLocation()
-  console.log('location', location)
+  const moneyUnit = useContext(MoneyUnitContext)
   return (
     <Box>
       <Heading>WalletDetail</Heading>
+      <Text>{moneyUnit.unit}</Text>
     </Box>
   )
 }

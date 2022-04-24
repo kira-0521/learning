@@ -13,11 +13,12 @@ import { WalletDetail } from './components/pages/WalletDetail'
 import { NotFound } from './components/pages/NotFound'
 import { WalletList } from './components/pages/WalletList'
 import { WalletAlert } from './components/pages/WalletAlert'
+import { MoneyUnitProvider } from './provider/MoneyUnitProvider'
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
+    <BrowserRouter>
+      <MoneyUnitProvider>
         <MainLayout>
           <List>
             {_.map(homeRoutes, (route: RouteType) => (
@@ -27,15 +28,15 @@ function App() {
             ))}
           </List>
           <Routes>
-            <Route path='wallet_list' element={<WalletList />} />
+            <Route path='/' element={<WalletList />} />
             <Route path='wallet_detail/:id' element={<WalletDetail />}></Route>
             <Route path='wallet_alert' element={<WalletAlert />} />
             <Route path='watch_list' element={<WalletList />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </MainLayout>
-      </BrowserRouter>
-    </>
+      </MoneyUnitProvider>
+    </BrowserRouter>
   )
 }
 
