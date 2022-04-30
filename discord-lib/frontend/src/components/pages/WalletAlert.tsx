@@ -21,7 +21,6 @@ export const WalletAlert: FC = () => {
     (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key !== 'Enter') return
       goInputPage()
-      console.log('currentPage', currentPage)
     },
     [inputValue, currentPage]
   )
@@ -40,6 +39,7 @@ export const WalletAlert: FC = () => {
         />
       </Box>
       {isEmpty(cautionMessage) ? null : <Text>{cautionMessage}</Text>}
+      現在のページ: {currentPage}
     </Box>
   )
 }
