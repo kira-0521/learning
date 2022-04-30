@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { toNumber, isNumber } from 'lodash'
+import { toNumber, isNumber, isNaN } from 'lodash'
 
 type Props = {
   inputValue: string
@@ -12,10 +12,11 @@ export const usePagenation = (props: Props) => {
 
   const goInputPage = () => {
     const value = toNumber(inputValue)
-    if (!isNumber(value)) {
+    if (isNaN(value)) {
       setCautionMessage('正しく入力してください。')
     }
     setCurrentPage(value)
+    setCautionMessage('')
   }
 
   return { currentPage, cautionMessage, goInputPage }

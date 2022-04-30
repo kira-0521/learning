@@ -24,7 +24,6 @@ export const WalletAlert: FC = () => {
     },
     [inputValue, currentPage]
   )
-  console.log(currentPage)
 
   return (
     <Box>
@@ -38,7 +37,8 @@ export const WalletAlert: FC = () => {
           onEnterPress={onEnterPressPageNationInput}
         />
       </Box>
-      {isEmpty(cautionMessage) ? null : <Text>{cautionMessage}</Text>}
+      <Text>{cautionMessage}</Text>
+      {/* {isEmpty(cautionMessage) ? null : <Text>{cautionMessage}</Text>} */}
       現在のページ: {currentPage}
     </Box>
   )
