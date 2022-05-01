@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { toNumber, isNumber, isNaN } from 'lodash'
+import { toNumber, isNaN } from 'lodash'
 
 type Props = {
   inputValue: string
