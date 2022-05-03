@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState, FC } from 'react'
 
-function App() {
+import './App.css'
+import { CleanUp } from './CleanUp'
+
+const App: FC = () => {
+  const [inputValue, setInputValue] = useState('')
+  const [counter, setCounter] = useState(0)
+  const [display, setDisplay] = useState(true)
+
+  const onChangedInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <label htmlFor=''>
+        <input
+          type='text'
+          value={inputValue}
+          onChange={onChangedInputHandler}
+        />
+      </label>
+      <div>
+        <p>Counter</p>
+        <p>{counter}</p>
+        <button onClick={() => setCounter((preCounter) => preCounter + 1)}>
+          count up
+        </button>
+      </div>
+      <div>
+        <button onClick={() => setDisplay(!display)}>display CleanUp</button>
+        {display && <CleanUp />}
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
