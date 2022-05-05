@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react'
+import React, { useState, ChangeEvent, useCallback } from 'react'
 import {
   Avatar,
   Button,
@@ -24,16 +24,21 @@ export const Auth = () => {
   const classes = useStyles()
   const { isOpen, showMessage, onClose, onOpen, setShowMessage } =
     useDiscloser()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLogin, setIsLogin] = useState(true)
 
-  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) =>
-    setEmail(e.target.value)
-  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) =>
-    setPassword(e.target.value)
+  const onChangeEmail = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value),
+    [email, setEmail]
+  )
+  const onChangePassword = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value),
+    [password, setPassword]
+  )
 
-  const onClickEmailLogin = async () => {
+  const onClickEmailLogin = useCallback(async () => {
     try {
       await signInWithEmail(email, password)
     } catch (err: unknown) {
@@ -42,9 +47,9 @@ export const Auth = () => {
         onOpen()
       }
     }
-  }
+  }, [email, password, setEmail, setPassword])
 
-  const onClickRegisterUser = async () => {
+  const onClickRegisterUser = useCallback(async () => {
     try {
       await signUpWithEmail(email, password)
     } catch (err: unknown) {
@@ -53,13 +58,16 @@ export const Auth = () => {
         onOpen()
       }
     }
-  }
+  }, [email, password, setEmail, setPassword])
 
-  const onClickGoogleLogin = async () => {
+  const onClickGoogleLogin = useCallback(async () => {
     await signInGoogle()
-  }
+  }, [])
 
-  const onClickToggleIsLogin = () => setIsLogin(!isLogin)
+  const onClickToggleIsLogin = useCallback(
+    () => setIsLogin(!isLogin),
+    [isLogin, setIsLogin]
+  )
 
   return (
     <Grid container component='main' className={classes.root}>
