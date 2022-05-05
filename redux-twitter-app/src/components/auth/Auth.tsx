@@ -10,15 +10,15 @@ import {
 } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 
-import { useStyles } from './style'
 import {
   signInGoogle,
   signInWithEmail,
   signUpWithEmail,
 } from '../../lib/firebase/auth'
+import { useStyles } from './style'
+import styles from './auth.module.css'
 import { AlertToast } from '../parts/AlertToast'
 import { useDiscloser } from '../../lib/hooks/useDiscloser'
-import styles from './auth.module.css'
 
 export const Auth = () => {
   const classes = useStyles()
