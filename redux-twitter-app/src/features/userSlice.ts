@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RootState } from '../app/store'
-import { User } from '../@types/user'
+import { User, UserContent } from '../@types/user'
 
 export const userSlice = createSlice({
   name: 'user',
@@ -23,9 +23,9 @@ export const userSlice = createSlice({
         displayName: '',
       }
     },
-    updateUserProfile: (state, action: PayloadAction<User>) => {
+    updateUserProfile: (state, action: PayloadAction<UserContent>) => {
       state.userState.displayName = action.payload.displayName
-      state.userState.photoUrl = action.payload.photoUrl
+      state.userState.photoUrl = action.payload.photoURL
     },
   },
 })

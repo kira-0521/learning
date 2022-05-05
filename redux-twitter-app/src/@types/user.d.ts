@@ -3,3 +3,8 @@ export interface User {
   photoUrl: string
   displayName: string
 }
+
+export interface UserContent {
+  photoURL: string
+  displayName: string
+}
