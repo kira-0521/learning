@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import styles from './App.module.css'
 import { selectUser, login, logout } from './features/userSlice'
-import { auth } from './firebase'
+import { auth } from './firebaseInit'
 import { Feed } from './components/Feed'
 import { Auth } from './components/auth/Auth'
 
