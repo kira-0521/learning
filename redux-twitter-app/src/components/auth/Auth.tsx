@@ -19,9 +19,13 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 
 import styles from './auth.module.css'
 import { useStyles } from './style'
+import { signInGoogle } from '../../lib/firebase/auth'
 
 export const Auth = () => {
   const classes = useStyles()
+  const onClickGoogleLogin = async () => {
+    await signInGoogle()
+  }
 
   return (
     <Grid container component='main' className={classes.root}>
@@ -65,6 +69,14 @@ export const Auth = () => {
               color='primary'
               className={classes.submit}>
               Sign In
+            </Button>
+            <Button
+              onClick={onClickGoogleLogin}
+              fullWidth
+              variant='contained'
+              color='primary'
+              className={classes.submit}>
+              Sign In With Google
             </Button>
           </form>
         </div>
