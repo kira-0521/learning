@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { isNil, isString } from 'lodash'
+import { isNil, isString, isEmpty } from 'lodash'
 import {
   Avatar,
   Button,
@@ -22,6 +22,7 @@ import {
 } from '../../lib/firebase/auth'
 import { getImageUrl } from '../../lib/firebase/util'
 import { getUniqueChar } from '../../lib/viewLogics/util'
+import { validateEmailAndPassword } from '../../lib/viewLogics/validate'
 import { updateUserProfile } from '../../features/userSlice'
 import { useStyles } from './style'
 import styles from './auth.module.css'
@@ -197,6 +198,12 @@ export const Auth = () => {
               variant='contained'
               color='primary'
               onClick={isLogin ? onClickEmailLogin : onClickRegisterUser}
+              disabled={
+                isLogin
+                  ? !validateEmailAndPassword(email, password)
+                  : !validateEmailAndPassword(email, password) ||
+                    isEmpty(username)
+              }
               className={classes.submit}>
               {isLogin
                 ? 'Sign In with Email and Password'
