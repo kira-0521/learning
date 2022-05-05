@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect } from 'react'
 
 import { logout } from '../lib/firebase/auth'
 import { useDiscloser } from '../lib/hooks/useDiscloser'

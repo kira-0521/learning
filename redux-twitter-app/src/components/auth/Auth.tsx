@@ -101,7 +101,6 @@ export const Auth = () => {
               onChange={onChangePassword}
             />
             <Button
-              type='submit'
               fullWidth
               variant='contained'
               color='primary'
@@ -115,7 +114,7 @@ export const Auth = () => {
               <Grid item xs>
                 <span className={styles.login_reset}>Forgot password?</span>
               </Grid>
-              <Grid item xs>
+              <Grid item>
                 <span
                   onClick={onClickToggleIsLogin}
                   className={styles.login_toggleMode}>
