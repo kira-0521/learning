@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, ChangeEvent } from 'react'
 import {
   Avatar,
   Button,
@@ -12,15 +12,22 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 
 import { useStyles } from './style'
 import { signInGoogle } from '../../lib/firebase/auth'
+import styles from './auth.module.css'
 
 export const Auth = () => {
   const classes = useStyles()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLogin, setIsLogin] = useState(true)
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) =>
+    setEmail(e.target.value)
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) =>
+    setPassword(e.target.value)
   const onClickGoogleLogin = async () => {
     await signInGoogle()
   }
+
+  const onClickToggleIsLogin = () => setIsLogin(!isLogin)
 
   return (
     <Grid container component='main' className={classes.root}>
@@ -33,6 +40,7 @@ export const Auth = () => {
           </Avatar>
           <Typography component='h1' variant='h5'>
             Sign in
+            {isLogin ? 'Sign in' : 'Register'}
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -71,6 +79,18 @@ export const Auth = () => {
                 ? 'Sign In with Email and Password'
                 : 'Register with Email and Password'}
             </Button>
+            <Grid container>
+              <Grid item xs>
+                <span className={styles.login_reset}>Forgot password?</span>
+              </Grid>
+              <Grid item xs>
+                <span
+                  onClick={onClickToggleIsLogin}
+                  className={styles.login_toggleMode}>
+                  {isLogin ? 'Create new account?' : 'Back to Login'}
+                </span>
+              </Grid>
+            </Grid>
             <Button
               onClick={onClickGoogleLogin}
               fullWidth
