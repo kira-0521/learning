@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import { isNil, isString } from 'lodash'
 
 import {
   signInGoogle,
@@ -27,6 +28,7 @@ export const Auth = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [avatarImage, setAvatarImage] = useState<File | null>(null)
   const [isLogin, setIsLogin] = useState(true)
 
   const onChangeEmail = useCallback(
@@ -36,6 +38,17 @@ export const Auth = () => {
   const onChangePassword = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value),
     [password, setPassword]
+  )
+
+  const onChangeImageHandler = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (!isNil(e.target.files)) {
+        setAvatarImage(e.target.files[0])
+        // 同じファイルが選択された時にイベントが発火させるよう
+        e.target.value = ''
+      }
+    },
+    [avatarImage, setAvatarImage]
   )
 
   const onClickEmailLogin = useCallback(async () => {
