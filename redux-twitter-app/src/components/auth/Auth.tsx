@@ -11,7 +11,11 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 
 import { useStyles } from './style'
-import { signInGoogle } from '../../lib/firebase/auth'
+import {
+  signInGoogle,
+  signInWithEmail,
+  signUpWithEmail,
+} from '../../lib/firebase/auth'
 import { AlertToast } from '../parts/AlertToast'
 import { useDiscloser } from '../../lib/hooks/useDiscloser'
 import styles from './auth.module.css'
@@ -23,10 +27,34 @@ export const Auth = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLogin, setIsLogin] = useState(true)
+
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value)
   const onChangePassword = (e: ChangeEvent<HTMLInputElement>) =>
     setPassword(e.target.value)
+
+  const onClickEmailLogin = async () => {
+    try {
+      await signInWithEmail(email, password)
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setShowMessage(err.message)
+        onOpen()
+      }
+    }
+  }
+
+  const onClickRegisterUser = async () => {
+    try {
+      await signUpWithEmail(email, password)
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setShowMessage(err.message)
+        onOpen()
+      }
+    }
+  }
+
   const onClickGoogleLogin = async () => {
     await signInGoogle()
   }
@@ -43,7 +71,6 @@ export const Auth = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component='h1' variant='h5'>
-            Sign in
             {isLogin ? 'Sign in' : 'Register'}
           </Typography>
           <form className={classes.form} noValidate>
@@ -78,6 +105,7 @@ export const Auth = () => {
               fullWidth
               variant='contained'
               color='primary'
+              onClick={isLogin ? onClickEmailLogin : onClickRegisterUser}
               className={classes.submit}>
               {isLogin
                 ? 'Sign In with Email and Password'
@@ -106,6 +134,7 @@ export const Auth = () => {
           </form>
         </div>
       </Grid>
+      <AlertToast isOpen={isOpen} onClose={onClose} message={showMessage} />
     </Grid>
   )
 }
