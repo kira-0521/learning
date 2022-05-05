@@ -5,3 +5,7 @@ export const signInGoogle = async () => {
     .signInWithPopup(firebaseAuthProvider)
     .catch((err: any) => err.message)
 }
+
+export const logout = async () => {
+  await auth.signOut()
+}
