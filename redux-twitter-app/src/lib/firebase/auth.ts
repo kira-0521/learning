@@ -18,13 +18,13 @@ export const signInWithEmail = async (email: string, password: string) => {
     })
 }
 export const signUpWithEmail = async (email: string, password: string) => {
-  await auth
-    .createUserWithEmailAndPassword(email, password)
-    .catch((err: unknown) => {
-      if (err instanceof Error) {
-        return err.message
-      }
-    })
+  try {
+    return await auth.createUserWithEmailAndPassword(email, password)
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return err.message
+    }
+  }
 }
 
 export const logout = async () => {
