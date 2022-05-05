@@ -15,6 +15,9 @@ import { signInGoogle } from '../../lib/firebase/auth'
 
 export const Auth = () => {
   const classes = useStyles()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isLogin, setIsLogin] = useState(true)
   const onClickGoogleLogin = async () => {
     await signInGoogle()
   }
@@ -42,6 +45,8 @@ export const Auth = () => {
               name='email'
               autoComplete='email'
               autoFocus
+              value={email}
+              onChange={onChangeEmail}
             />
             <TextField
               variant='outlined'
@@ -53,6 +58,8 @@ export const Auth = () => {
               type='password'
               id='password'
               autoComplete='current-password'
+              value={password}
+              onChange={onChangePassword}
             />
             <Button
               type='submit'
@@ -60,7 +67,9 @@ export const Auth = () => {
               variant='contained'
               color='primary'
               className={classes.submit}>
-              Sign In
+              {isLogin
+                ? 'Sign In with Email and Password'
+                : 'Register with Email and Password'}
             </Button>
             <Button
               onClick={onClickGoogleLogin}
