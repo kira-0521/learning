@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Avatar,
   Button,
@@ -7,17 +7,9 @@ import {
   Paper,
   Grid,
   Typography,
-  Modal,
-  IconButton,
-  Box,
 } from '@material-ui/core'
-import SendIcon from '@material-ui/icons/Send'
-import CameraIcon from '@material-ui/icons/Camera'
-import EmailIcon from '@material-ui/icons/Email'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 
-import styles from './auth.module.css'
 import { useStyles } from './style'
 import { signInGoogle } from '../../lib/firebase/auth'
 
