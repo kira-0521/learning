@@ -1,4 +1,6 @@
 import React, { useState, ChangeEvent, useCallback } from 'react'
+import { useDispatch } from 'react-redux'
+import { isNil, isString } from 'lodash'
 import {
   Avatar,
   Button,
@@ -7,15 +9,20 @@ import {
   Paper,
   Grid,
   Typography,
+  IconButton,
+  Box,
 } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import { isNil, isString } from 'lodash'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 
 import {
   signInGoogle,
   signInWithEmail,
   signUpWithEmail,
 } from '../../lib/firebase/auth'
+import { getImageUrl } from '../../lib/firebase/util'
+import { getUniqueChar } from '../../lib/viewLogics/util'
+import { updateUserProfile } from '../../features/userSlice'
 import { useStyles } from './style'
 import styles from './auth.module.css'
 import { AlertToast } from '../parts/AlertToast'
@@ -23,11 +30,13 @@ import { useDiscloser } from '../../lib/hooks/useDiscloser'
 
 export const Auth = () => {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const { isOpen, showMessage, onClose, onOpen, setShowMessage } =
     useDiscloser()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
   const [avatarImage, setAvatarImage] = useState<File | null>(null)
   const [isLogin, setIsLogin] = useState(true)
 
@@ -38,6 +47,10 @@ export const Auth = () => {
   const onChangePassword = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value),
     [password, setPassword]
+  )
+  const onChangeUsername = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value),
+    [username, setUsername]
   )
 
   const onChangeImageHandler = useCallback(
@@ -64,7 +77,29 @@ export const Auth = () => {
 
   const onClickRegisterUser = useCallback(async () => {
     try {
-      await signUpWithEmail(email, password)
+      const authUser = await signUpWithEmail(email, password)
+
+      let url = ''
+      if (!isNil(avatarImage)) {
+        const randomChar = getUniqueChar()
+        const fileName = `${randomChar}_${avatarImage.name}`
+        url = await getImageUrl('avatars', fileName, avatarImage)
+      }
+
+      if (!isString(authUser) && !isNil(authUser) && !isNil(authUser.user)) {
+        await authUser.user
+          .updateProfile({
+            displayName: username,
+            photoURL: url,
+          })
+          .catch((err) => console.log(JSON.stringify(err)))
+        dispatch(
+          updateUserProfile({
+            displayName: username,
+            photoURL: url,
+          })
+        )
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         setShowMessage(err.message)
@@ -95,6 +130,42 @@ export const Auth = () => {
             {isLogin ? 'Sign in' : 'Register'}
           </Typography>
           <form className={classes.form} noValidate>
+            {!isLogin && (
+              <>
+                <TextField
+                  variant='outlined'
+                  margin='normal'
+                  required
+                  fullWidth
+                  id='username'
+                  label='Username'
+                  name='username'
+                  autoComplete='username'
+                  autoFocus
+                  value={username}
+                  onChange={onChangeUsername}
+                />
+                <Box textAlign='center'>
+                  <IconButton>
+                    <label>
+                      <AccountCircleIcon
+                        fontSize='large'
+                        className={
+                          avatarImage
+                            ? styles.login_addIconLoaded
+                            : styles.login_addIcon
+                        }
+                      />
+                      <input
+                        className={styles.login_hiddenIcon}
+                        type='file'
+                        onChange={onChangeImageHandler}
+                      />
+                    </label>
+                  </IconButton>
+                </Box>
+              </>
+            )}
             <TextField
               variant='outlined'
               margin='normal'
