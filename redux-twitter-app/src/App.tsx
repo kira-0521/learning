@@ -6,7 +6,7 @@ import styles from './App.module.css'
 import { selectUser, login, logout } from './features/userSlice'
 import { auth } from './firebase'
 import { Feed } from './components/Feed'
-import { Auth } from './components/Auth'
+import { Auth } from './components/auth/Auth'
 
 function App() {
   const appUser = useSelector(selectUser)
@@ -27,7 +27,7 @@ function App() {
       )
     })
     return () => unSubscribe()
-  })
+  }, [])
 
   return (
     <div>
