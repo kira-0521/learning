@@ -12,10 +12,14 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 
 import { useStyles } from './style'
 import { signInGoogle } from '../../lib/firebase/auth'
+import { AlertToast } from '../parts/AlertToast'
+import { useDiscloser } from '../../lib/hooks/useDiscloser'
 import styles from './auth.module.css'
 
 export const Auth = () => {
   const classes = useStyles()
+  const { isOpen, showMessage, onClose, onOpen, setShowMessage } =
+    useDiscloser()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLogin, setIsLogin] = useState(true)

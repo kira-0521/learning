@@ -5,8 +5,8 @@ import { useDiscloser } from '../lib/hooks/useDiscloser'
 import { AlertToast } from './parts/AlertToast'
 
 export const Feed: FC = () => {
-  const { isOpen, onOpen, onClose } = useDiscloser()
-  const [showMessage, setShowMessage] = useState('')
+  const { isOpen, showMessage, setShowMessage, onOpen, onClose } =
+    useDiscloser()
 
   const onClickLogout = async () => {
     await logout()
