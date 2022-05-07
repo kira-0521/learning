@@ -205,9 +205,7 @@ export const Auth = () => {
                     isEmpty(username)
               }
               className={classes.submit}>
-              {isLogin
-                ? 'Sign In with Email and Password'
-                : 'Register with Email and Password'}
+              {isLogin ? 'Sign In' : 'Register'}
             </Button>
             <Grid container>
               <Grid item xs>
