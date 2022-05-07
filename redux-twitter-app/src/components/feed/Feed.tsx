@@ -1,8 +1,9 @@
 import React, { FC, useEffect } from 'react'
 
-import { logout } from '../lib/firebase/auth'
-import { useDiscloser } from '../lib/hooks/useDiscloser'
-import { AlertToast } from './parts/AlertToast'
+import { logout } from '../../lib/firebase/auth'
+import { useDiscloser } from '../../lib/hooks/useDiscloser'
+import { AlertToast } from '../parts/AlertToast'
+import { TweetInput } from '../forms/TweetInput'
 
 export const Feed: FC = () => {
   const { isOpen, showMessage, setShowMessage, onOpen, onClose } =
@@ -24,7 +25,7 @@ export const Feed: FC = () => {
 
   return (
     <div>
-      Feed
+      <TweetInput />
       <button onClick={onClickLogout}>ログアウト</button>
       <AlertToast isOpen={isOpen} onClose={onClose} message={showMessage} />
     </div>

@@ -6,7 +6,7 @@ import firebase from 'firebase/app'
 import styles from './App.module.css'
 import { selectUser, login, logout } from './features/userSlice'
 import { auth } from './firebaseInit'
-import { Feed } from './components/Feed'
+import { Feed } from './components/feed/Feed'
 import { Auth } from './components/auth/Auth'
 
 function App() {
