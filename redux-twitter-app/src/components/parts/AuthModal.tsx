@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent } from 'react'
+import React, { FC, ChangeEvent, memo } from 'react'
 import { TextField, IconButton, Modal } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send'
 
@@ -14,7 +14,8 @@ type Props = {
   sendResetEmail: () => Promise<void>
 }
 
-export const AuthModal: FC<Props> = (props) => {
+// eslint-disable-next-line react/display-name
+export const AuthModal: FC<Props> = memo((props: Props) => {
   const {
     openModal,
     closeModal,
@@ -45,4 +46,4 @@ export const AuthModal: FC<Props> = (props) => {
       </div>
     </Modal>
   )
-}
+})

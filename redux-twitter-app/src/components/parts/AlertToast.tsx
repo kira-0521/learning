@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 import { Snackbar, Button, IconButton } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 
@@ -8,31 +8,34 @@ type AlertToastProps = {
   message: string
 }
 
-export const AlertToast: FC<AlertToastProps> = (props: AlertToastProps) => {
-  const { isOpen, onClose, message } = props
+// eslint-disable-next-line react/display-name
+export const AlertToast: FC<AlertToastProps> = memo(
+  (props: AlertToastProps) => {
+    const { isOpen, onClose, message } = props
 
-  const action = (
-    <>
-      <Button color='secondary' size='small' onClick={onClose}>
-        CLOSE
-      </Button>
-      <IconButton
-        size='small'
-        aria-label='close'
-        color='inherit'
-        onClick={onClose}>
-        <CloseIcon fontSize='small' />
-      </IconButton>
-    </>
-  )
+    const action = (
+      <>
+        <Button color='secondary' size='small' onClick={onClose}>
+          CLOSE
+        </Button>
+        <IconButton
+          size='small'
+          aria-label='close'
+          color='inherit'
+          onClick={onClose}>
+          <CloseIcon fontSize='small' />
+        </IconButton>
+      </>
+    )
 
-  return (
-    <Snackbar
-      open={isOpen}
-      autoHideDuration={6000}
-      onClose={onClose}
-      message={message}
-      action={action}
-    />
-  )
-}
+    return (
+      <Snackbar
+        open={isOpen}
+        autoHideDuration={6000}
+        onClose={onClose}
+        message={message}
+        action={action}
+      />
+    )
+  }
+)
