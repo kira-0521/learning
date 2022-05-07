@@ -27,6 +27,7 @@ import { getUniqueChar } from '../../lib/viewLogics/util'
 import { useDiscloser } from '../../lib/hooks/useDiscloser'
 import { useResetPassword } from '../../lib/hooks/useResetPassword'
 import { validateEmailAndPassword } from '../../lib/viewLogics/validate'
+import { onChangeImageHandler } from '../../lib/viewLogics/form'
 import { AuthModal } from '../parts/AuthModal'
 import { AlertToast } from '../parts/AlertToast'
 import { updateUserProfile } from '../../features/userSlice'
@@ -65,17 +66,6 @@ export const Auth = () => {
   const onChangeUsername = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value),
     [username, setUsername]
-  )
-
-  const onChangeImageHandler = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      if (!isNil(e.target.files)) {
-        setAvatarImage(e.target.files[0])
-        // 同じファイルが選択された時にイベントが発火させるよう
-        e.target.value = ''
-      }
-    },
-    [avatarImage, setAvatarImage]
   )
 
   const onClickEmailLogin = useCallback(async () => {
@@ -173,7 +163,9 @@ export const Auth = () => {
                       <input
                         className={styles.login_hiddenIcon}
                         type='file'
-                        onChange={onChangeImageHandler}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                          onChangeImageHandler(e, setAvatarImage)
+                        }
                       />
                     </label>
                   </IconButton>
