@@ -1,7 +1,9 @@
+import firebase from 'firebase/app'
+
 export interface TweetPost {
   avatar: string
   image: string
   text: string
-  timestamp: string
+  timestamp: firebase.firestore.FieldValue
   username: string
 }
