@@ -22,7 +22,7 @@ import {
   signInWithEmail,
   signUpWithEmail,
 } from '../../lib/firebase/auth'
-import { getImageUrl } from '../../lib/firebase/util'
+import { getImageUrl } from '../../lib/firebase/storage'
 import { getUniqueChar } from '../../lib/viewLogics/util'
 import { useDiscloser } from '../../lib/hooks/useDiscloser'
 import { useResetPassword } from '../../lib/hooks/useResetPassword'
