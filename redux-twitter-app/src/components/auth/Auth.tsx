@@ -15,6 +15,8 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 
+import { useStyles } from './style'
+import styles from './auth.module.css'
 import {
   signInGoogle,
   signInWithEmail,
@@ -22,12 +24,12 @@ import {
 } from '../../lib/firebase/auth'
 import { getImageUrl } from '../../lib/firebase/util'
 import { getUniqueChar } from '../../lib/viewLogics/util'
-import { validateEmailAndPassword } from '../../lib/viewLogics/validate'
-import { updateUserProfile } from '../../features/userSlice'
-import { useStyles } from './style'
-import styles from './auth.module.css'
-import { AlertToast } from '../parts/AlertToast'
 import { useDiscloser } from '../../lib/hooks/useDiscloser'
+import { useResetPassword } from '../../lib/hooks/useResetPassword'
+import { validateEmailAndPassword } from '../../lib/viewLogics/validate'
+import { AuthModal } from '../parts/AuthModal'
+import { AlertToast } from '../parts/AlertToast'
+import { updateUserProfile } from '../../features/userSlice'
 
 export const Auth = () => {
   const classes = useStyles()
