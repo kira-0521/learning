@@ -9,15 +9,10 @@ import { selectUser } from '../../features/userSlice'
 // eslint-disable-next-line react/display-name
 export const TweetInput: FC = memo(() => {
   const user = useSelector(selectUser)
+
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null)
-
-  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
+  const [tweetText, setTweetText] = useState('')
+  const [tweetImage, setTweetImage] = useState<File | null>(null)
 
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
@@ -28,19 +23,20 @@ export const TweetInput: FC = memo(() => {
         aria-describedby={id}
         className={styles.tweet_avatar}
         src={user.photoUrl}
-        onClick={handleClick}
+        onClick={(e: MouseEvent<HTMLDivElement>) => {
+          setAnchorEl(e.currentTarget)
+        }}
       />
       <Popover
         id={id}
         open={open}
         anchorEl={anchorEl}
-        onClose={handleClose}
-        p={6}
+        onClose={() => setAnchorEl(null)}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        <Box padding='12px'>
+        <Box>
           <Typography>ログアウトしますか？</Typography>
           <Button variant='contained' color='primary' onClick={logout}>
             Logout
