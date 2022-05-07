@@ -4,6 +4,15 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
+  modal: {
+    outline: 'none',
+    position: 'absolute',
+    width: 400,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(10),
+  },
   image: {
     backgroundImage: 'url(https://source.unsplash.com/random)',
     backgroundRepeat: 'no-repeat',
