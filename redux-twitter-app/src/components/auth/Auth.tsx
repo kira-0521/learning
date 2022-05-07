@@ -36,6 +36,17 @@ export const Auth = () => {
   const dispatch = useDispatch()
   const { isOpen, showMessage, onClose, onOpen, setShowMessage } =
     useDiscloser()
+  const {
+    isModal,
+    resetEmail,
+    resetPasswordShowMessage,
+    onCloseModal,
+    onOpenModal,
+    onChangeResetEmail,
+    fetchResetPassword,
+  } = useResetPassword()
+
+  !isEmpty(resetPasswordShowMessage) && setShowMessage(resetPasswordShowMessage)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -211,7 +222,9 @@ export const Auth = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <span className={styles.login_reset}>Forgot password?</span>
+                <span className={styles.login_reset} onClick={onOpenModal}>
+                  Forgot password?
+                </span>
               </Grid>
               <Grid item>
                 <span
@@ -233,6 +246,13 @@ export const Auth = () => {
         </div>
       </Grid>
       <AlertToast isOpen={isOpen} onClose={onClose} message={showMessage} />
+      <AuthModal
+        openModal={isModal}
+        resetEmail={resetEmail}
+        closeModal={onCloseModal}
+        sendResetEmail={fetchResetPassword}
+        onChangeResetEmail={onChangeResetEmail}
+      />
     </Grid>
   )
 }
