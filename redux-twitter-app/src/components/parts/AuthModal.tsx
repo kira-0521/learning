@@ -11,7 +11,7 @@ type Props = {
   closeModal: () => void
   resetEmail: string
   onChangeResetEmail: (e: ChangeEvent<HTMLInputElement>) => void
-  sendResetEmail: () => void
+  sendResetEmail: () => Promise<void>
 }
 
 export const AuthModal: FC<Props> = (props) => {
