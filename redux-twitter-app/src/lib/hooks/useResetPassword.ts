@@ -5,7 +5,6 @@ import { sendResetEmail } from '../firebase/auth'
 export const useResetPassword = () => {
   const [isModal, setIsModal] = useState(false)
   const [resetEmail, setResetEmail] = useState('')
-  const [resetPasswordShowMessage, setResetPasswordShowMessage] = useState('')
 
   const onOpenModal = useCallback(() => setIsModal(true), [isModal, setIsModal])
   const onCloseModal = useCallback(
@@ -26,7 +25,7 @@ export const useResetPassword = () => {
     } catch (err: unknown) {
       setResetEmail('')
       if (err instanceof Error) {
-        setResetPasswordShowMessage(err.message)
+        // setResetPasswordShowMessage(err.message)
       }
     }
   }
@@ -34,7 +33,6 @@ export const useResetPassword = () => {
   return {
     isModal,
     resetEmail,
-    resetPasswordShowMessage,
     onCloseModal,
     onOpenModal,
     onChangeResetEmail,
