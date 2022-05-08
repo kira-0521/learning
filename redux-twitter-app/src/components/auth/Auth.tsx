@@ -40,28 +40,40 @@ export const Auth = () => {
   const { fetchResetPassword } = useResetPassword()
   const { onFloatAlert, showMessage, type } = useMessage()
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [loginState, setLoginState] = useState({
+    email: '',
+    password: '',
+  })
   const [username, setUsername] = useState('')
   const [avatarImage, setAvatarImage] = useState<File | null>(null)
   const [isLogin, setIsLogin] = useState(true)
   const [isModal, setIsModal] = useState(false)
   const [resetEmail, setResetEmail] = useState('')
 
+  const loginStateChangeHandler = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setLoginState({ ...loginState, [e.target.name]: e.target.value })
+    },
+    [loginState, setLoginState]
+  )
+
   const onClickEmailLogin = useCallback(async () => {
     try {
-      await signInWithEmail(email, password)
+      await signInWithEmail(loginState.email, loginState.password)
     } catch (err: unknown) {
       if (err instanceof Error) {
         onFloatAlert({ message: err.message, type: 'error' })
         onOpen()
       }
     }
-  }, [email, password, setEmail, setPassword])
+  }, [loginState.email, loginState.password, loginStateChangeHandler])
 
   const onClickRegisterUser = useCallback(async () => {
     try {
-      const authUser = await signUpWithEmail(email, password)
+      const authUser = await signUpWithEmail(
+        loginState.email,
+        loginState.password
+      )
 
       let url = ''
       if (!isNil(avatarImage)) {
@@ -90,7 +102,7 @@ export const Auth = () => {
         onOpen()
       }
     }
-  }, [email, password, setEmail, setPassword])
+  }, [loginState.email, loginState.password, loginStateChangeHandler])
 
   const onClickGoogleLogin = useCallback(async () => {
     await signInGoogle()
@@ -166,11 +178,8 @@ export const Auth = () => {
               name='email'
               autoComplete='email'
               autoFocus
-              value={email}
-              onChange={useCallback(
-                (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value),
-                [email]
-              )}
+              value={loginState.email}
+              onChange={loginStateChangeHandler}
             />
             <TextField
               variant='outlined'
@@ -182,12 +191,8 @@ export const Auth = () => {
               type='password'
               id='password'
               autoComplete='current-password'
-              value={password}
-              onChange={useCallback(
-                (e: ChangeEvent<HTMLInputElement>) =>
-                  setPassword(e.target.value),
-                [password]
-              )}
+              value={loginState.password}
+              onChange={loginStateChangeHandler}
             />
             <Button
               fullWidth
@@ -196,9 +201,14 @@ export const Auth = () => {
               onClick={isLogin ? onClickEmailLogin : onClickRegisterUser}
               disabled={
                 isLogin
-                  ? !validateEmailAndPassword(email, password)
-                  : !validateEmailAndPassword(email, password) ||
-                    isEmpty(username)
+                  ? !validateEmailAndPassword(
+                      loginState.email,
+                      loginState.password
+                    )
+                  : !validateEmailAndPassword(
+                      loginState.email,
+                      loginState.password
+                    ) || isEmpty(username)
               }
               className={classes.submit}>
               {isLogin ? 'Sign In' : 'Register'}
