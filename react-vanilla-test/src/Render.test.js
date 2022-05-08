@@ -15,5 +15,6 @@ describe('Rendering', () => {
     expect(screen.getAllByRole('button')[1]).toBeTruthy()
     expect(screen.getByText('Udemy')).toBeTruthy()
     expect(screen.queryByText('Udemyeeeeee')).toBeNull()
+    expect(screen.getByTestId('data-test')).toBeTruthy()
   })
 })
