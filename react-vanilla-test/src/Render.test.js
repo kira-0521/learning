@@ -11,5 +11,7 @@ describe('Rendering', () => {
     // 存在チェック
     expect(screen.getByRole('heading')).toBeTruthy()
     expect(screen.getByRole('textbox')).toBeTruthy()
+    expect(screen.getAllByRole('button')[0]).toBeTruthy()
+    expect(screen.getAllByRole('button')[1]).toBeTruthy()
   })
 })
