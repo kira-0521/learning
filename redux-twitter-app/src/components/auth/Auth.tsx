@@ -24,7 +24,6 @@ import {
 } from '../../lib/firebase/auth'
 import { getImageUrl } from '../../lib/firebase/storage'
 import { getUniqueChar } from '../../lib/viewLogics/util'
-import { useDiscloser } from '../../lib/hooks/useDiscloser'
 import { useResetPassword } from '../../lib/hooks/useResetPassword'
 import { useMessage } from '../../lib/hooks/useMessage'
 import { validateEmailAndPassword } from '../../lib/viewLogics/validate'
@@ -36,9 +35,9 @@ import { updateUserProfile } from '../../features/userSlice'
 export const Auth = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const { isOpen, onClose, onOpen } = useDiscloser()
   const { fetchResetPassword } = useResetPassword()
-  const { onFloatAlert, showMessage, type } = useMessage()
+  const { onFloatAlert, showMessage, type, isToast, onCloseToast } =
+    useMessage()
 
   const [loginState, setLoginState] = useState({
     email: '',
@@ -67,7 +66,6 @@ export const Auth = () => {
     } catch (err: unknown) {
       if (err instanceof Error) {
         onFloatAlert({ message: err.message, type: 'error' })
-        onOpen()
       }
     }
   }, [loginState.email, loginState.password, loginStateChangedHandler])
@@ -103,7 +101,6 @@ export const Auth = () => {
     } catch (err: unknown) {
       if (err instanceof Error) {
         onFloatAlert({ message: err.message, type: 'error' })
-        onOpen()
       }
     }
   }, [loginState.email, loginState.password, loginStateChangedHandler])
@@ -118,131 +115,133 @@ export const Auth = () => {
   )
 
   return (
-    <Grid container component='main' className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component='h1' variant='h5'>
-            {isLogin ? 'Sign in' : 'Register'}
-          </Typography>
-          <form className={classes.form} noValidate>
-            {!isLogin && (
-              <>
-                <TextField
-                  variant='outlined'
-                  margin='normal'
-                  required
-                  fullWidth
-                  id='username'
-                  label='Username'
-                  name='username'
-                  autoComplete='username'
-                  autoFocus
-                  value={username}
-                  onChange={onChangeUsername}
-                />
-                <Box textAlign='center'>
-                  <IconButton>
-                    <label>
-                      <AccountCircleIcon
-                        fontSize='large'
-                        className={
-                          avatarImage
-                            ? styles.login_addIconLoaded
-                            : styles.login_addIcon
-                        }
-                      />
-                      <input
-                        className={styles.login_hiddenIcon}
-                        type='file'
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                          onChangeImageHandler(e, setAvatarImage)
-                        }
-                      />
-                    </label>
-                  </IconButton>
-                </Box>
-              </>
-            )}
-            <TextField
-              variant='outlined'
-              margin='normal'
-              required
-              fullWidth
-              id='email'
-              label='Email Address'
-              name='email'
-              autoComplete='email'
-              autoFocus
-              value={loginState.email}
-              onChange={loginStateChangedHandler}
-            />
-            <TextField
-              variant='outlined'
-              margin='normal'
-              required
-              fullWidth
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
-              autoComplete='current-password'
-              value={loginState.password}
-              onChange={loginStateChangedHandler}
-            />
-            <Button
-              fullWidth
-              variant='contained'
-              color='primary'
-              onClick={isLogin ? onClickEmailLogin : onClickRegisterUser}
-              disabled={
-                isLogin
-                  ? !validateEmailAndPassword(
-                      loginState.email,
-                      loginState.password
-                    )
-                  : !validateEmailAndPassword(
-                      loginState.email,
-                      loginState.password
-                    ) || isEmpty(username)
-              }
-              className={classes.submit}>
-              {isLogin ? 'Sign In' : 'Register'}
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <span
-                  className={styles.login_reset}
-                  onClick={useCallback(() => setIsModal(true), [isModal])}>
-                  Forgot password?
-                </span>
+    <>
+      <Grid container component='main' className={classes.root}>
+        <CssBaseline />
+        <Grid item xs={false} sm={4} md={7} className={classes.image} />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component='h1' variant='h5'>
+              {isLogin ? 'Sign in' : 'Register'}
+            </Typography>
+            <form className={classes.form} noValidate>
+              {!isLogin && (
+                <>
+                  <TextField
+                    variant='outlined'
+                    margin='normal'
+                    required
+                    fullWidth
+                    id='username'
+                    label='Username'
+                    name='username'
+                    autoComplete='username'
+                    autoFocus
+                    value={username}
+                    onChange={onChangeUsername}
+                  />
+                  <Box textAlign='center'>
+                    <IconButton>
+                      <label>
+                        <AccountCircleIcon
+                          fontSize='large'
+                          className={
+                            avatarImage
+                              ? styles.login_addIconLoaded
+                              : styles.login_addIcon
+                          }
+                        />
+                        <input
+                          className={styles.login_hiddenIcon}
+                          type='file'
+                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                            onChangeImageHandler(e, setAvatarImage)
+                          }
+                        />
+                      </label>
+                    </IconButton>
+                  </Box>
+                </>
+              )}
+              <TextField
+                variant='outlined'
+                margin='normal'
+                required
+                fullWidth
+                id='email'
+                label='Email Address'
+                name='email'
+                autoComplete='email'
+                autoFocus
+                value={loginState.email}
+                onChange={loginStateChangedHandler}
+              />
+              <TextField
+                variant='outlined'
+                margin='normal'
+                required
+                fullWidth
+                name='password'
+                label='Password'
+                type='password'
+                id='password'
+                autoComplete='current-password'
+                value={loginState.password}
+                onChange={loginStateChangedHandler}
+              />
+              <Button
+                fullWidth
+                variant='contained'
+                color='primary'
+                onClick={isLogin ? onClickEmailLogin : onClickRegisterUser}
+                disabled={
+                  isLogin
+                    ? !validateEmailAndPassword(
+                        loginState.email,
+                        loginState.password
+                      )
+                    : !validateEmailAndPassword(
+                        loginState.email,
+                        loginState.password
+                      ) || isEmpty(username)
+                }
+                className={classes.submit}>
+                {isLogin ? 'Sign In' : 'Register'}
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <span
+                    className={styles.login_reset}
+                    onClick={useCallback(() => setIsModal(true), [isModal])}>
+                    Forgot password?
+                  </span>
+                </Grid>
+                <Grid item>
+                  <span
+                    onClick={onClickToggleIsLogin}
+                    className={styles.login_toggleMode}>
+                    {isLogin ? 'Create new account?' : 'Back to Login'}
+                  </span>
+                </Grid>
               </Grid>
-              <Grid item>
-                <span
-                  onClick={onClickToggleIsLogin}
-                  className={styles.login_toggleMode}>
-                  {isLogin ? 'Create new account?' : 'Back to Login'}
-                </span>
-              </Grid>
-            </Grid>
-            <Button
-              onClick={onClickGoogleLogin}
-              fullWidth
-              variant='contained'
-              color='primary'
-              className={classes.submit}>
-              Sign In With Google
-            </Button>
-          </form>
-        </div>
+              <Button
+                onClick={onClickGoogleLogin}
+                fullWidth
+                variant='contained'
+                color='primary'
+                className={classes.submit}>
+                Sign In With Google
+              </Button>
+            </form>
+          </div>
+        </Grid>
       </Grid>
       <AlertToast
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isToast}
+        onClose={onCloseToast}
         message={showMessage}
         alertType={type}
       />
@@ -263,6 +262,6 @@ export const Auth = () => {
           [resetEmail]
         )}
       />
-    </Grid>
+    </>
   )
 }

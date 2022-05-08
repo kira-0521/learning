@@ -6,13 +6,17 @@ type Props = {
 }
 
 export const useMessage = () => {
+  const [isToast, setIsToast] = useState(false)
   const [showMessage, setShowMessage] = useState('')
   const [type, setType] = useState<Props['type']>('success')
 
   const onFloatAlert = (props: Props) => {
     setShowMessage(props.message)
     setType(props.type)
+    setIsToast(true)
   }
 
-  return { showMessage, type, onFloatAlert }
+  const onCloseToast = () => setIsToast(false)
+
+  return { showMessage, type, isToast, onFloatAlert, onCloseToast }
 }

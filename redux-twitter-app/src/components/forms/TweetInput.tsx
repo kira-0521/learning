@@ -22,11 +22,15 @@ import { storage } from '../../firebaseInit'
 import { ClickPopover } from '../parts/ClickPopover'
 import { usePostTweet } from '../../lib/hooks/usePostTweet'
 import { onChangeImageHandler } from '../../lib/viewLogics/form'
+import { AlertToast } from '../parts/AlertToast'
+import { useMessage } from '../../lib/hooks/useMessage'
 
 // eslint-disable-next-line react/display-name
 export const TweetInput: FC = memo(() => {
   const user = useSelector(selectUser)
   const { postUserTweet } = usePostTweet()
+  const { onFloatAlert, showMessage, type, isToast, onCloseToast } =
+    useMessage()
 
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null)
   const [tweetText, setTweetText] = useState('')
@@ -41,7 +45,6 @@ export const TweetInput: FC = memo(() => {
   const id = open ? 'simple-popover' : undefined
 
   const sendTweet = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    // リフレッシュ阻止
     e.preventDefault()
 
     if (!isNil(tweetImage)) {
@@ -54,7 +57,7 @@ export const TweetInput: FC = memo(() => {
         () => {},
         (err: unknown) => {
           if (err instanceof Error) {
-            alert(err.message)
+            onFloatAlert({ message: err.message, type: 'error' })
           }
         },
         async () => {
@@ -64,11 +67,16 @@ export const TweetInput: FC = memo(() => {
             .getDownloadURL()
             .then(async (url) => {
               await postUserTweet(tweetText, url)
+              onFloatAlert({
+                message: 'Tweetを送信しました。',
+                type: 'success',
+              })
             })
         }
       )
     } else {
       await postUserTweet(tweetText)
+      onFloatAlert({ message: 'Tweetを送信しました。', type: 'success' })
     }
 
     refreshTweet()
@@ -134,6 +142,12 @@ export const TweetInput: FC = memo(() => {
           Tweet
         </Button>
       </form>
+      <AlertToast
+        isOpen={isToast}
+        onClose={onCloseToast}
+        message={showMessage}
+        alertType={type}
+      />
     </>
   )
 })
