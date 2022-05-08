@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react'
 
+import styles from './feed.module.css'
 import { logout } from '../../lib/firebase/auth'
 import { useDiscloser } from '../../lib/hooks/useDiscloser'
 import { AlertToast } from '../parts/AlertToast'
@@ -25,7 +26,7 @@ export const Feed: FC = () => {
   }, [])
 
   return (
-    <div>
+    <div className={styles.feed}>
       <TweetInput />
       <button onClick={onClickLogout}>ログアウト</button>
       <AlertToast
