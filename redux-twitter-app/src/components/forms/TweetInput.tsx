@@ -17,8 +17,6 @@ import { isNil } from 'lodash'
 import { getUniqueChar } from '../../lib/viewLogics/util'
 import { storage } from '../../firebaseInit'
 import { ClickPopover } from '../parts/ClickPopover'
-import { timestamp } from '../../lib/firebase/util'
-import { TweetPost } from '../../@types/tweet.d'
 import { usePostTweet } from '../../lib/hooks/usePostTweet'
 
 // eslint-disable-next-line react/display-name

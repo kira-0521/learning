@@ -50,7 +50,7 @@ export const Auth = () => {
   const [isModal, setIsModal] = useState(false)
   const [resetEmail, setResetEmail] = useState('')
 
-  const loginStateChangeHandler = useCallback(
+  const loginStateChangedHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       setLoginState({ ...loginState, [e.target.name]: e.target.value })
     },
@@ -66,7 +66,7 @@ export const Auth = () => {
         onOpen()
       }
     }
-  }, [loginState.email, loginState.password, loginStateChangeHandler])
+  }, [loginState.email, loginState.password, loginStateChangedHandler])
 
   const onClickRegisterUser = useCallback(async () => {
     try {
@@ -102,7 +102,7 @@ export const Auth = () => {
         onOpen()
       }
     }
-  }, [loginState.email, loginState.password, loginStateChangeHandler])
+  }, [loginState.email, loginState.password, loginStateChangedHandler])
 
   const onClickGoogleLogin = useCallback(async () => {
     await signInGoogle()
@@ -179,7 +179,7 @@ export const Auth = () => {
               autoComplete='email'
               autoFocus
               value={loginState.email}
-              onChange={loginStateChangeHandler}
+              onChange={loginStateChangedHandler}
             />
             <TextField
               variant='outlined'
@@ -192,7 +192,7 @@ export const Auth = () => {
               id='password'
               autoComplete='current-password'
               value={loginState.password}
-              onChange={loginStateChangeHandler}
+              onChange={loginStateChangedHandler}
             />
             <Button
               fullWidth
