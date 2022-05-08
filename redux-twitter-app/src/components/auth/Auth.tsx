@@ -56,6 +56,10 @@ export const Auth = () => {
     },
     [loginState, setLoginState]
   )
+  const onChangeUsername = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value),
+    [username]
+  )
 
   const onClickEmailLogin = useCallback(async () => {
     try {
@@ -139,11 +143,7 @@ export const Auth = () => {
                   autoComplete='username'
                   autoFocus
                   value={username}
-                  onChange={useCallback(
-                    (e: ChangeEvent<HTMLInputElement>) =>
-                      setUsername(e.target.value),
-                    [username]
-                  )}
+                  onChange={onChangeUsername}
                 />
                 <Box textAlign='center'>
                   <IconButton>
