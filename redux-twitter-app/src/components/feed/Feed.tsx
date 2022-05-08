@@ -1,14 +1,17 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
 import styles from './feed.module.css'
 import { logout } from '../../lib/firebase/auth'
 import { AlertToast } from '../parts/AlertToast'
 import { TweetInput } from '../forms/TweetInput'
 import { useMessage } from '../../lib/hooks/useMessage'
+import { useAllPosts } from '../../lib/hooks/useAllPosts'
+import { map } from 'lodash'
 
 export const Feed: FC = () => {
   const { onFloatAlert, showMessage, type, isToast, onCloseToast } =
     useMessage()
+  const { posts, loading, getAllPosts } = useAllPosts()
 
   useEffect(() => {
     const loginSuccessShowMessage = () => {
@@ -16,7 +19,19 @@ export const Feed: FC = () => {
     }
     loginSuccessShowMessage()
 
-    return () => loginSuccessShowMessage()
+    const getPostsList = async () => {
+      await getAllPosts().catch((e: unknown) => {
+        if (e instanceof Error) {
+          onFloatAlert({ message: e.message, type: 'error' })
+        }
+      })
+    }
+    getPostsList()
+
+    return () => {
+      loginSuccessShowMessage()
+      getPostsList()
+    }
   }, [])
 
   const onClickLogout = async () => {
