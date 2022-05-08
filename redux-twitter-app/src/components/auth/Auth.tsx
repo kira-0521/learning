@@ -29,7 +29,7 @@ import { useResetPassword } from '../../lib/hooks/useResetPassword'
 import { useMessage } from '../../lib/hooks/useMessage'
 import { validateEmailAndPassword } from '../../lib/viewLogics/validate'
 import { onChangeImageHandler } from '../../lib/viewLogics/form'
-import { AuthModal } from '../parts/AuthModal'
+import { ResetEmailModal } from '../parts/ResetEmailModal'
 import { AlertToast } from '../parts/AlertToast'
 import { updateUserProfile } from '../../features/userSlice'
 
@@ -37,14 +37,7 @@ export const Auth = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
   const { isOpen, onClose, onOpen } = useDiscloser()
-  const {
-    isModal,
-    resetEmail,
-    onCloseModal,
-    onOpenModal,
-    onChangeResetEmail,
-    fetchResetPassword,
-  } = useResetPassword()
+  const { fetchResetPassword } = useResetPassword()
   const { onFloatAlert, showMessage, type } = useMessage()
 
   const [email, setEmail] = useState('')
@@ -52,19 +45,8 @@ export const Auth = () => {
   const [username, setUsername] = useState('')
   const [avatarImage, setAvatarImage] = useState<File | null>(null)
   const [isLogin, setIsLogin] = useState(true)
-
-  const onChangeEmail = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value),
-    [email, setEmail]
-  )
-  const onChangePassword = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value),
-    [password, setPassword]
-  )
-  const onChangeUsername = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value),
-    [username, setUsername]
-  )
+  const [isModal, setIsModal] = useState(false)
+  const [resetEmail, setResetEmail] = useState('')
 
   const onClickEmailLogin = useCallback(async () => {
     try {
@@ -145,7 +127,11 @@ export const Auth = () => {
                   autoComplete='username'
                   autoFocus
                   value={username}
-                  onChange={onChangeUsername}
+                  onChange={useCallback(
+                    (e: ChangeEvent<HTMLInputElement>) =>
+                      setUsername(e.target.value),
+                    [username]
+                  )}
                 />
                 <Box textAlign='center'>
                   <IconButton>
@@ -181,7 +167,10 @@ export const Auth = () => {
               autoComplete='email'
               autoFocus
               value={email}
-              onChange={onChangeEmail}
+              onChange={useCallback(
+                (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value),
+                [email]
+              )}
             />
             <TextField
               variant='outlined'
@@ -194,7 +183,11 @@ export const Auth = () => {
               id='password'
               autoComplete='current-password'
               value={password}
-              onChange={onChangePassword}
+              onChange={useCallback(
+                (e: ChangeEvent<HTMLInputElement>) =>
+                  setPassword(e.target.value),
+                [password]
+              )}
             />
             <Button
               fullWidth
@@ -212,7 +205,9 @@ export const Auth = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <span className={styles.login_reset} onClick={onOpenModal}>
+                <span
+                  className={styles.login_reset}
+                  onClick={useCallback(() => setIsModal(true), [isModal])}>
                   Forgot password?
                 </span>
               </Grid>
@@ -241,12 +236,22 @@ export const Auth = () => {
         message={showMessage}
         alertType={type}
       />
-      <AuthModal
+      <ResetEmailModal
         openModal={isModal}
         resetEmail={resetEmail}
-        closeModal={onCloseModal}
-        sendResetEmail={fetchResetPassword}
-        onChangeResetEmail={onChangeResetEmail}
+        closeModal={useCallback(() => setIsModal(false), [isModal])}
+        sendResetEmail={() => {
+          fetchResetPassword({
+            resetEmail,
+            callback: () => {
+              setResetEmail('')
+            },
+          })
+        }}
+        onChangeResetEmail={useCallback(
+          (e: ChangeEvent<HTMLInputElement>) => setResetEmail(e.target.value),
+          [resetEmail]
+        )}
       />
     </Grid>
   )

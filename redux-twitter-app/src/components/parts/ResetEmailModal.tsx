@@ -11,7 +11,7 @@ type Props = {
   closeModal: () => void
   resetEmail: string
   onChangeResetEmail: (e: ChangeEvent<HTMLInputElement>) => void
-  sendResetEmail: () => Promise<void>
+  sendResetEmail: () => void
 }
 
 // eslint-disable-next-line react/display-name
