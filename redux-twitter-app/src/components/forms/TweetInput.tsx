@@ -5,10 +5,13 @@ import React, {
   MouseEvent,
   FormEvent,
   useCallback,
+  ChangeEvent,
 } from 'react'
 import { useSelector } from 'react-redux'
-import { Avatar, Button, Box, Typography } from '@material-ui/core'
+import { Avatar, Button, Box, Typography, IconButton } from '@material-ui/core'
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto'
 import firebase from 'firebase/app'
+import { isEmpty } from 'lodash'
 
 import styles from './TweetInput.module.css'
 import { logout } from '../../lib/firebase/auth'
@@ -18,6 +21,7 @@ import { getUniqueChar } from '../../lib/viewLogics/util'
 import { storage } from '../../firebaseInit'
 import { ClickPopover } from '../parts/ClickPopover'
 import { usePostTweet } from '../../lib/hooks/usePostTweet'
+import { onChangeImageHandler } from '../../lib/viewLogics/form'
 
 // eslint-disable-next-line react/display-name
 export const TweetInput: FC = memo(() => {
@@ -59,7 +63,6 @@ export const TweetInput: FC = memo(() => {
             .child(fileName)
             .getDownloadURL()
             .then(async (url) => {
-              // await postUserTweet(tweetText, url)
               await postUserTweet(tweetText, url)
             })
         }
@@ -72,27 +75,65 @@ export const TweetInput: FC = memo(() => {
   }
 
   return (
-    <div>
-      <Avatar
-        aria-describedby={id}
-        className={styles.tweet_avatar}
-        src={user.photoUrl}
-        onClick={(e: MouseEvent<HTMLDivElement>) => {
-          setAnchorEl(e.currentTarget)
-        }}
-      />
-      <ClickPopover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={() => setAnchorEl(null)}>
-        <Box>
-          <Typography>ログアウトしますか？</Typography>
-          <Button variant='contained' color='primary' onClick={logout}>
-            Logout
-          </Button>
-        </Box>
-      </ClickPopover>
-    </div>
+    <>
+      <form onSubmit={sendTweet}>
+        <div className={styles.tweet_form}>
+          <Avatar
+            aria-describedby={id}
+            className={styles.tweet_avatar}
+            src={user.photoUrl}
+            onClick={(e: MouseEvent<HTMLDivElement>) => {
+              setAnchorEl(e.currentTarget)
+            }}
+          />
+          <ClickPopover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={() => setAnchorEl(null)}>
+            <Box>
+              <Typography>ログアウトしますか？</Typography>
+              <Button variant='contained' color='primary' onClick={logout}>
+                Logout
+              </Button>
+            </Box>
+          </ClickPopover>
+          <input
+            className={styles.tweet_input}
+            placeholder="What's happening?"
+            type='text'
+            autoFocus
+            value={tweetText}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setTweetText(e.target.value)
+            }
+          />
+          <IconButton>
+            <label>
+              <AddAPhotoIcon
+                className={
+                  tweetImage ? styles.tweet_addIconLoaded : styles.tweet_addIcon
+                }
+              />
+              <input
+                className={styles.tweet_hiddenIcon}
+                type='file'
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  onChangeImageHandler(e, setTweetImage)
+                }
+              />
+            </label>
+          </IconButton>
+        </div>
+        <Button
+          type='submit'
+          disabled={isEmpty(tweetText)}
+          className={
+            tweetText ? styles.tweet_sendBtn : styles.tweet_sendDisableBtn
+          }>
+          Tweet
+        </Button>
+      </form>
+    </>
   )
 })
