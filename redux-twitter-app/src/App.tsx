@@ -8,6 +8,7 @@ import { selectUser, login, logout } from './features/userSlice'
 import { auth } from './firebaseInit'
 import { Feed } from './components/feed/Feed'
 import { Auth } from './components/auth/Auth'
+import { ToastMessageProvider } from './providers/ToastMessageProvider'
 
 function App() {
   const appUser = useSelector(selectUser)
@@ -33,15 +34,17 @@ function App() {
   }, [])
 
   return (
-    <div>
-      {isEmpty(appUser.uid) ? (
-        <Auth />
-      ) : (
-        <div className={styles.app}>
-          <Feed />
-        </div>
-      )}
-    </div>
+    <ToastMessageProvider>
+      <div>
+        {isEmpty(appUser.uid) ? (
+          <Auth />
+        ) : (
+          <div className={styles.app}>
+            <Feed />
+          </div>
+        )}
+      </div>
+    </ToastMessageProvider>
   )
 }
 
