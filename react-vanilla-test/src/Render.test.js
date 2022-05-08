@@ -6,6 +6,9 @@ describe('Rendering', () => {
   it('全ての要素がレンダリングされているか。', () => {
     render(<Render />)
     // eslint-disable-next-line testing-library/no-debugging-utils
-    screen.debug(screen.getByRole('heading'))
+    // 取得
+    // screen.debug(screen.getByRole('heading'))
+    // 存在チェック
+    expect(screen.getByRole('heading')).toBeTruthy()
   })
 })
