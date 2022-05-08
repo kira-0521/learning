@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect } from 'react'
 
 import styles from './feed.module.css'
 import { logout } from '../../lib/firebase/auth'
