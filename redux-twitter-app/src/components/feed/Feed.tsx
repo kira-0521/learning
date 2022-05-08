@@ -7,6 +7,7 @@ import { TweetInput } from '../forms/TweetInput'
 import { useMessage } from '../../lib/hooks/useMessage'
 import { useAllPosts } from '../../lib/hooks/useAllPosts'
 import { map } from 'lodash'
+import { Post } from '../post/Post'
 
 export const Feed: FC = () => {
   const { onFloatAlert, showMessage, type, isToast, onCloseToast } =
@@ -47,6 +48,17 @@ export const Feed: FC = () => {
         message={showMessage}
         alertType={type}
       />
+      {map(posts, (post) => (
+        <Post
+          key={post.id}
+          postId={post.id}
+          username={post.username}
+          avatar={post.avatar}
+          image={post.image}
+          timestamp={post.timestamp}
+          text={post.text}
+        />
+      ))}
     </div>
   )
 }
