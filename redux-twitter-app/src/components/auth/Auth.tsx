@@ -26,6 +26,7 @@ import { getImageUrl } from '../../lib/firebase/storage'
 import { getUniqueChar } from '../../lib/viewLogics/util'
 import { useDiscloser } from '../../lib/hooks/useDiscloser'
 import { useResetPassword } from '../../lib/hooks/useResetPassword'
+import { useMessage } from '../../lib/hooks/useMessage'
 import { validateEmailAndPassword } from '../../lib/viewLogics/validate'
 import { onChangeImageHandler } from '../../lib/viewLogics/form'
 import { AuthModal } from '../parts/AuthModal'
@@ -35,19 +36,16 @@ import { updateUserProfile } from '../../features/userSlice'
 export const Auth = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const { isOpen, showMessage, onClose, onOpen, setShowMessage } =
-    useDiscloser()
+  const { isOpen, onClose, onOpen } = useDiscloser()
   const {
     isModal,
     resetEmail,
-    resetPasswordShowMessage,
     onCloseModal,
     onOpenModal,
     onChangeResetEmail,
     fetchResetPassword,
   } = useResetPassword()
-
-  !isEmpty(resetPasswordShowMessage) && setShowMessage(resetPasswordShowMessage)
+  const { onFloatAlert, showMessage, type } = useMessage()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -73,7 +71,7 @@ export const Auth = () => {
       await signInWithEmail(email, password)
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setShowMessage(err.message)
+        onFloatAlert({ message: err.message, type: 'error' })
         onOpen()
       }
     }
@@ -106,7 +104,7 @@ export const Auth = () => {
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setShowMessage(err.message)
+        onFloatAlert({ message: err.message, type: 'error' })
         onOpen()
       }
     }
@@ -237,7 +235,12 @@ export const Auth = () => {
           </form>
         </div>
       </Grid>
-      <AlertToast isOpen={isOpen} onClose={onClose} message={showMessage} />
+      <AlertToast
+        isOpen={isOpen}
+        onClose={onClose}
+        message={showMessage}
+        alertType={type}
+      />
       <AuthModal
         openModal={isModal}
         resetEmail={resetEmail}

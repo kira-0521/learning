@@ -4,10 +4,11 @@ import { logout } from '../../lib/firebase/auth'
 import { useDiscloser } from '../../lib/hooks/useDiscloser'
 import { AlertToast } from '../parts/AlertToast'
 import { TweetInput } from '../forms/TweetInput'
+import { useMessage } from '../../lib/hooks/useMessage'
 
 export const Feed: FC = () => {
-  const { isOpen, showMessage, setShowMessage, onOpen, onClose } =
-    useDiscloser()
+  const { isOpen, onOpen, onClose } = useDiscloser()
+  const { onFloatAlert, showMessage, type } = useMessage()
 
   const onClickLogout = async () => {
     await logout()
@@ -16,7 +17,7 @@ export const Feed: FC = () => {
   useEffect(() => {
     const loginSuccessShowMessage = () => {
       onOpen()
-      setShowMessage('ログインに成功しました。')
+      onFloatAlert({ message: 'ログインに成功しました。', type: 'success' })
     }
     loginSuccessShowMessage()
 
@@ -27,7 +28,12 @@ export const Feed: FC = () => {
     <div>
       <TweetInput />
       <button onClick={onClickLogout}>ログアウト</button>
-      <AlertToast isOpen={isOpen} onClose={onClose} message={showMessage} />
+      <AlertToast
+        isOpen={isOpen}
+        onClose={onClose}
+        message={showMessage}
+        alertType={type}
+      />
     </div>
   )
 }
