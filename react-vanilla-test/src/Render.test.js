@@ -6,6 +6,6 @@ describe('Rendering', () => {
   it('全ての要素がレンダリングされているか。', () => {
     render(<Render />)
     // eslint-disable-next-line testing-library/no-debugging-utils
-    screen.debug()
+    screen.debug(screen.getByRole('heading'))
   })
 })
