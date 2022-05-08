@@ -1,41 +1,33 @@
-import { useState, ChangeEvent, useCallback } from 'react'
+import { useCallback } from 'react'
 
 import { sendResetEmail } from '../firebase/auth'
+import { useMessage } from './useMessage'
+
+type Props = {
+  resetEmail: string
+  callback: () => void
+}
 
 export const useResetPassword = () => {
-  const [isModal, setIsModal] = useState(false)
-  const [resetEmail, setResetEmail] = useState('')
+  const { onFloatAlert } = useMessage()
 
-  const onOpenModal = useCallback(() => setIsModal(true), [isModal, setIsModal])
-  const onCloseModal = useCallback(
-    () => setIsModal(false),
-    [isModal, setIsModal]
-  )
-
-  const onChangeResetEmail = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setResetEmail(e.target.value),
-    [resetEmail, setResetEmail]
-  )
-
-  const fetchResetPassword = async () => {
-    try {
-      await sendResetEmail(resetEmail)
-      setIsModal(false)
-      setResetEmail('')
-    } catch (err: unknown) {
-      setResetEmail('')
-      if (err instanceof Error) {
-        // setResetPasswordShowMessage(err.message)
+  const fetchResetPassword = useCallback(
+    async (props: Props) => {
+      const { resetEmail, callback } = props
+      try {
+        await sendResetEmail(resetEmail)
+        callback()
+      } catch (err: unknown) {
+        callback()
+        if (err instanceof Error) {
+          onFloatAlert({ message: err.message, type: 'error' })
+        }
       }
-    }
-  }
+    },
+    [onFloatAlert]
+  )
 
   return {
-    isModal,
-    resetEmail,
-    onCloseModal,
-    onOpenModal,
-    onChangeResetEmail,
     fetchResetPassword,
   }
 }
