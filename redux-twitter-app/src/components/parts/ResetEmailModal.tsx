@@ -15,7 +15,7 @@ type Props = {
 }
 
 // eslint-disable-next-line react/display-name
-export const AuthModal: FC<Props> = memo((props: Props) => {
+export const ResetEmailModal: FC<Props> = memo((props: Props) => {
   const {
     openModal,
     closeModal,
