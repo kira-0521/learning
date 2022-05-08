@@ -7,8 +7,7 @@ import React, {
   useCallback,
 } from 'react'
 import { useSelector } from 'react-redux'
-import { Avatar, Popover, Button, Box, Typography } from '@material-ui/core'
-import { isString } from 'lodash'
+import { Avatar, Button, Box, Typography } from '@material-ui/core'
 import firebase from 'firebase/app'
 
 import styles from './TweetInput.module.css'
@@ -17,11 +16,15 @@ import { selectUser } from '../../features/userSlice'
 import { isNil } from 'lodash'
 import { getUniqueChar } from '../../lib/viewLogics/util'
 import { storage } from '../../firebaseInit'
-import { postUserTweet } from '../../lib/firebase/db'
+import { ClickPopover } from '../parts/ClickPopover'
+import { timestamp } from '../../lib/firebase/util'
+import { TweetPost } from '../../@types/tweet.d'
+import { usePostTweet } from '../../lib/hooks/usePostTweet'
 
 // eslint-disable-next-line react/display-name
 export const TweetInput: FC = memo(() => {
   const user = useSelector(selectUser)
+  const { postUserTweet } = usePostTweet()
 
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null)
   const [tweetText, setTweetText] = useState('')
@@ -58,7 +61,8 @@ export const TweetInput: FC = memo(() => {
             .child(fileName)
             .getDownloadURL()
             .then(async (url) => {
-              return await postUserTweet(tweetText, url)
+              // await postUserTweet(tweetText, url)
+              await postUserTweet(tweetText, url)
             })
         }
       )
@@ -79,22 +83,18 @@ export const TweetInput: FC = memo(() => {
           setAnchorEl(e.currentTarget)
         }}
       />
-      <Popover
+      <ClickPopover
         id={id}
         open={open}
         anchorEl={anchorEl}
-        onClose={() => setAnchorEl(null)}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}>
+        onClose={() => setAnchorEl(null)}>
         <Box>
           <Typography>ログアウトしますか？</Typography>
           <Button variant='contained' color='primary' onClick={logout}>
             Logout
           </Button>
         </Box>
-      </Popover>
+      </ClickPopover>
     </div>
   )
 })
