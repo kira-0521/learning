@@ -10,10 +10,6 @@ export const Feed: FC = () => {
   const { onFloatAlert, showMessage, type, isToast, onCloseToast } =
     useMessage()
 
-  const onClickLogout = async () => {
-    await logout()
-  }
-
   useEffect(() => {
     const loginSuccessShowMessage = () => {
       onFloatAlert({ message: 'ログインに成功しました。', type: 'success' })
@@ -23,10 +19,13 @@ export const Feed: FC = () => {
     return () => loginSuccessShowMessage()
   }, [])
 
+  const onClickLogout = async () => {
+    await logout()
+  }
+
   return (
     <div className={styles.feed}>
       <TweetInput />
-      <button onClick={onClickLogout}>ログアウト</button>
       <AlertToast
         isOpen={isToast}
         onClose={onCloseToast}
