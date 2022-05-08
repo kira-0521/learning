@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 
 import { selectUser } from '../../features/userSlice'
 import { timestamp } from '../firebase/util'
-import { TweetPost } from '../../@types/tweet.d'
+import { PostTweet } from '../../@types/tweet.d'
 import { db } from '../../firebaseInit'
 
 export const usePostTweet = () => {
@@ -15,7 +15,7 @@ export const usePostTweet = () => {
       text,
       timestamp,
       username: user.displayName,
-    } as TweetPost)
+    } as PostTweet)
   }
 
   return {

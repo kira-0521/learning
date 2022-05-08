@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
 
-export interface TweetPost {
+export interface PostTweet {
   avatar: string
   image: string
   text: string
