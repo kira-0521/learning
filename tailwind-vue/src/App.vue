@@ -1,7 +1,15 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import HeaderLayout from './components/HeaderLayout.vue'
 </script>
 
 <template>
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <HeaderLayout title="My Work" />
 </template>
+
+<style>
+html,
+body {
+  font-size: 10px;
+  margin: 0;
+}
+</style>
