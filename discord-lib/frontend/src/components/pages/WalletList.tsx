@@ -10,18 +10,42 @@ import { PankuzuList } from '../atoms/Layouts/PankuzuList'
 
 export const WalletList: FC = () => {
   const [count, setCount] = useState(0)
+  const [data, setData] = useState([])
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     await fetch('https://jsonplaceholder.typicode.com/posts')
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         setData(data)
+  //         console.log(data[0])
+  //       })
+  //       .catch((err) => console.log(err))
+  //   }
+  //   const timer = setInterval(fetchData, 5000)
+
+  //   return () => {
+  //     clearInterval(timer)
+  //   }
+  // }, [])
 
   useEffect(() => {
+    let isMounted = true
     const fetchData = async () => {
       await fetch('https://jsonplaceholder.typicode.com/posts')
         .then((res) => res.json())
-        .then((data) => console.log(data[0]))
+        .then((data) => {
+          if (isMounted) {
+            setData(data)
+          }
+          console.log(data[0])
+        })
         .catch((err) => console.log(err))
     }
-    const timer = setInterval(fetchData, 5000)
 
+    fetchData()
     return () => {
-      clearInterval(timer)
+      isMounted = false
     }
   }, [])
 
