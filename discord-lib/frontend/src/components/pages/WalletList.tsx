@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Heading, Box, Flex } from '@chakra-ui/react'
 
 import { WalletListTable } from '../organisms/Layouts/WalletListTable'
@@ -8,20 +8,39 @@ import { TagFilter } from '../organisms/TagFilter'
 import { CheckboxGroup } from '../organisms/Forms/CheckboxGroup'
 
 export const WalletList: FC = () => {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetch('https://jsonplaceholder.typicode.com/posts')
+        .then((res) => res.json())
+        .then((data) => console.log(data[0]))
+        .catch((err) => console.log(err))
+    }
+    fetchData()
+
+    return () => {
+      fetchData()
+    }
+  })
+
   return (
     <Box>
       <Heading>WalletListTable</Heading>
+      <p>{count}</p>
+      <button onClick={() => setCount(count + 1)}>カウント</button>
       <Flex justify='center' mt='30px'>
-        <WalletListTable />
+        {/* <WalletListTable /> */}
+        テーブル
       </Flex>
       <Box mt='24px'>
-        <WalletAccordionGroup children='discord nanashi' />
+        {/* <WalletAccordionGroup children='discord nanashi' /> */}
       </Box>
-      <DrawerExample />
+      {/* <DrawerExample /> */}
       <Box mt={24}>
-        <TagFilter>
+        {/* <TagFilter>
           <CheckboxGroup />
-        </TagFilter>
+        </TagFilter> */}
       </Box>
     </Box>
   )
