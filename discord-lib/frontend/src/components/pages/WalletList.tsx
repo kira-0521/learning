@@ -6,6 +6,7 @@ import { WalletAccordionGroup } from '../organisms/Accordions/WalltAccordionGrou
 import { DrawerExample } from '../molecules/Drawer'
 import { TagFilter } from '../organisms/TagFilter'
 import { CheckboxGroup } from '../organisms/Forms/CheckboxGroup'
+import { PankuzuList } from '../atoms/Layouts/PankuzuList'
 
 export const WalletList: FC = () => {
   const [count, setCount] = useState(0)
@@ -17,12 +18,12 @@ export const WalletList: FC = () => {
         .then((data) => console.log(data[0]))
         .catch((err) => console.log(err))
     }
-    fetchData()
+    const timer = setInterval(fetchData, 5000)
 
     return () => {
-      fetchData()
+      clearInterval(timer)
     }
-  })
+  }, [])
 
   return (
     <Box>
@@ -33,6 +34,7 @@ export const WalletList: FC = () => {
         {/* <WalletListTable /> */}
         テーブル
       </Flex>
+      <PankuzuList pageName='aa' />
       <Box mt='24px'>
         {/* <WalletAccordionGroup children='discord nanashi' /> */}
       </Box>
