@@ -54,9 +54,8 @@ export const WalletList: FC = () => {
       <Heading>WalletListTable</Heading>
       <p>{count}</p>
       <button onClick={() => setCount(count + 1)}>カウント</button>
-      <Flex justify='center' mt='30px'>
-        {/* <WalletListTable /> */}
-        テーブル
+      <Flex justify='center' mt='30px' overflow='scroll' height='300px'>
+        <WalletListTable />
       </Flex>
       <PankuzuList pageName='aa' />
       <Box mt='24px'>

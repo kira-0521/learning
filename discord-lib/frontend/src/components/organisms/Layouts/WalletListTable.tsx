@@ -115,46 +115,34 @@ export const WalletListTable: FC = () => {
     tableInstance
 
   return (
-    <Box
-      overflowX='scroll'
-      sx={{
-        '&::-webkit-scrollbar': {
-          height: '8px',
-          borderRadius: '8px',
-          backgroundColor: `rgba(0, 0, 0, 0.05)`,
-        },
-        '&::-webkit-scrollbar-thumb': {
-          backgroundColor: `rgba(0, 0, 0, 0.05)`,
-          borderRadius: '30px',
-        },
-      }}>
+    <Box>
       <table {...getTableProps({ style: tableStyle })}>
         <thead>
           {_.map(headerGroups, (headerGroup: HeaderGroup<Data>) => (
-            // tr ===> TableCommonProps型の属性を展開
-            <>
-              <div style={{ borderTop: '1px solid #fff' }}></div>
-              <tr
-                {...headerGroup.getHeaderGroupProps({
-                  style: tableHeaderStyle,
-                })}
-                className='table-header'>
-                {_.map(headerGroup.headers, (column: HeaderGroup<Data>) => {
-                  return (
-                    // th ===> TableCommonProps型の属性を展開
-                    <th
-                      {...column.getHeaderProps({
-                        style: {
-                          width: column.width,
-                          padding: 0,
-                        },
-                      })}>
-                      {column.render('Header')}
-                    </th>
-                  )
-                })}
-              </tr>
-            </>
+            <tr
+              {...headerGroup.getHeaderGroupProps({
+                style: tableHeaderStyle,
+              })}
+              className='table-header'>
+              {_.map(headerGroup.headers, (column: HeaderGroup<Data>) => {
+                return (
+                  // th ===> TableCommonProps型の属性を展開
+                  <th
+                    {...column.getHeaderProps({
+                      style: {
+                        width: column.width,
+                        padding: 0,
+                        position: 'sticky',
+                        top: 0,
+                        zIndex: 10,
+                        backgroundColor: '#707070',
+                      },
+                    })}>
+                    {column.render('Header')}
+                  </th>
+                )
+              })}
+            </tr>
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
@@ -162,20 +150,13 @@ export const WalletListTable: FC = () => {
             // 表示する予定の行だけをレンダリングしてくれる
             prepareRow(row)
             return (
-              <>
-                <div
-                  style={{
-                    borderBottom: '1px solid #fff',
-                    width: '1800px',
-                  }}></div>
-                <tr {...row.getRowProps({ style: tableBodyStyle })}>
-                  {_.map(row.cells, (cell: Cell<Data>) => {
-                    return (
-                      <td {...cell.getCellProps({})}>{cell.render('Cell')}</td>
-                    )
-                  })}
-                </tr>
-              </>
+              <tr {...row.getRowProps({ style: tableBodyStyle })}>
+                {_.map(row.cells, (cell: Cell<Data>) => {
+                  return (
+                    <td {...cell.getCellProps({})}>{cell.render('Cell')}</td>
+                  )
+                })}
+              </tr>
             )
           })}
         </tbody>
