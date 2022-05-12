@@ -5,43 +5,40 @@ import './table.css'
 
 export const TableList: FC = () => {
   return (
-    <table
-      style={{
-        backgroundColor: '#fff',
-        color: '#000',
-        display: 'flex',
-        whiteSpace: 'nowrap',
-        paddingRight: '10px',
-      }}>
-      <thead style={{ display: 'flex' }}>
+    <table>
+      <thead>
         <tr>
-          <th style={{ display: 'block', minWidth: '100px' }}>userId</th>
+          <th>userId</th>
           {sample.map((x) => (
-            <th style={{ display: 'block', minWidth: '100px' }}>{x.userId}</th>
+            <td>{x.userId}</td>
           ))}
         </tr>
-        <tr style={{ minWidth: '100px', background: 'teal' }}>
-          <td style={{ display: 'block' }}>id</td>
+        <tr>
+          <th>id</th>
           {sample.map((x) => (
             // TODO: 擬似要素でボーダー作る
             // TODO: ボーダーの高さカルクで上下のpadding分引く
-            <td style={{ display: 'block', borderRight: '3px solid #000' }}>
-              {x.id}
-            </td>
+            <td className='border-right'>{x.id}</td>
           ))}
         </tr>
         <tr>
-          <td style={{ minWidth: '100px', display: 'block' }}>title</td>
+          <th>title</th>
           {sample.map((x) => (
-            <th style={{ display: 'block' }}>{x.title}</th>
+            <td>{x.title}</td>
           ))}
         </tr>
       </thead>
-      <tbody style={{ display: 'flex', overflowX: 'auto' }}>
+      <tbody>
         <tr>
-          <td style={{ minWidth: '100px', display: 'block' }}>body</td>
+          <th>body</th>
           {sample.map((x) => (
-            <th style={{ display: 'block' }}>{x.body}</th>
+            <td>{x.body}</td>
+          ))}
+        </tr>
+        <tr>
+          <th>body</th>
+          {sample.map((x) => (
+            <td>{x.body}</td>
           ))}
         </tr>
       </tbody>

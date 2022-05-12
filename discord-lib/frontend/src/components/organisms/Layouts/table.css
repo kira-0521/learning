@@ -1,6 +1,45 @@
-tr *:first-child {
+table {
+  background-color: #fff;
+  color: #000;
+  display: flex;
+  white-space: nowrap;
+  padding-right: 10px;
+}
+
+thead {
+  display: flex;
+}
+
+tbody {
+  display: flex;
+  overflow-x: scroll;
+}
+
+thead tr *:first-child,
+tbody tr *:first-child {
   position: sticky;
   top: 0;
   z-index: 999;
   background-color: blue;
+}
+
+thead tr:nth-child(2) {
+  background-color: aquamarine;
+}
+
+th,
+td {
+  display: block;
+  min-width: 100px;
+  padding: 5px 0;
+  height: 80px;
+}
+
+.border-right::after {
+  content: '';
+  border: 2px solid #000;
+  margin-left: auto;
+  display: block;
+  width: 3px;
+  height: 100%;
 }

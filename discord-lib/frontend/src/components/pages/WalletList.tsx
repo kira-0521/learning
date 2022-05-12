@@ -56,7 +56,7 @@ export const WalletList: FC = () => {
         <Heading>WalletListTable</Heading>
         <p>{count}</p>
         <button onClick={() => setCount(count + 1)}>カウント</button>
-        <Box overflow='scroll' width='100%'>
+        <Box width='100%'>
           <TableList />
         </Box>
         <PankuzuList pageName='aa' />
@@ -70,7 +70,7 @@ export const WalletList: FC = () => {
         </TagFilter> */}
         </Box>
       </Box>
-      <Box
+      {/* <Box
         bg='teal'
         position='fixed'
         top={0}
@@ -79,10 +79,10 @@ export const WalletList: FC = () => {
         width='1000px'
         pt='300px'>
         {/* TODO: 高さがないとスクロールできない */}
-        <Box overflow='scroll' width='60%' height='60vh'>
+        {/* <Box overflow='scroll' width='60%' height='60vh'>
           <TableList />
         </Box>
-      </Box>
+      </Box> */} */}
     </>
   )
 }
