@@ -7,6 +7,7 @@ import { DrawerExample } from '../molecules/Drawer'
 import { TagFilter } from '../organisms/TagFilter'
 import { CheckboxGroup } from '../organisms/Forms/CheckboxGroup'
 import { PankuzuList } from '../atoms/Layouts/PankuzuList'
+import { TableList } from '../organisms/Layouts/TableLIst'
 
 export const WalletList: FC = () => {
   const [count, setCount] = useState(0)
@@ -50,23 +51,38 @@ export const WalletList: FC = () => {
   }, [])
 
   return (
-    <Box>
-      <Heading>WalletListTable</Heading>
-      <p>{count}</p>
-      <button onClick={() => setCount(count + 1)}>カウント</button>
-      <Flex justify='center' mt='30px' overflow='scroll' height='300px'>
-        <WalletListTable />
-      </Flex>
-      <PankuzuList pageName='aa' />
-      <Box mt='24px'>
-        {/* <WalletAccordionGroup children='discord nanashi' /> */}
-      </Box>
-      {/* <DrawerExample /> */}
-      <Box mt={24}>
-        {/* <TagFilter>
+    <>
+      <Box w='100%'>
+        <Heading>WalletListTable</Heading>
+        <p>{count}</p>
+        <button onClick={() => setCount(count + 1)}>カウント</button>
+        <Box overflow='scroll' width='100%'>
+          <TableList />
+        </Box>
+        <PankuzuList pageName='aa' />
+        <Box mt='24px'>
+          {/* <WalletAccordionGroup children='discord nanashi' /> */}
+        </Box>
+        {/* <DrawerExample /> */}
+        <Box mt={24}>
+          {/* <TagFilter>
           <CheckboxGroup />
         </TagFilter> */}
+        </Box>
       </Box>
-    </Box>
+      <Box
+        bg='teal'
+        position='fixed'
+        top={0}
+        right={0}
+        height='100vh'
+        width='1000px'
+        pt='300px'>
+        {/* TODO: 高さがないとスクロールできない */}
+        <Box overflow='scroll' width='60%' height='60vh'>
+          <TableList />
+        </Box>
+      </Box>
+    </>
   )
 }
