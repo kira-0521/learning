@@ -26,7 +26,7 @@ export const DrawerExample: FC<Props> = (props) => {
               X
             </Button>
           </Flex>
-          <Box>{children}</Box>
+          <Box mt='50px'>{children}</Box>
         </Box>
       </Box>
     </>
