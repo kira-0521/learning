@@ -1,3 +1,10 @@
+th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #585858;
+}
+
 th,
 td {
   text-align: left;
