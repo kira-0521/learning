@@ -12,10 +12,11 @@ type Props = {
 export const TabsList: FC<Props> = (props) => {
   const { tabList } = props
   return (
-    <Tabs>
-      <TabList>
-        {map(tabList.titles, (title) => (
+    <Tabs id='tabs'>
+      <TabList id='tab-list'>
+        {map(tabList.titles, (title, i) => (
           <Tab
+            key={i}
             _focus={{ boxShadow: 'none' }}
             _selected={{ color: 'white', bg: 'blue.500' }}>
             {title}
@@ -23,9 +24,9 @@ export const TabsList: FC<Props> = (props) => {
         ))}
       </TabList>
 
-      <TabPanels>
-        {map(tabList.contents, (content) => (
-          <TabPanel>{content}</TabPanel>
+      <TabPanels id='tab-panels'>
+        {map(tabList.contents, (content, i) => (
+          <TabPanel key={i}>{content}</TabPanel>
         ))}
       </TabPanels>
     </Tabs>
