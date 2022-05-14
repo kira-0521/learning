@@ -1,16 +1,11 @@
 import { FC, useEffect, useState } from 'react'
-import { Heading, Box, Flex, useDisclosure, Button } from '@chakra-ui/react'
+import { Box, useDisclosure, Button } from '@chakra-ui/react'
 
-import { WalletListTable } from '../organisms/Layouts/WalletListTable'
-import { WalletAccordionGroup } from '../organisms/Accordions/WalltAccordionGroup'
 import { DrawerExample } from '../molecules/DrawerExample'
-import { TagFilter } from '../organisms/TagFilter'
-import { CheckboxGroup } from '../organisms/Forms/CheckboxGroup'
-import { PankuzuList } from '../atoms/Layouts/PankuzuList'
-import { TableList } from '../organisms/Layouts/TableLIst'
 import { TokenTable } from '../organisms/Layouts/TokenTable'
 import { TabsList } from '../molecules/TabsList'
 import { ActivityTable } from '../organisms/Layouts/ActivityTable'
+import { ACTIVITY_DATA } from '../../scripts/componentsData/activityTableData'
 
 export const WalletList: FC = () => {
   const [count, setCount] = useState(0)
@@ -40,7 +35,7 @@ export const WalletList: FC = () => {
 
   const wrappedNode = {
     titles: ['Token', 'Activity'],
-    contents: [<TokenTable />, <ActivityTable />],
+    contents: [<TokenTable />, <ActivityTable viewList={ACTIVITY_DATA} />],
   }
 
   return (

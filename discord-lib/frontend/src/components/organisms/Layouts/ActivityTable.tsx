@@ -5,7 +5,6 @@ import InfiniteScroll from 'react-infinite-scroller'
 
 import {
   ACTIVITY_COLUMNS,
-  ACTIVITY_DATA,
   Data,
 } from '../../../scripts/componentsData/activityTableData'
 import '../../../assets/styles/activityTable.css'
@@ -67,7 +66,7 @@ export const ActivityTable: FC<Props> = ({ viewList }) => {
             </tr>
           </thead>
           <tbody>
-            {map(ACTIVITY_DATA, (data) => (
+            {map(bodyList, (data) => (
               <tr key={data.id}>
                 <td>{data.id}</td>
                 <td className='token-id'>{data.tokenId}</td>
