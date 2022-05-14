@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from 'react'
-import { Heading, Box, Flex } from '@chakra-ui/react'
+import { Heading, Box, Flex, useDisclosure, Button } from '@chakra-ui/react'
 
 import { WalletListTable } from '../organisms/Layouts/WalletListTable'
 import { WalletAccordionGroup } from '../organisms/Accordions/WalltAccordionGroup'
-import { DrawerExample } from '../molecules/Drawer'
+import { DrawerExample } from '../molecules/DrawerExample'
 import { TagFilter } from '../organisms/TagFilter'
 import { CheckboxGroup } from '../organisms/Forms/CheckboxGroup'
 import { PankuzuList } from '../atoms/Layouts/PankuzuList'
@@ -12,6 +12,8 @@ import { TableList } from '../organisms/Layouts/TableLIst'
 export const WalletList: FC = () => {
   const [count, setCount] = useState(0)
   const [data, setData] = useState([])
+
+  const { isOpen, onClose, onOpen } = useDisclosure()
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -51,38 +53,17 @@ export const WalletList: FC = () => {
   }, [])
 
   return (
-    <>
-      <Box w='100%'>
-        <Heading>WalletListTable</Heading>
-        <p>{count}</p>
-        <button onClick={() => setCount(count + 1)}>カウント</button>
-        <Box width='100%'>
+    <Box w='100%'>
+      {/* <Box width='100%'>
           <TableList />
-        </Box>
-        <PankuzuList pageName='aa' />
-        <Box mt='24px'>
-          {/* <WalletAccordionGroup children='discord nanashi' /> */}
-        </Box>
-        {/* <DrawerExample /> */}
-        <Box mt={24}>
-          {/* <TagFilter>
+        </Box> */}
+      <Button onClick={onOpen}>開閉</Button>
+      {isOpen && <DrawerExample onClose={onClose}>こ要素</DrawerExample>}
+      <Box mt={24}>
+        {/* <TagFilter>
           <CheckboxGroup />
         </TagFilter> */}
-        </Box>
       </Box>
-      {/* <Box
-        bg='teal'
-        position='fixed'
-        top={0}
-        right={0}
-        height='100vh'
-        width='1000px'
-        pt='300px'>
-        {/* TODO: 高さがないとスクロールできない */}
-        {/* <Box overflow='scroll' width='60%' height='60vh'>
-          <TableList />
-        </Box>
-      </Box> */} */}
-    </>
+    </Box>
   )
 }
