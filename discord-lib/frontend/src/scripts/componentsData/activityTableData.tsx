@@ -8,36 +8,43 @@ export const ACTIVITY_COLUMNS: Column[] = [
     data: 'Type',
     id: 'type',
     minWidth: '150px',
+    className: 'type',
   },
   {
     data: 'Token ID',
     id: 'tokenId',
     minWidth: '120px',
+    className: 'token-id',
   },
   {
     data: 'From Address',
     id: 'fromAddress',
     minWidth: '130px',
+    className: 'from-address',
   },
   {
     data: '',
     id: 'arrow',
     minWidth: '65px',
+    className: 'arrow',
   },
   {
     data: 'To Address',
     id: 'toAddress',
     minWidth: '130px',
+    className: 'to-address',
   },
   {
     data: 'In Price',
     id: 'inPrice',
     minWidth: '90px',
+    className: 'in-price',
   },
   {
     data: 'Hold Time',
     id: 'holdTime',
     minWidth: '90px',
+    className: 'hold-time',
   },
 ]
 
@@ -47,9 +54,9 @@ export const ACTIVITY_DATA = map(Array(200).fill(null), (_, i) => ({
     Math.floor(Math.random() * 5)
   ],
   tokenId: `#${Math.floor(Math.random() * 1000)}`,
-  fromAddress: `0x${Math.floor(Math.random() * 10000)}`,
+  fromAddress: `0x${Math.floor(Math.random() * 10000000)}`,
   arrow: <BiRightArrowAlt color='#828282' />,
-  toAddress: `0x${Math.floor(Math.random() * 10000)}`,
+  toAddress: `0x${Math.floor(Math.random() * 10000000)}`,
   inPrice: `$${Math.floor(Math.random() * 100)}`,
   holdTime: `${Math.floor(Math.random() * 90)}\n minutes`,
 }))
