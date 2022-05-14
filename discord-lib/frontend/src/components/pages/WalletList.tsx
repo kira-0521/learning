@@ -8,6 +8,7 @@ import { TagFilter } from '../organisms/TagFilter'
 import { CheckboxGroup } from '../organisms/Forms/CheckboxGroup'
 import { PankuzuList } from '../atoms/Layouts/PankuzuList'
 import { TableList } from '../organisms/Layouts/TableLIst'
+import { InfiniteTable } from '../organisms/Layouts/InfiniteTable'
 
 export const WalletList: FC = () => {
   const [count, setCount] = useState(0)
@@ -58,7 +59,11 @@ export const WalletList: FC = () => {
           <TableList />
         </Box> */}
       <Button onClick={onOpen}>開閉</Button>
-      {isOpen && <DrawerExample onClose={onClose}>こ要素</DrawerExample>}
+      {isOpen && (
+        <DrawerExample onClose={onClose}>
+          <InfiniteTable />
+        </DrawerExample>
+      )}
       <Box mt={24}>
         {/* <TagFilter>
           <CheckboxGroup />
