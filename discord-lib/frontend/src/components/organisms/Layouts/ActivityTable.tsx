@@ -1,5 +1,6 @@
 import React from 'react'
 import { map } from 'lodash'
+import { Box } from '@chakra-ui/react'
 
 import {
   ACTIVITY_COLUMNS,
@@ -9,32 +10,34 @@ import '../../../assets/styles/activityTable.css'
 
 export const ActivityTable = () => {
   return (
-    <table>
-      <thead>
-        <tr>
-          {map(ACTIVITY_COLUMNS, (column) => (
-            <th
-              key={column.id}
-              style={{ minWidth: column.minWidth }}
-              className={column.id === 'inPrice' ? 'in-price' : ''}>
-              {column.data}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {map(ACTIVITY_DATA, (data) => (
-          <tr key={data.id}>
-            <td>{data.type}</td>
-            <td>{data.tokenId}</td>
-            <td>{data.fromAddress}</td>
-            <td>{data.arrow}</td>
-            <td>{data.toAddress}</td>
-            <td className='in-price'>{data.inPrice}</td>
-            <td>{data.holdTime}</td>
+    <Box overflowY='scroll' height='100%'>
+      <table>
+        <thead>
+          <tr>
+            {map(ACTIVITY_COLUMNS, (column) => (
+              <th
+                key={column.id}
+                style={{ minWidth: column.minWidth }}
+                className={column.className}>
+                {column.data}
+              </th>
+            ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {map(ACTIVITY_DATA, (data) => (
+            <tr key={data.id}>
+              <td>{data.id}</td>
+              <td className='token-id'>{data.tokenId}</td>
+              <td>{data.fromAddress}</td>
+              <td>{data.arrow}</td>
+              <td>{data.toAddress}</td>
+              <td className='in-price'>{data.inPrice}</td>
+              <td>{data.holdTime}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </Box>
   )
 }
