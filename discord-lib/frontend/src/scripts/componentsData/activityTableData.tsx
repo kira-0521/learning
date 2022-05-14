@@ -48,7 +48,18 @@ export const ACTIVITY_COLUMNS: Column[] = [
   },
 ]
 
-export const ACTIVITY_DATA = map(Array(200).fill(null), (_, i) => ({
+export type Data = {
+  id: number
+  type: string
+  tokenId: string
+  fromAddress: string
+  arrow: JSX.Element
+  toAddress: string
+  inPrice: string
+  holdTime: string
+}
+
+export const ACTIVITY_DATA: Data[] = map(Array(200).fill(null), (_, i) => ({
   id: i,
   type: ['Buy', 'Sell', 'Mint', 'Transfer_In', 'Transfer_Out'][
     Math.floor(Math.random() * 5)
