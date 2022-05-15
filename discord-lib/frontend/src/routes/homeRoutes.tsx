@@ -31,4 +31,9 @@ export const homeRoutes: RouteType[] = [
     element: <WatchList />,
     name: 'Watch List',
   },
+  {
+    path: '/test',
+    element: <WatchList />,
+    name: 'test',
+  },
 ]

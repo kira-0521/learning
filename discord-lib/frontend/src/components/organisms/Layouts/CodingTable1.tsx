@@ -4,9 +4,6 @@ import {
   TopData,
   convertToTopViewList,
 } from '../../../scripts/componentsData/walletTopData'
-
-import '../../../assets/styles/scrollFixedTableCommon.css'
-import '../../../assets/styles/topTable.css'
 import { Box } from '@chakra-ui/react'
 
 type Props = {

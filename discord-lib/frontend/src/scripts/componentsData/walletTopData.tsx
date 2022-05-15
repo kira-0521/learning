@@ -30,6 +30,87 @@ export interface TopData {
   unRealizedProfit: string
 }
 
+export const TOP_COLUMN = [
+  {
+    id: 'checkbox-th',
+    name: '',
+    minWidth: '40px',
+    className: 'checkbox-th',
+  },
+  {
+    id: 'rank-th',
+    name: 'Rank',
+    minWidth: '150px',
+    className: 'rank-th',
+  },
+  {
+    id: 'address-th',
+    name: 'Address',
+    minWidth: '150px',
+    className: 'address-th',
+  },
+  {
+    id: 'tag-th',
+    name: 'Tag',
+    minWidth: '150px',
+    className: 'tag-th',
+  },
+  {
+    id: 'totalProfit-th',
+    name: 'TotalProfit',
+    minWidth: '150px',
+    className: 'totalProfit-th',
+  },
+  {
+    id: 'totalAvgCost-th',
+    name: 'TotalAvgCost',
+    minWidth: '150px',
+    className: 'totalAvgCost-th',
+  },
+  {
+    id: 'portfolioValue-th',
+    name: 'PortfolioValue',
+    minWidth: '150px',
+    className: 'portfolioValue-th',
+  },
+  {
+    id: 'totalAvgGasCost',
+    name: 'TotalAvgGasCost',
+    minWidth: '150px',
+    className: 'totalAvgGasCost',
+  },
+  {
+    id: 'totalAvgHoldTime',
+    name: 'TotalAvgHoldTime',
+    minWidth: '150px',
+    className: 'totalAvgHoldTime',
+  },
+  {
+    id: 'nftsOwned',
+    name: 'NftsOwned',
+    minWidth: '150px',
+    className: 'nftsOwned',
+  },
+  {
+    id: 'profitPercentage-th',
+    name: 'ProfitPercentage',
+    minWidth: '150px',
+    className: 'profitPercentage-th',
+  },
+  {
+    id: 'realizedProfit-th',
+    name: 'RealizedProfit',
+    minWidth: '150px',
+    className: 'realizedProfit-th',
+  },
+  {
+    id: 'unRealizedProfit-th',
+    name: 'UnRealizedProfit',
+    minWidth: '150px',
+    className: 'unRealizedProfit-th',
+  },
+]
+
 export const TOP_DATA = (num?: number): TopData[] =>
   map(Array(100).fill(null), (_, i) => ({
     id: isNil(num) ? i : i + num,
