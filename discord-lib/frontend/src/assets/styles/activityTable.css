@@ -3,15 +3,15 @@ table {
   width: 100%;
 }
 
-tr {
-  white-space: nowrap;
-}
-
-th {
+thead tr {
   position: sticky;
   top: 0;
   z-index: 10;
   background-color: #585858;
+}
+
+tr {
+  white-space: nowrap;
 }
 
 th,
@@ -25,11 +25,15 @@ td {
   text-align: right;
 }
 
+.token-id-th,
+.in-price-th,
 .token-id-td,
 .in-price-td {
   position: relative;
 }
 
+.token-id-th::after,
+.in-price-th::after,
 .token-id-td::after,
 .in-price-td::after {
   content: '';
