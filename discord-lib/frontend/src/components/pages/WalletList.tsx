@@ -1,5 +1,5 @@
 import { FC, useEffect, useState, useCallback } from 'react'
-import { Box, useDisclosure, Button } from '@chakra-ui/react'
+import { Box, useDisclosure, Button, Slide } from '@chakra-ui/react'
 
 import { DrawerExample } from '../molecules/DrawerExample'
 import { TokenTable } from '../organisms/Layouts/TokenTable'
@@ -72,11 +72,11 @@ export const WalletList: FC = () => {
   return (
     <Box w='100%'>
       <Button onClick={onOpen}>開閉</Button>
-      {isOpen && (
+      <Slide direction='right' in={isOpen} style={{ zIndex: 10 }}>
         <DrawerExample onClose={onClose}>
           <TabsList tabList={wrappedNode} />
         </DrawerExample>
-      )}
+      </Slide>
     </Box>
   )
 }
