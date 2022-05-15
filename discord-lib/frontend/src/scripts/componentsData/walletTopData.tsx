@@ -1,6 +1,6 @@
 import React, { ReactNode, CSSProperties } from 'react'
 import { map, isNil } from 'lodash'
-import { Image, Checkbox, Flex } from '@chakra-ui/react'
+import { Image, Checkbox, Flex, Grid } from '@chakra-ui/react'
 
 import LEFT_DOWN from '../../assets/svg/arrow_left_down.svg'
 import LEFT_UP from '../../assets/svg/arrow_left_up.svg'
@@ -146,18 +146,18 @@ export const TOP_DATA = (num?: number): TopData[] =>
     rank: i,
     address: `0x${Math.floor(Math.random() * 10000000)}`,
     tag: (
-      <Flex gap='4px' flexWrap='wrap'>
-        <Image src={LEFT_DOWN} />
-        <Image src={LEFT_UP} />
-        <Image src={RIGHT_UP} />
-        <Image src={RIGHT_DOWN} />
-        <Image src={MULTIPLY} />
-        <Image src={PLUS} />
-        <Image src={WAVE_DOWN} />
-        <Image src={WAVE_LEFT} />
-        <Image src={WAVE_RIGHT} />
-        <Image src={WAVE_UP} />
-      </Flex>
+      <Grid gap='4px' templateColumns='repeat(5, 1fr)'>
+        <Image src={LEFT_DOWN} w='30px' />
+        <Image src={LEFT_UP} w='30px' />
+        <Image src={RIGHT_UP} w='30px' />
+        <Image src={RIGHT_DOWN} w='30px' />
+        <Image src={MULTIPLY} w='30px' />
+        <Image src={PLUS} w='30px' />
+        <Image src={WAVE_DOWN} w='30px' />
+        <Image src={WAVE_LEFT} w='30px' />
+        <Image src={WAVE_RIGHT} w='30px' />
+        <Image src={WAVE_UP} w='30px' />
+      </Grid>
     ),
     totalProfit: `$ ${Math.floor(Math.random() * 10000000)}`,
     totalAvgCost: `$ ${Math.floor(Math.random() * 10000000)}`,
