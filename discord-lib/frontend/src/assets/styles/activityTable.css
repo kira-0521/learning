@@ -1,3 +1,12 @@
+/* 指定しないと画面広げた時に一定値で止まる */
+table {
+  width: 100%;
+}
+
+tr {
+  white-space: nowrap;
+}
+
 th {
   position: sticky;
   top: 0;
@@ -9,8 +18,27 @@ th,
 td {
   text-align: left;
   padding: 0 12px;
+  padding: 10px 0;
 }
 
 .in-price {
   text-align: right;
+}
+
+.token-id-td,
+.in-price-td {
+  position: relative;
+}
+
+.token-id-td::after,
+.in-price-td::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10%;
+  /* 上下paddingマイナス */
+  height: calc(100% - 20px);
+  width: 3px;
+  background-color: white;
 }
