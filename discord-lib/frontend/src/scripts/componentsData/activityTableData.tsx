@@ -1,4 +1,4 @@
-import { map } from 'lodash'
+import { map, isNil } from 'lodash'
 import React from 'react'
 import { BiRightArrowAlt } from 'react-icons/bi'
 import { Column } from '../../@types/table'
@@ -48,7 +48,7 @@ export const ACTIVITY_COLUMNS: Column[] = [
   },
 ]
 
-export type Data = {
+export type ActivityData = {
   id: number
   type: string
   tokenId: string
@@ -59,15 +59,16 @@ export type Data = {
   holdTime: string
 }
 
-export const ACTIVITY_DATA: Data[] = map(Array(200).fill(null), (_, i) => ({
-  id: i,
-  type: ['Buy', 'Sell', 'Mint', 'Transfer_In', 'Transfer_Out'][
-    Math.floor(Math.random() * 5)
-  ],
-  tokenId: `#${Math.floor(Math.random() * 1000)}`,
-  fromAddress: `0x${Math.floor(Math.random() * 10000000)}`,
-  arrow: <BiRightArrowAlt color='#828282' />,
-  toAddress: `0x${Math.floor(Math.random() * 10000000)}`,
-  inPrice: `$${Math.floor(Math.random() * 100)}`,
-  holdTime: `${Math.floor(Math.random() * 90)}\n minutes`,
-}))
+export const ACTIVITY_DATA = (num?: number): ActivityData[] =>
+  map(Array(100).fill(null), (_, i) => ({
+    id: isNil(num) ? i : i + num,
+    type: ['Buy', 'Sell', 'Mint', 'Transfer_In', 'Transfer_Out'][
+      Math.floor(Math.random() * 5)
+    ],
+    tokenId: `#${Math.floor(Math.random() * 1000)}`,
+    fromAddress: `0x${Math.floor(Math.random() * 10000000)}`,
+    arrow: <BiRightArrowAlt color='#828282' />,
+    toAddress: `0x${Math.floor(Math.random() * 10000000)}`,
+    inPrice: `$${Math.floor(Math.random() * 100)}`,
+    holdTime: `${Math.floor(Math.random() * 90)}\n minutes`,
+  }))

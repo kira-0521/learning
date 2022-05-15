@@ -1,27 +1,28 @@
 import React, { useEffect, useState, FC } from 'react'
 import { map, isNil } from 'lodash'
-import { Box } from '@chakra-ui/react'
+import { Box, Spinner } from '@chakra-ui/react'
 import InfiniteScroll from 'react-infinite-scroller'
 
 import {
   ACTIVITY_COLUMNS,
-  Data,
+  ActivityData,
 } from '../../../scripts/componentsData/activityTableData'
 import '../../../assets/styles/activityTable.css'
 import { getDomHight } from '../../../scripts/utils/dom'
 import { DRAWER_STYLE_FOR_SUBTRACTION } from '../../../scripts/const'
 
 type Props = {
-  viewList: Data[]
+  viewList: ActivityData[]
+  loadMoreFetch: (page: number) => void
+  hasMoreLoad: boolean
 }
 
-export const ActivityTable: FC<Props> = ({ viewList }) => {
+export const ActivityTable: FC<Props> = ({
+  viewList,
+  loadMoreFetch,
+  hasMoreLoad,
+}) => {
   const [scrollDomHeight, setScrollDomHeight] = useState(0)
-  const [bodyList, setBodyList] = useState<Data[]>([])
-
-  const loadMore = (page: number) => {
-    console.log('page', page)
-  }
 
   useEffect(() => {
     let isMounted = true
@@ -32,7 +33,6 @@ export const ActivityTable: FC<Props> = ({ viewList }) => {
 
     if (isMounted) {
       !isNil(domHeight) && setScrollDomHeight(domHeight)
-      setBodyList(viewList)
     }
 
     return () => {
@@ -44,13 +44,9 @@ export const ActivityTable: FC<Props> = ({ viewList }) => {
     <Box overflowY='scroll' height={`${scrollDomHeight}px`}>
       <InfiniteScroll
         pageStart={1}
-        loadMore={loadMore}
-        hasMore={true || false}
-        loader={
-          <div className='loader' key={0}>
-            Loading ...
-          </div>
-        }
+        loadMore={loadMoreFetch}
+        hasMore={hasMoreLoad}
+        loader={<Spinner ml='15px' mt='10px' />}
         useWindow={false}>
         <table>
           <thead>
@@ -66,9 +62,9 @@ export const ActivityTable: FC<Props> = ({ viewList }) => {
             </tr>
           </thead>
           <tbody>
-            {map(bodyList, (data) => (
-              <tr key={data.id}>
-                <td>{data.id}</td>
+            {map(viewList, (data) => (
+              <tr key={data.toAddress}>
+                <td>{data.type}</td>
                 <td className='token-id'>{data.tokenId}</td>
                 <td>{data.fromAddress}</td>
                 <td>{data.arrow}</td>
