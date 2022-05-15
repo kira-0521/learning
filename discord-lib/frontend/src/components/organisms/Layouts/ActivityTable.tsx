@@ -65,11 +65,11 @@ export const ActivityTable: FC<Props> = ({
             {map(viewList, (data) => (
               <tr key={data.toAddress}>
                 <td>{data.type}</td>
-                <td className='token-id'>{data.tokenId}</td>
+                <td className='token-id-td'>{data.tokenId}</td>
                 <td>{data.fromAddress}</td>
                 <td>{data.arrow}</td>
                 <td>{data.toAddress}</td>
-                <td className='in-price'>{data.inPrice}</td>
+                <td className='in-price-td'>{data.inPrice}</td>
                 <td>{data.holdTime}</td>
               </tr>
             ))}
