@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, CSSProperties } from 'react'
 import { map, isNil } from 'lodash'
 import { Image, Checkbox, Flex } from '@chakra-ui/react'
 
@@ -34,79 +34,107 @@ export const TOP_COLUMN = [
   {
     id: 'checkbox-th',
     name: '',
-    minWidth: '40px',
     className: 'checkbox-th',
+    style: {
+      minWidth: '40px',
+    } as CSSProperties,
   },
   {
     id: 'rank-th',
     name: 'Rank',
-    minWidth: '150px',
     className: 'rank-th',
+    style: {
+      minWidth: '80px',
+      textAlign: 'center',
+    } as CSSProperties,
   },
   {
     id: 'address-th',
     name: 'Address',
-    minWidth: '150px',
+    style: {
+      minWidth: '150px',
+    } as CSSProperties,
     className: 'address-th',
   },
   {
     id: 'tag-th',
     name: 'Tag',
-    minWidth: '150px',
+    style: {
+      minWidth: '150px',
+    } as CSSProperties,
     className: 'tag-th',
   },
   {
     id: 'totalProfit-th',
     name: 'TotalProfit',
-    minWidth: '150px',
+    style: {
+      minWidth: '150px',
+      backgroundColor: 'teal',
+    } as CSSProperties,
     className: 'totalProfit-th',
   },
   {
     id: 'totalAvgCost-th',
     name: 'TotalAvgCost',
-    minWidth: '150px',
+    style: {
+      minWidth: '150px',
+    } as CSSProperties,
     className: 'totalAvgCost-th',
   },
   {
     id: 'portfolioValue-th',
     name: 'PortfolioValue',
-    minWidth: '150px',
+    style: {
+      minWidth: '150px',
+    } as CSSProperties,
     className: 'portfolioValue-th',
   },
   {
     id: 'totalAvgGasCost',
     name: 'TotalAvgGasCost',
-    minWidth: '150px',
+    style: {
+      minWidth: '150px',
+    } as CSSProperties,
     className: 'totalAvgGasCost',
   },
   {
     id: 'totalAvgHoldTime',
     name: 'TotalAvgHoldTime',
-    minWidth: '150px',
+    style: {
+      minWidth: '150px',
+    } as CSSProperties,
     className: 'totalAvgHoldTime',
   },
   {
     id: 'nftsOwned',
     name: 'NftsOwned',
-    minWidth: '150px',
+    style: {
+      minWidth: '150px',
+    } as CSSProperties,
     className: 'nftsOwned',
   },
   {
     id: 'profitPercentage-th',
     name: 'ProfitPercentage',
-    minWidth: '150px',
+    style: {
+      minWidth: '150px',
+    } as CSSProperties,
     className: 'profitPercentage-th',
   },
   {
     id: 'realizedProfit-th',
     name: 'RealizedProfit',
-    minWidth: '150px',
+    style: {
+      minWidth: '150px',
+    } as CSSProperties,
     className: 'realizedProfit-th',
   },
   {
     id: 'unRealizedProfit-th',
     name: 'UnRealizedProfit',
-    minWidth: '150px',
+    style: {
+      minWidth: '150px',
+    } as CSSProperties,
     className: 'unRealizedProfit-th',
   },
 ]

@@ -65,7 +65,7 @@ export const CodingTable2: FC<Props> = ({ dataList }) => {
         <SThead>
           <SHTr>
             {map(TOP_COLUMN, (column) => (
-              <STh key={column.id} style={{ minWidth: column.minWidth }}>
+              <STh key={column.id} style={column.style}>
                 {column.name}
               </STh>
             ))}
