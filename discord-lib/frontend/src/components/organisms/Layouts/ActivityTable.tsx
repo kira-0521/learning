@@ -7,7 +7,7 @@ import {
   ACTIVITY_COLUMNS,
   ActivityData,
 } from '../../../scripts/componentsData/activityTableData'
-import '../../../assets/styles/activityTable.css'
+// import '../../../assets/styles/activityTable.css'
 import { getDomHight } from '../../../scripts/utils/dom'
 import { DRAWER_STYLE_FOR_SUBTRACTION } from '../../../scripts/const'
 
