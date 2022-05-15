@@ -14,36 +14,35 @@ type Props = {
 
 // styled components 定義
 const STable = styled.table`
-  position: sticky;
-  top: 0;
   width: 100%;
   background-color: #414141;
   overflow: auto;
 `
 const SThead = styled.thead`
-  position: sticky;
-  top: 0;
-  z-index: 10;
   background-color: #414141;
 `
 const STbody = styled.tbody`
   background-color: #414141;
 `
 const SHTr = styled.tr`
-  position: sticky;
-  top: 0;
+  padding-right: 30px;
 `
 const STh = styled.th`
   padding: 10px 0;
   text-align: left;
   position: sticky;
+  z-index: 100;
   top: 0;
-  left: 0;
+  background-color: #414141;
+`
+// スクロールバーとの間
+const SEndCell = styled.td`
+  min-width: 30px;
 `
 
 export const CodingTable2: FC<Props> = ({ dataList }) => {
   return (
-    <Box overflow='scroll' width='100'>
+    <Box overflow='scroll' width='100%' height='60vh'>
       <STable>
         <SThead>
           <SHTr>
@@ -52,11 +51,12 @@ export const CodingTable2: FC<Props> = ({ dataList }) => {
                 {column.name}
               </STh>
             ))}
+            <SEndCell></SEndCell>
           </SHTr>
         </SThead>
         <STbody>
           {map(dataList, (data: TopData) => (
-            <tr key={data.address}>
+            <SHTr key={data.address}>
               <td>{data.checkbox}</td>
               <td>{data.rank}</td>
               <td>{data.address}</td>
@@ -70,7 +70,8 @@ export const CodingTable2: FC<Props> = ({ dataList }) => {
               <td>{data.profitPercentage}</td>
               <td>{data.realizedProfit}</td>
               <td>{data.unRealizedProfit}</td>
-            </tr>
+              <SEndCell></SEndCell>
+            </SHTr>
           ))}
         </STbody>
       </STable>
