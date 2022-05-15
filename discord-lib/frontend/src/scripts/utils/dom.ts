@@ -22,4 +22,7 @@ export const getDomHight = (
     : windowHeight - rejectDomsCalcHeight - otherRejectHeight
 }
 
-export const getStickyLeft = () => {}
+export const getStickyLeft = (elId: string) => {
+  const targetDom = document.getElementById(elId)
+  return isNil(targetDom) ? 0 : targetDom.offsetWidth
+}

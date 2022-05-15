@@ -144,7 +144,7 @@ export const TOP_DATA = (num?: number): TopData[] =>
     id: isNil(num) ? i : i + num,
     checkbox: <Checkbox />,
     rank: i,
-    address: `0x${Math.floor(Math.random() * 10000000)}`,
+    address: `0x${Math.floor(Math.random() * 10000000)}00000000000000000`,
     tag: (
       <Grid gap='4px' templateColumns='repeat(5, 1fr)'>
         <Image src={LEFT_DOWN} w='30px' />
