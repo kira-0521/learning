@@ -1,0 +1,36 @@
+table {
+  display: flex;
+  background-color: teal;
+  padding-right: 10px;
+}
+
+tr {
+  white-space: nowrap;
+}
+
+thead,
+tbody {
+  display: flex;
+}
+
+tbody {
+  overflow-x: scroll;
+}
+
+thead tr th,
+tbody tr th {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: teal;
+}
+
+th,
+td {
+  display: block;
+  padding: 10px 0;
+}
+
+th {
+  min-width: 150px;
+}
