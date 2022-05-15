@@ -21,3 +21,5 @@ export const getDomHight = (
     ? windowHeight - rejectDomsCalcHeight
     : windowHeight - rejectDomsCalcHeight - otherRejectHeight
 }
+
+export const getStickyLeft = () => {}

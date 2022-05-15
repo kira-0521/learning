@@ -7,7 +7,9 @@ import { TOP_DATA } from '../../scripts/componentsData/walletTopData'
 export const TableTest = () => {
   return (
     <Grid templateColumns='300px 1fr' w='100%'>
-      <Box height='300px'>固定要素</Box>
+      <Box height='300px' bg='teal'>
+        固定要素
+      </Box>
       <CodingTable2 dataList={TOP_DATA()} />
     </Grid>
   )
