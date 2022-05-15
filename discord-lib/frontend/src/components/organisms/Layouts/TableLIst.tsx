@@ -1,8 +1,6 @@
 import { useMemo, FC, ChangeEvent, ReactNode } from 'react'
 import { sample } from '../../../array'
 
-import './table.css'
-
 export const TableList: FC = () => {
   return (
     <table>
