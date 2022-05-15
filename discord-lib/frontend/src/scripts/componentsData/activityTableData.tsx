@@ -67,7 +67,7 @@ export const ACTIVITY_DATA = (num?: number): ActivityData[] =>
     ],
     tokenId: `#${Math.floor(Math.random() * 1000)}`,
     fromAddress: `0x${Math.floor(Math.random() * 10000000)}`,
-    arrow: <BiRightArrowAlt color='#828282' />,
+    arrow: <BiRightArrowAlt color='#828282' key={i} />,
     toAddress: `0x${Math.floor(Math.random() * 10000000)}`,
     inPrice: `$${Math.floor(Math.random() * 100)}`,
     holdTime: `${Math.floor(Math.random() * 90)}\n minutes`,

@@ -46,9 +46,9 @@ export const ActivityTable: FC<Props> = ({
         pageStart={1}
         loadMore={loadMoreFetch}
         hasMore={hasMoreLoad}
-        loader={<Spinner ml='15px' mt='10px' />}
+        loader={<Spinner key={0} ml='15px' mt='10px' />}
         useWindow={false}>
-        <table>
+        <table key={1}>
           <thead>
             <tr>
               {map(ACTIVITY_COLUMNS, (column) => (
@@ -62,8 +62,8 @@ export const ActivityTable: FC<Props> = ({
             </tr>
           </thead>
           <tbody>
-            {map(viewList, (data) => (
-              <tr key={data.toAddress}>
+            {map(viewList, (data, i) => (
+              <tr key={`${i}_${data.fromAddress}`}>
                 <td>{data.type}</td>
                 <td className='token-id-td'>{data.tokenId}</td>
                 <td>{data.fromAddress}</td>
