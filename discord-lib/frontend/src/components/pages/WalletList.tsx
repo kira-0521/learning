@@ -72,11 +72,19 @@ export const WalletList: FC = () => {
   return (
     <Box w='100%'>
       <Button onClick={onOpen}>開閉</Button>
-      <Slide direction='right' in={isOpen} style={{ zIndex: 10 }}>
+      {/* chakra */}
+      {/* <Slide direction='right' in={isOpen} style={{ zIndex: 10 }}> */}
+      {/* <DrawerExample onClose={onClose}>
+        <TabsList tabList={wrappedNode} />
+      </DrawerExample> */}
+      {/* </Slide> */}
+
+      {/* 自前 */}
+      {!!isOpen && (
         <DrawerExample onClose={onClose}>
           <TabsList tabList={wrappedNode} />
         </DrawerExample>
-      </Slide>
+      )}
     </Box>
   )
 }

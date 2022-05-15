@@ -18,7 +18,9 @@ export const DrawerExample: FC<Props> = (props) => {
         py='40px'
         px='40px'
         h='100vh'
-        w='65%'>
+        w='65%'
+        transition='all'
+        transitionDelay='0.5s'>
         <Box>
           <Flex
             id='drawer-header'
