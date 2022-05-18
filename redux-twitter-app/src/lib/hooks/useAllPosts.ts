@@ -10,7 +10,6 @@ export const useAllPosts = () => {
       avatar: '',
       image: '',
       text: '',
-      timestamp: null,
       username: '',
     },
   ])
@@ -26,7 +25,6 @@ export const useAllPosts = () => {
           avatar: doc.data().avatar,
           image: doc.data().image,
           text: doc.data().text,
-          timestamp: doc.data().timestamp,
           username: doc.data().username,
         }))
         setPosts(allPosts)

@@ -6,7 +6,6 @@ type Props = {
   avatar: string
   image: string
   text: string
-  timestamp: firebase.firestore.FieldValue | null
   username: string
 }
 

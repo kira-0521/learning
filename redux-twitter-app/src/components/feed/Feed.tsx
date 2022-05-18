@@ -55,7 +55,6 @@ export const Feed: FC = () => {
           username={post.username}
           avatar={post.avatar}
           image={post.image}
-          timestamp={post.timestamp}
           text={post.text}
         />
       ))}
