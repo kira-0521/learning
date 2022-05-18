@@ -1,12 +1,12 @@
 import React, { FC, useEffect } from 'react'
+import { map } from 'lodash'
+import { LinearProgress } from '@material-ui/core'
 
 import styles from './feed.module.css'
-import { logout } from '../../lib/firebase/auth'
 import { AlertToast } from '../parts/AlertToast'
 import { TweetInput } from '../forms/TweetInput'
 import { useMessage } from '../../lib/hooks/useMessage'
 import { useAllPosts } from '../../lib/hooks/useAllPosts'
-import { map } from 'lodash'
 import { Post } from '../post/Post'
 
 export const Feed: FC = () => {
@@ -35,10 +35,6 @@ export const Feed: FC = () => {
     }
   }, [])
 
-  const onClickLogout = async () => {
-    await logout()
-  }
-
   return (
     <div className={styles.feed}>
       <TweetInput />
@@ -48,16 +44,26 @@ export const Feed: FC = () => {
         message={showMessage}
         alertType={type}
       />
-      {map(posts, (post) => (
-        <Post
-          key={post.id}
-          postId={post.id}
-          username={post.username}
-          avatar={post.avatar}
-          image={post.image}
-          text={post.text}
-        />
-      ))}
+      {loading ? (
+        <LinearProgress />
+      ) : (
+        <>
+          {posts[0].id && (
+            <>
+              {map(posts, (post) => (
+                <Post
+                  key={post.id}
+                  postId={post.id}
+                  username={post.username}
+                  avatar={post.avatar}
+                  image={post.image}
+                  text={post.text}
+                />
+              ))}
+            </>
+          )}
+        </>
+      )}
     </div>
   )
 }
