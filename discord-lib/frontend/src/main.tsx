@@ -1,7 +1,7 @@
 import React from 'react'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
-import { DefaultChakraTheme } from '@chakra-ui/react'
 import ReactDOM from 'react-dom/client'
+import 'materialize-css'
 
 import App from './App'
 import './index.css'
