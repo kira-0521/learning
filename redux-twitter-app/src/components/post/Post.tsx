@@ -1,13 +1,14 @@
-import React, { FC, FormEvent, useState } from 'react'
+import React, { FC, FormEvent, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import firebase from 'firebase/app'
-import { Avatar } from '@material-ui/core'
+import { isEmpty, map } from 'lodash'
+import { Avatar, makeStyles } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send'
 
 import styles from './Post.module.css'
-import { db } from '../../firebaseInit'
 import { selectUser } from '../../features/userSlice'
-import { isEmpty } from 'lodash'
+import { Comment } from '../../@types/api'
+import { tweetComments } from '../../lib/firebase/db'
 
 type Props = {
   postId: string
@@ -17,12 +18,46 @@ type Props = {
   username: string
 }
 
-export const Post: FC<Props> = (props) => {
+const useStyles = makeStyles((theme) => ({
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+    marginRight: theme.spacing(1),
+  },
+}))
+
+export const Post: FC<Props> = ({ postId, avatar, image, text, username }) => {
+  const classes = useStyles()
   const user = useSelector(selectUser)
   const [comment, setComment] = useState('')
+  const [comments, setComments] = useState<Comment[]>([
+    {
+      id: '',
+      avatar: '',
+      text: '',
+      username: '',
+    },
+  ])
+
+  useEffect(() => {
+    const unSub = tweetComments(postId).onSnapshot((snapshot) => {
+      setComments(
+        map(snapshot.docs, (doc) => ({
+          id: doc.id,
+          avatar: doc.data().avatar,
+          text: doc.data().text,
+          username: doc.data().username,
+        }))
+      )
+    })
+    return () => {
+      unSub()
+    }
+  }, [postId])
+
   const newComment = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    db.collection('posts').doc(props.postId).collection('comments').add({
+    tweetComments(postId).add({
       avatar: user.photoUrl,
       username: user.displayName,
       text: comment,
@@ -33,26 +68,35 @@ export const Post: FC<Props> = (props) => {
   return (
     <div className={styles.post}>
       <div className={styles.post_avatar}>
-        <Avatar src={props.avatar} />
+        <Avatar src={avatar} />
       </div>
 
       <div className={styles.post_body}>
         <div>
           <div className={styles.post_header}>
             <h3>
-              <span className={styles.post_headerUser}>@{props.username}</span>
+              <span className={styles.post_headerUser}>@{username}</span>
             </h3>
           </div>
 
           <div className={styles.post_tweet}>
-            <p>{props.text}</p>
+            <p>{text}</p>
           </div>
         </div>
-        {props.image && (
+        {image && (
           <div className={styles.post_tweetImage}>
-            <img src={props.image} alt='tweet' />
+            <img src={image} alt='tweet' />
           </div>
         )}
+
+        {comments.map((com) => (
+          <div key={com.id} className={styles.post_comment}>
+            <Avatar src={com.avatar} className={classes.small} />
+
+            <span className={styles.post_commentUser}>@{com.username}</span>
+            <span className={styles.post_commentText}>{com.text} </span>
+          </div>
+        ))}
         <form onSubmit={newComment}>
           <div className={styles.post_form}>
             <input

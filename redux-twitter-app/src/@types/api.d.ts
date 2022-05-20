@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
 
-interface Comment {
+export interface Comment {
   id: string
   avatar: string
   text: string
