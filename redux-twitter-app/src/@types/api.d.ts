@@ -1,5 +1,3 @@
-import firebase from 'firebase/app'
-
 export interface Comment {
   id: string
   avatar: string

@@ -4,6 +4,7 @@ import firebase from 'firebase/app'
 import { isEmpty, map } from 'lodash'
 import { Avatar, makeStyles } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send'
+import MessageIcon from '@material-ui/icons/Message'
 
 import styles from './Post.module.css'
 import { selectUser } from '../../features/userSlice'
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 export const Post: FC<Props> = ({ postId, avatar, image, text, username }) => {
   const classes = useStyles()
   const user = useSelector(selectUser)
+  const [openComments, setOpenComments] = useState(false)
   const [comment, setComment] = useState('')
   const [comments, setComments] = useState<Comment[]>([
     {
@@ -89,37 +91,46 @@ export const Post: FC<Props> = ({ postId, avatar, image, text, username }) => {
           </div>
         )}
 
-        {comments.map((com) => (
-          <div key={com.id} className={styles.post_comment}>
-            <Avatar src={com.avatar} className={classes.small} />
+        <MessageIcon
+          className={styles.post_commentIcon}
+          onClick={() => setOpenComments(!openComments)}
+        />
 
-            <span className={styles.post_commentUser}>@{com.username}</span>
-            <span className={styles.post_commentText}>{com.text} </span>
-          </div>
-        ))}
-        <form onSubmit={newComment}>
-          <div className={styles.post_form}>
-            <input
-              className={styles.post_input}
-              type='text'
-              placeholder='Type new comment...'
-              value={comment}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setComment(e.target.value)
-              }
-            />
-            <button
-              disabled={isEmpty(comment)}
-              className={
-                !isEmpty(comment)
-                  ? styles.post_button
-                  : styles.post_buttonDisable
-              }
-              type='submit'>
-              <SendIcon className={styles.post_sendIcon} />
-            </button>
-          </div>
-        </form>
+        {openComments && (
+          <>
+            {comments.map((com) => (
+              <div key={com.id} className={styles.post_comment}>
+                <Avatar src={com.avatar} className={classes.small} />
+
+                <span className={styles.post_commentUser}>@{com.username}</span>
+                <span className={styles.post_commentText}>{com.text} </span>
+              </div>
+            ))}
+            <form onSubmit={newComment}>
+              <div className={styles.post_form}>
+                <input
+                  className={styles.post_input}
+                  type='text'
+                  placeholder='Type new comment...'
+                  value={comment}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setComment(e.target.value)
+                  }
+                />
+                <button
+                  disabled={isEmpty(comment)}
+                  className={
+                    !isEmpty(comment)
+                      ? styles.post_button
+                      : styles.post_buttonDisable
+                  }
+                  type='submit'>
+                  <SendIcon className={styles.post_sendIcon} />
+                </button>
+              </div>
+            </form>
+          </>
+        )}
       </div>
     </div>
   )
