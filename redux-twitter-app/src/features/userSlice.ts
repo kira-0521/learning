@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RootState } from '../app/store'
-import { User, UserContent } from '../@types/user'
+import { User, UserContent } from '../@types/api'
 
 export const userSlice = createSlice({
   name: 'user',
