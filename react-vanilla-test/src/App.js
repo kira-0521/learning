@@ -1,16 +1,12 @@
-import React from 'react'
-import logo from './logo.svg'
-import { Counter } from './features/counter/Counter'
-import './App.css'
+import { BadgeCheckIcon } from '@heroicons/react/solid'
+import { Layout } from './components/Layout'
 
 function App() {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <Counter />
-      </header>
-    </div>
+    <Layout>
+      <p className="my-5 text-xl font-bold">React18 basic lesson</p>
+      <BadgeCheckIcon className="h-12 w-12 text-blue-500" />
+    </Layout>
   )
 }
 
