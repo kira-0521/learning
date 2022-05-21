@@ -9,8 +9,15 @@ export const AutoBatch = () => {
   const [users, setUsers] = useState([])
 
   const clickHandler = () => {
-    setCount((count) => count + 1)
-    setFetchCount((fetchCount) => fetchCount + 1)
+    // NORMAL: normal state update
+    // setCount((count) => count + 1)
+    // setFetchCount((fetchCount) => fetchCount + 1)
+
+    // PROMISE: promise state update
+    axios.get('https://jsonplaceholder.typicode.com/users').then((res) => {
+      setUsers(res.data)
+      setFetchCount((fetchCount) => fetchCount + 1)
+    })
   }
 
   console.log('rendered auto-batch')
