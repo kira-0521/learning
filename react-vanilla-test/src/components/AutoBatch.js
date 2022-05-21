@@ -15,8 +15,15 @@ export const AutoBatch = () => {
 
     // PROMISE: promise state update
     axios.get('https://jsonplaceholder.typicode.com/users').then((res) => {
-      setUsers(res.data)
-      setFetchCount((fetchCount) => fetchCount + 1)
+      // FLUSHSYNC Automatic batching 無効
+      flushSync(() => {
+        setUsers(res.data)
+      })
+      flushSync(() => {
+        setFetchCount((fetchCount) => fetchCount + 1)
+      })
+      // setUsers(res.data)
+      // setFetchCount((fetchCount) => fetchCount + 1)
     })
   }
 
