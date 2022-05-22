@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AutoBatch } from './components/AutoBatch'
+import { SuspenseDemo } from './components/SuspenseDemo'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,9 +32,11 @@ root.render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/autobatch" element={<AutoBatch />} />
+          <Route path="/suspense" element={<SuspenseDemo />} />
         </Routes>
       </BrowserRouter>
     </Provider>
+    <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>
   // {/* </React.StrictMode> */}
 )
