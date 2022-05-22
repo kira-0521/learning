@@ -13,5 +13,8 @@ export const useQueryTasks = () => {
   return useQuery({
     queryKey: ['tasks'],
     queryFn: getTasks,
+    // ２秒間キャッシュを新しいデータとして見る
+    // ２秒経つと再フェッチ
+    staleTime: 2000,
   })
 }

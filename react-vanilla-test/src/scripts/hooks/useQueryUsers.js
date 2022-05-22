@@ -13,5 +13,6 @@ export const useQueryUsers = () => {
   return useQuery({
     queryKey: ['users'],
     queryFn: getUsers,
+    staleTime: Infinity,
   })
 }
