@@ -10,27 +10,34 @@ import { useAllPosts } from '../../lib/hooks/useAllPosts'
 import { Post } from '../post/Post'
 
 export const Feed: FC = () => {
+  /*
+    Hooks
+  */
   const { onFloatAlert, showMessage, type, isToast, onCloseToast } =
     useMessage()
   const { posts, loading, getAllPosts } = useAllPosts()
 
+  /*
+    Fetch Posts List
+  */
   useEffect(() => {
-    const loginSuccessShowMessage = () => {
+    let isMounted = true
+
+    if (isMounted) {
       onFloatAlert({ message: 'ログインに成功しました。', type: 'success' })
     }
-    loginSuccessShowMessage()
 
     const getPostsList = async () => {
       await getAllPosts().catch((e: unknown) => {
         if (e instanceof Error) {
-          onFloatAlert({ message: e.message, type: 'error' })
+          isMounted && onFloatAlert({ message: e.message, type: 'error' })
         }
       })
     }
     getPostsList()
 
     return () => {
-      loginSuccessShowMessage()
+      isMounted = false
       getPostsList()
     }
   }, [])

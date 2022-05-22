@@ -33,12 +33,18 @@ import { AlertToast } from '../parts/AlertToast'
 import { updateUserProfile } from '../../features/userSlice'
 
 export const Auth = () => {
+  /*
+    Hooks
+  */
   const classes = useStyles()
   const dispatch = useDispatch()
   const { fetchResetPassword } = useResetPassword()
   const { onFloatAlert, showMessage, type, isToast, onCloseToast } =
     useMessage()
 
+  /*
+    State
+  */
   const [loginState, setLoginState] = useState({
     email: '',
     password: '',
@@ -49,17 +55,35 @@ export const Auth = () => {
   const [isModal, setIsModal] = useState(false)
   const [resetEmail, setResetEmail] = useState('')
 
+  /*
+    toggle login state
+  */
+  const onClickToggleIsLogin = useCallback(
+    () => setIsLogin(!isLogin),
+    [isLogin, setIsLogin]
+  )
+
+  /*
+    email, password change handler
+  */
   const loginStateChangedHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       setLoginState({ ...loginState, [e.target.name]: e.target.value })
     },
     [loginState, setLoginState]
   )
+
+  /*
+    username change handler
+  */
   const onChangeUsername = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value),
     [username]
   )
 
+  /*
+    Login handler
+  */
   const onClickEmailLogin = useCallback(async () => {
     try {
       await signInWithEmail(loginState.email, loginState.password)
@@ -70,6 +94,9 @@ export const Auth = () => {
     }
   }, [loginState.email, loginState.password, loginStateChangedHandler])
 
+  /*
+    Register handler
+  */
   const onClickRegisterUser = useCallback(async () => {
     try {
       const authUser = await signUpWithEmail(
@@ -105,14 +132,12 @@ export const Auth = () => {
     }
   }, [loginState.email, loginState.password, loginStateChangedHandler])
 
+  /*
+    Google login handler
+  */
   const onClickGoogleLogin = useCallback(async () => {
     await signInGoogle()
   }, [])
-
-  const onClickToggleIsLogin = useCallback(
-    () => setIsLogin(!isLogin),
-    [isLogin, setIsLogin]
-  )
 
   return (
     <>
