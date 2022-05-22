@@ -1,4 +1,4 @@
-import { useQueryComments } from '../hooks/useQueryComments'
+import { useQueryComments } from '../scripts/hooks/useQueryComments'
 
 export const FetchComments = () => {
   const { data } = useQueryComments()

@@ -1,4 +1,4 @@
-import { useQueryTasks } from '../hooks/useQueryTasks'
+import { useQueryTasks } from '../scripts/hooks/useQueryTasks'
 
 export const FetchTasks = () => {
   const { data } = useQueryTasks()

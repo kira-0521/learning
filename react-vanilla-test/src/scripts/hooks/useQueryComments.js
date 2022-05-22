@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useQuery } from 'react-query'
-import { delay } from '../utils/fetchDelay'
+import { delay } from '../utils/delay'
 
 const getComments = async () => {
   const { data } = await axios

@@ -1,4 +1,4 @@
-import { useQueryUsers } from '../hooks/useQueryUsers'
+import { useQueryUsers } from '../scripts/hooks/useQueryUsers'
 
 export const FetchUsers = () => {
   const { data } = useQueryUsers()
