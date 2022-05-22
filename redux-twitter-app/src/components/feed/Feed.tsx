@@ -1,6 +1,7 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, Suspense } from 'react'
 import { map } from 'lodash'
 import { LinearProgress } from '@material-ui/core'
+import { ErrorBoundary } from 'react-error-boundary'
 
 import styles from './feed.module.css'
 import { AlertToast } from '../parts/AlertToast'
@@ -15,7 +16,7 @@ export const Feed: FC = () => {
   */
   const { onFloatAlert, showMessage, type, isToast, onCloseToast } =
     useMessage()
-  const { posts, loading, getAllPosts } = useAllPosts()
+  const { posts, getAllPosts } = useAllPosts()
 
   /*
     Fetch Posts List
@@ -51,10 +52,8 @@ export const Feed: FC = () => {
         message={showMessage}
         alertType={type}
       />
-      {loading ? (
-        <LinearProgress />
-      ) : (
-        <>
+      <ErrorBoundary fallback={<div>error</div>}>
+        <Suspense fallback={<LinearProgress />}>
           {posts[0].id && (
             <>
               {map(posts, (post) => (
@@ -69,8 +68,8 @@ export const Feed: FC = () => {
               ))}
             </>
           )}
-        </>
-      )}
+        </Suspense>
+      </ErrorBoundary>
     </div>
   )
 }
