@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useTransition } from 'react'
 import axios from 'axios'
 import { NavBar } from './NavBar'
 
 export const Concurrent = () => {
   const [photos, setPhotos] = useState([])
-  const [searchKey, setSearchKey] = useState('')
+  const [input, setInput] = useState('') // 緊急度の高い
+  const [searchKey, setSearchKey] = useState('') // 緊急度の低い
+  const [isPending, startTransition] = useTransition()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,18 +19,25 @@ export const Concurrent = () => {
     return photo.title.includes(searchKey)
   })
   const updateHandler = (e) => {
-    setSearchKey(e.target.value)
+    setInput(e.target.value)
+    // 緊急度の高くないstate
+    startTransition(() => setSearchKey(e.target.value))
   }
   return (
     <div className="flex flex-col items-center font-mono text-gray-600">
       <NavBar />
-      <p className={`my-3 text-xl font-bold ${'text-blue-500'}`}>
+      <p
+        className={`my-3 text-xl font-bold ${
+          // stateの差分に応じたステータス
+          isPending ? 'text-pink-500' : 'text-blue-500'
+        }`}
+      >
         startTransition (concurrent feature)
       </p>
       <input
         type="text"
         className="mb-5 rounded border border-gray-300 px-3 py-1 text-xs"
-        value={searchKey}
+        value={input}
         onChange={updateHandler}
       />
       {filteredPhotos.map((photo) => (
