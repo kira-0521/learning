@@ -21,7 +21,10 @@ describe('Rendering', () => {
   })
 })
 
-    expect(screen.getByRole('button')).toBeTruthy()
-    expect(screen.getByPlaceholderText('Enter')).toBeTruthy()
+describe('Input form onChange event', () => {
+  it('Should update input value correctly', () => {
+    const { input } = setup()
+    fireEvent.change(input, { target: { value: 'test' } })
+    expect(input.value).toBe('test')
   })
 })
