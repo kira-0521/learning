@@ -28,3 +28,12 @@ describe('Input form onChange event', () => {
     expect(input.value).toBe('test')
   })
 })
+
+describe('Console button conditionally triggered', () => {
+  it('Should not trigger output function', () => {
+    const { button } = setup()
+    const outputConsole = jest.fn()
+    fireEvent.click(button)
+    expect(outputConsole).not.toHaveBeenCalled()
+  })
+})
