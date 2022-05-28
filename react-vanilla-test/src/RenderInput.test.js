@@ -37,4 +37,11 @@ describe('Console button conditionally triggered', () => {
     fireEvent.click(button)
     expect(outputConsole).not.toHaveBeenCalled()
   })
+
+  it('Should trigger output function', () => {
+    const { input, button, outputConsole } = setup()
+    fireEvent.change(input, { target: { value: 'test' } })
+    fireEvent.click(button)
+    expect(outputConsole).toHaveBeenCalledTimes(1)
+  })
 })
