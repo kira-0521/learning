@@ -3,12 +3,14 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import RenderInput from './RenderInput'
 
 const setup = () => {
-  const utils = [render(<RenderInput />)]
+  const outputConsole = jest.fn()
+  const utils = [render(<RenderInput outputConsole={outputConsole} />)]
   const input = screen.getByPlaceholderText('Enter')
   const button = screen.getByRole('button')
   return {
     input,
     button,
+    outputConsole,
     ...utils,
   }
 }
@@ -31,8 +33,7 @@ describe('Input form onChange event', () => {
 
 describe('Console button conditionally triggered', () => {
   it('Should not trigger output function', () => {
-    const { button } = setup()
-    const outputConsole = jest.fn()
+    const { button, outputConsole } = setup()
     fireEvent.click(button)
     expect(outputConsole).not.toHaveBeenCalled()
   })
