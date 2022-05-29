@@ -1,5 +1,5 @@
 import instance from './axios'
-import { Task, Tag } from '../@types/types.d'
+import { Task, Tag, EditTask } from '../@types/types.d'
 
 /*
  * Get Tasks
@@ -33,6 +33,18 @@ export const fetchCreateTask = async (
 ): Promise<Task> => {
   try {
     const { data } = await instance.post<Task>('tasks/', task)
+    return data
+  } catch (e) {
+    throw e
+  }
+}
+
+/*
+ * Update Task
+ */
+export const fetchUpdateTask = async (task: EditTask): Promise<Task> => {
+  try {
+    const { data } = await instance.put<Task>(`tasks/${task.id}`, task)
     return data
   } catch (e) {
     throw e
