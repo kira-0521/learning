@@ -24,3 +24,17 @@ export const fetchTags = async (): Promise<Tag[]> => {
     throw e
   }
 }
+
+/*
+ * Create Task
+ */
+export const fetchCreateTask = async (
+  task: Omit<Task, 'id'>
+): Promise<Task> => {
+  try {
+    const { data } = await instance.post<Task>('tasks/', task)
+    return data
+  } catch (e) {
+    throw e
+  }
+}
