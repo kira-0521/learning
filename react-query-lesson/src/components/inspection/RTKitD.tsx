@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import { useAppSelector } from '../app/hooks'
-import { selectMode } from '../slices/counterSlice'
+import { useAppSelector } from '../../app/hooks'
+import { selectMode } from '../../slices/counterSlice'
 
 /*
  * reference mode

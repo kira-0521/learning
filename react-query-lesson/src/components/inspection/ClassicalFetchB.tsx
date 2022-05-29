@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useStateContext } from '../context/StateProvider'
+import { useStateContext } from '../../context/StateProvider'
 import { ChevronDoubleLeftIcon } from '@heroicons/react/solid'
 
 export const ClassicalFetchB: FC = () => {

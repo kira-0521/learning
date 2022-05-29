@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useStateContext } from '../context/StateProvider'
+import { useStateContext } from '../../context/StateProvider'
 export const ContextA: FC = () => {
   // context上のtasksが更新されることで参照していないcomponentも再レンダリングが走ってしまう
   const { dark, setDark } = useStateContext()

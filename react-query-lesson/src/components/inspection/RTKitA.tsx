@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
-import { useAppSelector, useAppDispatch } from '../app/hooks'
-import { selectCount, increment } from '../slices/counterSlice'
+import { useAppSelector, useAppDispatch } from '../../app/hooks'
+import { selectCount, increment } from '../../slices/counterSlice'
 
 /*
 

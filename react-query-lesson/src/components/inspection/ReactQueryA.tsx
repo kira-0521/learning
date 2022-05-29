@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { FC } from 'react'
+import { useQueryTasks } from '../../hooks/useQueryTasks'
 import { useNavigate } from 'react-router-dom'
-import { useQueryClient } from 'react-query'
-import { Task } from '../@types/types.d'
 import { ChevronDoubleRightIcon } from '@heroicons/react/solid'
 
-export const ReactQueryB = () => {
+export const ReactQueryA: FC = () => {
   const navigate = useNavigate()
-  const queryClient = useQueryClient()
-  const data = queryClient.getQueryData<Task[]>('tasks')
+  const { status, data } = useQueryTasks()
+  console.log('rendered ReactQueryA')
+  if (status === 'loading') return <div>{'Loading...'}</div>
+  if (status === 'error') return <div>{'Error'}</div>
 
   return (
     <>
@@ -24,10 +25,10 @@ export const ReactQueryB = () => {
         <div>{'Error'}</div>
       )}
       <ChevronDoubleRightIcon
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/query-b')}
         className="h-5 w-5 mt-2 text-blue-500 cursor-pointer"
       />
-      <p className="text-sm">react query A</p>
+      <p className="text-sm">react query B</p>
     </>
   )
 }

@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import { useAppDispatch } from '../app/hooks'
-import { toggleMode } from '../slices/counterSlice'
+import { useAppDispatch } from '../../app/hooks'
+import { toggleMode } from '../../slices/counterSlice'
 
 /*
  * call toggleMode
