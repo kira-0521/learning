@@ -2,15 +2,16 @@ import React, { FC } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
+
 import './App.css'
-import { Layout } from './components/Layout'
-import { ClassicalFetchA } from './components/ClassicalFetchA'
-import { ClassicalFetchB } from './components/ClassicalFetchB'
 import { StateProvider } from './context/StateProvider'
-import { ReactQueryA } from './components/ReactQueryA'
-import { ReactQueryB } from './components/ReactQueryB'
-import { MainContext } from './components/MainContext'
-import { MainRTKit } from './components/MainRTKit'
+import { Layout } from './components/inspection/Layout'
+import { ClassicalFetchA } from './components/inspection/ClassicalFetchA'
+import { ClassicalFetchB } from './components/inspection/ClassicalFetchB'
+import { ReactQueryA } from './components/inspection/ReactQueryA'
+import { ReactQueryB } from './components/inspection/ReactQueryB'
+import { MainContext } from './components/inspection/MainContext'
+import { MainRTKit } from './components/inspection/MainRTKit'
 
 const queryClient = new QueryClient({
   defaultOptions: {
