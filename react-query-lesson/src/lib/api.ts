@@ -32,7 +32,7 @@ export const fetchCreateTask = async (
  */
 export const fetchUpdateTask = async (task: EditTask): Promise<Task> => {
   try {
-    const { data } = await instance.put<Task>(`tasks/${task.id}`, task)
+    const { data } = await instance.put<Task>(`tasks/${task.id}/`, task)
     return data
   } catch (e) {
     throw e
@@ -44,7 +44,7 @@ export const fetchUpdateTask = async (task: EditTask): Promise<Task> => {
  */
 export const fetchDeleteTask = async (id: number): Promise<Tag> => {
   try {
-    const { data } = await instance.delete(`tasks/${id}`)
+    const { data } = await instance.delete(`tasks/${id}/`)
     return data
   } catch (e) {
     throw e
@@ -79,7 +79,7 @@ export const fetchCreateTag = async (tag: Omit<Tag, 'id'>): Promise<Tag> => {
  */
 export const fetchUpdateTag = async (tag: Tag): Promise<Tag> => {
   try {
-    const { data } = await instance.put(`tags/${tag.id}`, tag.name)
+    const { data } = await instance.put(`tags/${tag.id}/`, tag.name)
     return data
   } catch (e) {
     throw e
@@ -91,7 +91,7 @@ export const fetchUpdateTag = async (tag: Tag): Promise<Tag> => {
  */
 export const fetchDeleteTag = async (id: number): Promise<Tag> => {
   try {
-    const { data } = await instance.delete(`tags/${id}`)
+    const { data } = await instance.delete(`tags/${id}/`)
     return data
   } catch (e) {
     throw e
