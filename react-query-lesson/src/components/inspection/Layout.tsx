@@ -36,6 +36,12 @@ export const Layout: FC<Props> = ({ children }) => {
               >
                 RTKit
               </Link>
+              <Link
+                className="text-sm text-gray-300 hover:bg-gray-700 px-3 py-2 rounded"
+                to="/task"
+              >
+                Task
+              </Link>
             </div>
           </div>
         </nav>

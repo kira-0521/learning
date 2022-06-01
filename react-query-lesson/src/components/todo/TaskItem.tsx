@@ -14,6 +14,8 @@ const TaskItem: FC<Props> = ({ task }: Props) => {
   const dispatch = useAppDispatch()
   const { deleteTaskMutation } = useMutateTask()
 
+  console.log('rendered taskitem')
+
   if (deleteTaskMutation.isLoading) {
     return <p>Deleting...</p>
   }

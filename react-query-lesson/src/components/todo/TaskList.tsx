@@ -3,7 +3,7 @@ import { FC, memo } from 'react'
 import { useQueryTasks } from '../../hooks/useQueryTasks'
 import { TaskItemMemo } from './TaskItem'
 
-export const TaskList: FC = () => {
+const TaskList: FC = () => {
   const { status, data } = useQueryTasks()
   console.log('rendered TaskList')
   if (status === 'loading') return <div>{'Loading...'}</div>

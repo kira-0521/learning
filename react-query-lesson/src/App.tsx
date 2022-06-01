@@ -12,6 +12,7 @@ import { ReactQueryA } from './components/inspection/ReactQueryA'
 import { ReactQueryB } from './components/inspection/ReactQueryB'
 import { MainContext } from './components/inspection/MainContext'
 import { MainRTKit } from './components/inspection/MainRTKit'
+import { MainTask } from './components/todo/MainTask'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,6 +36,7 @@ const App: FC = () => {
               <Route path="/fetch-b" element={<ClassicalFetchB />} />
               <Route path="/main-context" element={<MainContext />} />
               <Route path="/main-rtkit" element={<MainRTKit />} />
+              <Route path="/task" element={<MainTask />} />
             </Routes>
           </Layout>
         </StateProvider>
