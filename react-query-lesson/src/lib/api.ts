@@ -17,7 +17,7 @@ export const fetchTasks = async (): Promise<Task[]> => {
  * Create Task
  */
 export const fetchCreateTask = async (
-  task: Omit<Task, 'id'>
+  task: Omit<EditTask, 'id'>
 ): Promise<Task> => {
   try {
     const { data } = await instance.post<Task>('tasks/', task)
