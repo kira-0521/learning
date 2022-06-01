@@ -2,7 +2,7 @@ import { useQueryClient, useMutation } from 'react-query'
 
 import { useAppDispatch } from '../app/hooks'
 import { resetEditedTask } from '../slices/todoSlice'
-import { fetchCreateTask } from '../lib/api'
+import { fetchCreateTask, fetchUpdateTask } from '../lib/api'
 import { Task } from '../@types/types.d'
 
 export const useMutateTask = () => {
@@ -11,11 +11,27 @@ export const useMutateTask = () => {
 
   const craeteTaskMutation = useMutation(fetchCreateTask, {
     onSuccess: (data) => {
-      const previousTodos = queryClient.getQueryData<Task[]>('task')
+      const previousTodos = queryClient.getQueryData<Task[]>('tasks')
       if (previousTodos) {
         queryClient.setQueryData<Task[]>('task', [...previousTodos, data])
       }
-      dispatch(resetEditedTask)
+      dispatch(resetEditedTask())
+    },
+  })
+
+  const updateTaskMutaion = useMutation(fetchUpdateTask, {
+    // variables: request時のparamsが入っている
+    onSuccess: (data, variables) => {
+      // * 既存のキャッシュを取得
+      const previousTodos = queryClient.getQueryData<Task[]>('tasks')
+      if (previousTodos) {
+        // * キャッシュをセット
+        queryClient.setQueryData<Task[]>(
+          'tasks',
+          previousTodos.map((task) => (task.id === variables.id ? data : task))
+        )
+      }
+      dispatch(resetEditedTask())
     },
   })
 }
