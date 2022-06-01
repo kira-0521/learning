@@ -1,4 +1,4 @@
-import { FC, memo, FormEvent } from 'react'
+import { FC, memo, FormEvent, ChangeEvent } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { setEditedTask, selectTask } from '../../slices/todoSlice'
@@ -20,6 +20,19 @@ const TaskEdit: FC = () => {
     } else {
       updateTaskMutation.mutate(editedTask)
     }
+  }
+
+  const ERROR = <div>Error</div>
+  const tagOptions = () => {
+    return data
+      ? 'message' in data
+        ? ERROR
+        : data.map((tag) => (
+            <option key={tag.id} value={tag.id}>
+              {tag.name}
+            </option>
+          ))
+      : ERROR
   }
 
   console.log('rendered TaskEdit')
@@ -51,6 +64,20 @@ const TaskEdit: FC = () => {
           {editedTask.id === 0 ? 'Create' : 'Update'}
         </button>
       </form>
+      <select
+        className="mb-3 px-3 py-2 border border-gray-300"
+        value={editedTask.tag}
+        onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+          dispatch(
+            setEditedTask({ ...editedTask, tag: Number(e.target.value) })
+          )
+        }}
+      >
+        <option value={0} disabled>
+          Tag
+        </option>
+        {tagOptions()}
+      </select>
     </div>
   )
 }
