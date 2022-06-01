@@ -14,18 +14,6 @@ export const fetchTasks = async (): Promise<Task[]> => {
 }
 
 /*
- * Get Tags
- */
-export const fetchTags = async (): Promise<Tag[]> => {
-  try {
-    const { data } = await instance.get<Tag[]>('tags/')
-    return data
-  } catch (e) {
-    throw e
-  }
-}
-
-/*
  * Create Task
  */
 export const fetchCreateTask = async (
@@ -54,9 +42,56 @@ export const fetchUpdateTask = async (task: EditTask): Promise<Task> => {
 /*
  * Delete Task
  */
-export const fetchDeleteTask = async (id: number): Promise<void> => {
+export const fetchDeleteTask = async (id: number): Promise<Tag> => {
   try {
     const { data } = await instance.delete(`tasks/${id}`)
+    return data
+  } catch (e) {
+    throw e
+  }
+}
+
+/*
+ * Get Tags
+ */
+export const fetchTags = async (): Promise<Tag[]> => {
+  try {
+    const { data } = await instance.get<Tag[]>('tags/')
+    return data
+  } catch (e) {
+    throw e
+  }
+}
+
+/*
+ * Create Tag
+ */
+export const fetchCreateTag = async (tag: Omit<Tag, 'id'>): Promise<Tag> => {
+  try {
+    const { data } = await instance.post(`tags/`, tag)
+    return data
+  } catch (e) {
+    throw e
+  }
+}
+/*
+ * Update Tag
+ */
+export const fetchUpdateTag = async (tag: Tag): Promise<Tag> => {
+  try {
+    const { data } = await instance.put(`tags/${tag.id}`, tag.name)
+    return data
+  } catch (e) {
+    throw e
+  }
+}
+
+/*
+ * Delete Tag
+ */
+export const fetchDeleteTag = async (id: number): Promise<Tag> => {
+  try {
+    const { data } = await instance.delete(`tags/${id}`)
     return data
   } catch (e) {
     throw e
