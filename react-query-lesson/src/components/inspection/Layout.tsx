@@ -42,6 +42,12 @@ export const Layout: FC<Props> = ({ children }) => {
               >
                 Task
               </Link>
+              <Link
+                className="text-sm text-gray-300 hover:bg-gray-700 px-3 py-2 rounded"
+                to="/tags"
+              >
+                Tags
+              </Link>
             </div>
           </div>
         </nav>

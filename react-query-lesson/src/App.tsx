@@ -13,6 +13,7 @@ import { ReactQueryB } from './components/inspection/ReactQueryB'
 import { MainContext } from './components/inspection/MainContext'
 import { MainRTKit } from './components/inspection/MainRTKit'
 import { MainTask } from './components/todo/MainTask'
+import { MainTag } from './components/todo/MainTag'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,6 +38,7 @@ const App: FC = () => {
               <Route path="/main-context" element={<MainContext />} />
               <Route path="/main-rtkit" element={<MainRTKit />} />
               <Route path="/task" element={<MainTask />} />
+              <Route path="/tags" element={<MainTag />} />
             </Routes>
           </Layout>
         </StateProvider>

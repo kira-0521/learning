@@ -24,6 +24,7 @@ export const useMutateTask = () => {
     onSuccess: (data, variables) => {
       // * 既存のキャッシュを取得
       const previousTodos = queryClient.getQueryData<Task[]>('tasks')
+      console.log('todos', previousTodos)
       if (previousTodos) {
         // * キャッシュをセット
         queryClient.setQueryData<Task[]>(
