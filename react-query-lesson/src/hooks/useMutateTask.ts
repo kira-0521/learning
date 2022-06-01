@@ -9,7 +9,7 @@ export const useMutateTask = () => {
   const dispatch = useAppDispatch()
   const queryClient = useQueryClient()
 
-  const craeteTaskMutation = useMutation(fetchCreateTask, {
+  const createTaskMutation = useMutation(fetchCreateTask, {
     onSuccess: (data) => {
       const previousTodos = queryClient.getQueryData<Task[]>('tasks')
       if (previousTodos) {
@@ -19,7 +19,7 @@ export const useMutateTask = () => {
     },
   })
 
-  const updateTaskMutaion = useMutation(fetchUpdateTask, {
+  const updateTaskMutation = useMutation(fetchUpdateTask, {
     // variables: request時のparamsが入っている
     onSuccess: (data, variables) => {
       // * 既存のキャッシュを取得
@@ -47,4 +47,6 @@ export const useMutateTask = () => {
       dispatch(resetEditedTask())
     },
   })
+
+  return { createTaskMutation, updateTaskMutation, deleteTaskMutation }
 }
