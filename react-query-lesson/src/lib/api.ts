@@ -50,3 +50,15 @@ export const fetchUpdateTask = async (task: EditTask): Promise<Task> => {
     throw e
   }
 }
+
+/*
+ * Delete Task
+ */
+export const fetchDeleteTask = async (id: number): Promise<void> => {
+  try {
+    const { data } = await instance.delete(`tasks/${id}`)
+    return data
+  } catch (e) {
+    throw e
+  }
+}
