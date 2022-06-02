@@ -6,9 +6,11 @@ export const useQueryTasks = () => {
   return useQuery<Task[] | Error>({
     queryKey: 'tasks',
     queryFn: fetchTasks,
-    // react-queryでfetchを行なっているコンポーネントがアンマウントされた時、cacheを破棄するまでの時間
+    // cacheを破棄するまでの時間
     // cacheTime: 30000,
     // fetchを行なってからどれだけデータをfreshとみなすか
     staleTime: 0,
+    // ポーリング
+    // refetchInterval: 10000,
   })
 }
