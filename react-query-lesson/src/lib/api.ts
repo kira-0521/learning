@@ -74,12 +74,14 @@ export const fetchCreateTag = async (tag: Omit<Tag, 'id'>): Promise<Tag> => {
     throw e
   }
 }
+
 /*
  * Update Tag
  */
 export const fetchUpdateTag = async (tag: Tag): Promise<Tag> => {
   try {
-    const { data } = await instance.put(`tags/${tag.id}/`, tag.name)
+    console.log('tag', tag)
+    const { data } = await instance.put(`tags/${tag.id}/`, tag)
     return data
   } catch (e) {
     throw e
