@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChevronDoubleLeftIcon } from '@heroicons/react/solid'
-// import { TagListMemo } from './TagList'
-// import { TagEditMemo } from './TagEdit'
+import { TagList } from './TagList'
+import { TagEdit } from './TagEdit'
 
 export const MainTag: FC = () => {
   const navigate = useNavigate()
@@ -12,8 +12,8 @@ export const MainTag: FC = () => {
       <p className="mb-10 text-xl font-bold">Tags</p>
 
       <div className="grid grid-cols-2 gap-40">
-        {/* <TagListMemo />
-        <TagEditMemo /> */}
+        <TagList />
+        <TagEdit />
       </div>
 
       <ChevronDoubleLeftIcon
