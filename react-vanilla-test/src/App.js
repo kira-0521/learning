@@ -20,6 +20,7 @@ function App() {
   ]
   return (
     <Layout>
+      learn
       <Counter />
       <RenderInput outputConsole={console.log} />
       <FrameworkList frameworks={data} />
