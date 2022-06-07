@@ -2,6 +2,7 @@ import { Layout } from './components/Layout'
 import RenderInput from './RenderInput'
 import { Counter } from './features/counter/Counter'
 import FrameworkList from './FrameworkList'
+import Redux from './Redux'
 
 function App() {
   const data = [
@@ -24,6 +25,7 @@ function App() {
       <Counter />
       <RenderInput outputConsole={console.log} />
       <FrameworkList frameworks={data} />
+      <Redux />
     </Layout>
   )
 }
