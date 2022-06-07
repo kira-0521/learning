@@ -2,7 +2,7 @@ import React from 'react'
 
 const FrameworkList = (props) => {
   if (!props.frameworks || !props.frameworks.length) {
-    return <h1>No data !</h1>
+    return <h1>No Data !</h1>
   }
   return (
     <div>
