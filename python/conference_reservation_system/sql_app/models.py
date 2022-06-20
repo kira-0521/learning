@@ -11,7 +11,7 @@ class Room(Base):
   __tablename__ = 'rooms'
 
   room_id = Column(Integer, primary_key=True, index=True)
-  roomname = Column(String, unique=True, index=True)
+  room_name = Column(String, unique=True, index=True)
   capacity = Column(Integer)
   
 class Booking(Base):
