@@ -1,0 +1,1 @@
+{"id":"1bed3933-7378-49dc-975b-3c27f6dafee4","space":25106,"runtime":"python3.9","name":"deploy_test","path":"jci70z","project":"c0ewrqqx","account":"144798365827","region":"ap-southeast-1","deps":["fastapi"],"envs":null,"public":true,"log_level":"debug","cron":""}

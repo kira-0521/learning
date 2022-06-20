@@ -11,6 +11,15 @@ def main():
   }
   res = requests.post(url, json.dumps(body))
   print(res.json())
+  
+def deploy_test():
+  url = 'https://jci70z.deta.dev'
+  body = {
+    "x": 1.1,
+    "y": 1.2
+  }
+  res = requests.post(url, json.dumps(body))
+  print(res.json())
 
 if __name__ == '__main__':
-  main()
+  deploy_test()
