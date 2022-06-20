@@ -8,7 +8,7 @@ async_session = sessionmaker(
     autocommit=False, autoflush=False, bind=async_engine, class_=AsyncSession
 )
 
-Base = declarative_base()
+BaseModel = declarative_base()
 
 async def get_db():
     async with async_session() as session:
