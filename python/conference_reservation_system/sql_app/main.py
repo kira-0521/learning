@@ -1,7 +1,4 @@
-from pyexpat import model
 from typing import List
-from urllib import response
-from webbrowser import get
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 
@@ -47,13 +44,13 @@ async def read_bookings(skip: int = 0, limit: int = 100, db: Session = Depends(g
 Create
 """
 @app.post("/users", response_model=schemas.User)
-async def create_users(user: schemas.User, db: Session = Depends(get_db)):
+async def create_users(user: schemas.UserCreate, db: Session = Depends(get_db)):
   return crud.create_user(db=db, user=user)
 
 @app.post("/rooms", response_model=schemas.Room)
-async def create_rooms(room: schemas.Room, db: Session = Depends(get_db)):
+async def create_rooms(room: schemas.RoomCreate, db: Session = Depends(get_db)):
   return crud.create_room(db=db, room=room)
 
 @app.post("/bookings", response_model=schemas.Booking)
-async def create_bookings(booking: schemas.Booking, db: Session = Depends(get_db)):
+async def create_bookings(booking: schemas.BookingCreate, db: Session = Depends(get_db)):
   return crud.create_booking(db=db, booking=booking)
