@@ -1,18 +1,18 @@
 from optparse import Option
 from typing import Optional
 from fastapi import FastAPI
+from pydantic import BaseModel
+
+class Item(BaseModel):
+  name: str
+  price: int
+  description: Optional[str]
+  tax: Optional[float]
 
 app = FastAPI()
 
-@app.get('/')
-async def index():
-  return { "message": "hello world" }
+@app.post("/item/")
+async def create_item(item: Item):
+  return {"message" : f"{item.name}は税込み価格{int(item.price*item.tax)}円です。"}
 
-@app.get('/countries/{country_name}')
-async def country(country_name: int):
-  return { "country_name": country_name }
-
-@app.get('/animals/')
-async def country(name: str = 'dog', animal_no: Optional[int] = None):
-  return { "name": name, "animal_no": animal_no }
 
