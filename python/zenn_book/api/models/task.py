@@ -17,6 +17,6 @@ class Done(BaseModel):
   
   id = Column(Integer, ForeignKey("tasks.id"), primary_key=True)
   
-  task = relationship("Tasks", back_populates="done")
+  task = relationship("Task", back_populates="done")
   
   
