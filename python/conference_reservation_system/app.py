@@ -5,6 +5,10 @@ import requests
 import json
 import pandas as pd
 
+import config
+
+# BASE_URL
+base_url = config.BASE_URL
 page = st.sidebar.selectbox('Choose your page', ['users', 'rooms', 'bookings'])
 
 if page == 'users':
@@ -19,7 +23,7 @@ if page == 'users':
     
   if submit_button:
     st.write('## レスポンス結果')
-    url = 'http://127.0.0.1:8000/users'
+    url = f'{base_url}users'
     res = requests.post(url, data=json.dumps(data))
     if res.status_code == 200:
       st.success('ユーザー登録が完了しました。')
@@ -39,7 +43,7 @@ elif page == 'rooms':
     submit_button = st.form_submit_button(label='送信')
 
   if submit_button:
-    url = 'http://127.0.0.1:8000/rooms'
+    url = f'{base_url}rooms'
     res = requests.post(url, data=json.dumps(data))
     if res.status_code == 200:
       st.success('会議室登録完了')
@@ -50,9 +54,9 @@ elif page == 'bookings':
   st.title('会議室予約画面')
 
   """
-  ユーザー一覧取得
+  ユーザー一覧
   """
-  url_users = 'http://127.0.0.1:8000/users'
+  url_users = f'{base_url}users'
   res = requests.get(url_users)
   users = res.json()
   users_dict = {}
@@ -60,9 +64,9 @@ elif page == 'bookings':
     users_dict[user['username']] = user['user_id']
 
   """
-  会議室一覧取得
+  会議室一覧
   """
-  url_rooms = 'http://127.0.0.1:8000/rooms'
+  url_rooms = f'{base_url}rooms'
   rooms = requests.get(url_rooms).json()
   rooms_dict = {}
   for room in rooms:
@@ -70,7 +74,7 @@ elif page == 'bookings':
       'room_id': room['room_id'],
       'capacity': room['capacity'],
     }
-    
+
   # 会議室一覧
   st.write('### 会議室一覧')
   df_rooms = pd.DataFrame(rooms)
@@ -78,12 +82,13 @@ elif page == 'bookings':
   st.table(df_rooms)
 
   # 予約一覧
-  url_bookings = 'http://127.0.0.1:8000/bookings'
+  url_bookings = f'{base_url}bookings'
   bookings = requests.get(url_bookings).json()
   st.write('### 予約一覧')
   df_bookings = pd.DataFrame(bookings)
   st.table(df_bookings)
 
+  # FORM
   with st.form(key='bookings'):
     username: str = st.selectbox('予約者名', users_dict.keys())
     room_name: str = st.selectbox('会議室名', rooms_dict.keys())
@@ -93,12 +98,14 @@ elif page == 'bookings':
     end_time = st.time_input('終了時刻: ', value=datetime.time(hour=20, minute=0))
 
     submit_button = st.form_submit_button(label='送信')
-    
+  
+  # SUBMIT
   if submit_button:
     user_id: int = users_dict[username]
     room_id: int = rooms_dict[room_name]['room_id']
     capacity: int = rooms_dict[room_name]['capacity']
     
+    # request_data
     data = {
       'user_id': user_id,
       'room_id': room_id,
@@ -119,9 +126,9 @@ elif page == 'bookings':
       ).isoformat()
     }
 
-    # 定員以下の予約人数の場合
+    # 定員バリデーション
     if booked_num <= capacity:
-      url = 'http://127.0.0.1:8000/bookings'
+      url = f'{base_url}bookings'
       res = requests.post(url, data=json.dumps(data))
       if res.status_code == 200:
         st.success('予約完了しました。')
