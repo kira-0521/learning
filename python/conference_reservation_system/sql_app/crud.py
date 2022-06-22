@@ -1,3 +1,5 @@
+from fastapi import HTTPException
+
 from sqlalchemy.orm import Session
 from models import User as UserModel, Room as RoomModel, Booking as BookingModel
 from schemas import User as UserSchema, Room as RoomSchema, Booking as BookingSchema
@@ -45,15 +47,27 @@ def create_room(db: Session, room: RoomSchema):
 予約登録
 """
 def create_booking(db: Session, booking: BookingSchema):
-  db_booking = BookingModel(
-    user_id = booking.user_id,
-    room_id = booking.room_id,
-    booked_num = booking.booked_num,
-    start_datetime = booking.start_datetime,
-    end_datetime = booking.end_datetime,
-  )
-  db.add(db_booking)
-  db.commit()
-  db.refresh(db_booking)
-  return db_booking
+  # 重複取得
+  db_booked = db.query(BookingModel).\
+    filter(BookingModel.id == booking.id).\
+      filter(BookingModel.start_datetime < booking.end_datetime).\
+        filter(BookingModel.end_datetime > booking.start_datetime).\
+          all()
+
+  # 重複なし
+  if len(db_booked) == 0:
+    db_booking = BookingModel(
+      user_id = booking.user_id,
+      room_id = booking.room_id,
+      booked_num = booking.booked_num,
+      start_datetime = booking.start_datetime,
+      end_datetime = booking.end_datetime,
+    )
+    db.add(db_booking)
+    db.commit()
+    db.refresh(db_booking)
+    return db_booking
+  # 重複あり
+  else:
+      raise HTTPException(status_code=404, detail="Already booked")
 
