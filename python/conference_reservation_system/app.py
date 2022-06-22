@@ -175,7 +175,5 @@ elif page == 'bookings':
       res = requests.post(url, data=json.dumps(data))
       if res.status_code == 200:
         st.success('予約完了しました。')
-      else:
-        raise HTTPException(status_code=404, detail="予約が完了しませんでした。再度お試しください。")
 
 
