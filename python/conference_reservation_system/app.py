@@ -71,10 +71,18 @@ elif page == 'bookings':
       'capacity': room['capacity'],
     }
     
+  # 会議室一覧
   st.write('### 会議室一覧')
   df_rooms = pd.DataFrame(rooms)
   df_rooms.columns = ['会議室名', '定員', '会議室ID']
   st.table(df_rooms)
+
+  # 予約一覧
+  url_bookings = 'http://127.0.0.1:8000/bookings'
+  bookings = requests.get(url_bookings).json()
+  st.write('### 予約一覧')
+  df_bookings = pd.DataFrame(bookings)
+  st.table(df_bookings)
 
   with st.form(key='bookings'):
     username: str = st.selectbox('予約者名', users_dict.keys())
