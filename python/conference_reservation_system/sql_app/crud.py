@@ -49,13 +49,14 @@ def create_room(db: Session, room: RoomSchema):
 def create_booking(db: Session, booking: BookingSchema):
   # 重複取得
   db_booked = db.query(BookingModel).\
-    filter(BookingModel.id == booking.id).\
+    filter(BookingModel.room_id == booking.room_id).\
       filter(BookingModel.start_datetime < booking.end_datetime).\
         filter(BookingModel.end_datetime > booking.start_datetime).\
           all()
 
   # 重複なし
   if len(db_booked) == 0:
+    print('重複なし')
     db_booking = BookingModel(
       user_id = booking.user_id,
       room_id = booking.room_id,
@@ -69,5 +70,6 @@ def create_booking(db: Session, booking: BookingSchema):
     return db_booking
   # 重複あり
   else:
+      print('重複あり')
       raise HTTPException(status_code=404, detail="Already booked")
 
