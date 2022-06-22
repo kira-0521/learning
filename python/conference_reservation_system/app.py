@@ -163,13 +163,19 @@ elif page == 'bookings':
     }
 
     # 定員バリデーション
-    if booked_num <= capacity:
+    if booked_num > capacity:
+      st.error(f'{room_name}の定員は、{capacity}名です。')
+    # 時間バリデーション
+    elif start_time >= end_time:
+      st.error('開始時刻が終了時刻を越えております。')
+    elif start_time < datetime.time(hour=9, minute=0, second=9) or end_time > datetime.time(hour=20, minute=0, second=9):
+      st.error('予約時間は9:00~20:00までとなっております。')
+    else:
       url = f'{base_url}bookings'
       res = requests.post(url, data=json.dumps(data))
       if res.status_code == 200:
         st.success('予約完了しました。')
       else:
         raise HTTPException(status_code=404, detail="予約が完了しませんでした。再度お試しください。")
-    else:
-      st.error(f'{room_name}の定員は、{capacity}名です。')
+
 
