@@ -1,3 +1,4 @@
+from sqlalchemy import column
 import streamlit as st
 import datetime
 import random
@@ -59,23 +60,21 @@ elif page == 'bookings':
   url_users = f'{base_url}users'
   res = requests.get(url_users)
   users = res.json()
-  users_dict = {}
+  users_name = {}
   for user in users:
-    users_dict[user['username']] = user['user_id']
+    users_name[user['username']] = user['user_id']
 
   """
   会議室一覧
   """
-  url_rooms = f'{base_url}rooms'
-  rooms = requests.get(url_rooms).json()
-  rooms_dict = {}
+  rooms = requests.get(f'{base_url}rooms').json()
+  rooms_name = {}
   for room in rooms:
-    rooms_dict[room['room_name']] = {
+    rooms_name[room['room_name']] = {
       'room_id': room['room_id'],
       'capacity': room['capacity'],
     }
 
-  # 会議室一覧
   st.write('### 会議室一覧')
   df_rooms = pd.DataFrame(rooms)
   df_rooms.columns = ['会議室名', '定員', '会議室ID']
@@ -120,16 +119,15 @@ elif page == 'bookings':
   })
 
   # 予約一覧
-  url_bookings = f'{base_url}bookings'
-  bookings = requests.get(url_bookings).json()
   st.write('### 予約一覧')
-  df_bookings = pd.DataFrame(bookings)
   st.table(df_bookings)
 
-  # FORM
+  """
+  FORM
+  """
   with st.form(key='bookings'):
-    username: str = st.selectbox('予約者名', users_dict.keys())
-    room_name: str = st.selectbox('会議室名', rooms_dict.keys())
+    username: str = st.selectbox('予約者名', users_name.keys())
+    room_name: str = st.selectbox('会議室名', rooms_name.keys())
     booked_num: int = st.number_input('予約人数', step=1, min_value=1)
     date = st.date_input('日付を入力', min_value=datetime.date.today())
     start_time = st.time_input('開始時刻: ', value=datetime.time(hour=9, minute=0))
@@ -139,9 +137,9 @@ elif page == 'bookings':
   
   # SUBMIT
   if submit_button:
-    user_id: int = users_dict[username]
-    room_id: int = rooms_dict[room_name]['room_id']
-    capacity: int = rooms_dict[room_name]['capacity']
+    user_id: int = users_name[username]
+    room_id: int = rooms_name[room_name]['room_id']
+    capacity: int = rooms_name[room_name]['capacity']
     
     # request_data
     data = {
