@@ -7,7 +7,7 @@ DATABASE = 'mysql://%s:%s@%s/%s?charset=utf8' % (
     DB_USER,
     DB_PASSWORD,
     DB_HOST,
-    DB_NAME
+    DB_NAME,
 )
 
 engine = create_engine(
@@ -16,6 +16,7 @@ engine = create_engine(
     echo=True
 )
 
+# 実際の DB セッション
 SessionLocal = scoped_session(
     sessionmaker(
         autocommit=False,
@@ -28,6 +29,7 @@ Base = declarative_base()
 Base.query = SessionLocal.query_property()
 
 
+# Dependency Injection用
 def get_db():
     try:
         db = SessionLocal()
