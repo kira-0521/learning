@@ -24,7 +24,7 @@ def change_cognito_status(username: str, to_status) -> bool:
             print('Error: ', e)
             is_success = False
 
-    if to_status == 'disable':
+    else:
         try:
             cognito.admin_disable_user(
                 UserPoolId=USER_POOL_ID,
@@ -33,9 +33,6 @@ def change_cognito_status(username: str, to_status) -> bool:
         except Exception as e:
             print('Error: ', e)
             is_success = False
-
-    else:
-        is_success = False
 
     return is_success
 
@@ -62,8 +59,7 @@ def get_cognito_user(username: str):
     except Exception as e:
         print('Error: ', e)
 
-    finally:
-        return result
+    return result
 
 """
 ハンドラー
@@ -89,11 +85,12 @@ def lambda_handler(event, context):
             # ユーザー情報取得
             cognito_user = get_cognito_user(username=username)
 
+            if cognito_user['status'] or cognito_user['username'] == '':
+                is_success = False
+
             if cognito_user['status'] == 'enable':
                 # ステータス変更
                 is_success = change_cognito_status(username=cognito_user['username'], to_status='disable')
-            else:
-                is_success = False
 
     return {
         "statusCode": 200,
