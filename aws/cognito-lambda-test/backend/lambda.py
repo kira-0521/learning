@@ -4,6 +4,7 @@ import os
 REGION = os.environ.get('region')
 USER_POOL_ID = os.environ.get('user_pool_id')
 
+
 cognito = boto3.client('cognito-idp', REGION)
 
 
@@ -12,29 +13,26 @@ Cognitoステータス変更
 """
 def change_cognito_status(username: str, to_status) -> bool:
     is_success = True
+
     if to_status == 'enable':
-        print('change_cognito_status enable')
         try:
             cognito.admin_enable_user(
                 UserPoolId=USER_POOL_ID,
                 Username=username
             )
-            print('change_cognito_status enable success')
         except Exception as e:
+            print('Error: ', e)
             is_success = False
-            print('change_cognito_status enable failed')
 
     if to_status == 'disable':
-        print('change_cognito_status disable')
         try:
             cognito.admin_disable_user(
                 UserPoolId=USER_POOL_ID,
                 Username=username
             )
-            print('change_cognito_status disable success')
         except Exception as e:
+            print('Error: ', e)
             is_success = False
-            print('change_cognito_status disable failed')
 
     else:
         is_success = False
@@ -56,17 +54,15 @@ def get_cognito_user(username: str):
             UserPoolId=USER_POOL_ID,
             Filter=f'username = \"{username}\"'
         ).get('Users')[0]
-        
+
         # レスポンスにユーザーセット
         result['username'] = cognito_user['Username']
         result['status'] = 'enable' if cognito_user['Enabled'] else 'disable'
-        print('get_cognito_user second')
 
     except Exception as e:
-        print(e)
+        print('Error: ', e)
 
     finally:
-        print('get_cognito_user third')
         return result
 
 """
