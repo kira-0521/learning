@@ -1,18 +1,21 @@
 data "aws_subnet" "apigw" {
   filter {
-    name   = "tag:Name"
+    name = "tag:Name"
+    # TODO: 調査
     values = [var.subnet_name]
   }
 }
 
 data "aws_vpc" "vpc" {
   filter {
-    name   = "tag:Name"
+    name = "tag:Name"
+    # TODO: 調査
     values = [var.vpc_name]
   }
 }
 
 data "aws_security_group" "apigw" {
+  # TODO: 調査
   name   = var.secgroup_name
   vpc_id = data.aws_vpc.vpc.id
 }
@@ -41,7 +44,7 @@ resource "aws_apigatewayv2_integration" "Test_API_http" {
   api_id             = aws_apigatewayv2_api.Test_API.id
   integration_type   = "HTTP_PROXY"
   integration_method = "ANY"
-  # TODO: 書き換え
+  # TODO: 書き換え わからん
   integration_uri = "${var.uri}/{proxy}"
 }
 
@@ -61,6 +64,7 @@ resource "aws_apigatewayv2_route" "Test_API_rt_auth_manager" {
 }
 
 resource "aws_apigatewayv2_vpc_link" "Test_API_vpc" {
+  # TODO: 調査
   name               = "${var.name}-link"
   security_group_ids = [data.aws_security_group.apigw.id]
   subnet_ids         = [data.aws_subnet.apigw.id]
