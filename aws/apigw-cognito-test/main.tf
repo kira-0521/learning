@@ -1,3 +1,22 @@
+data "aws_subnet" "apigw" {
+  filter {
+    name   = "tag:Name"
+    values = [var.subnet_name]
+  }
+}
+
+data "aws_vpc" "vpc" {
+  filter {
+    name   = "tag:Name"
+    values = [var.vpc_name]
+  }
+}
+
+data "aws_security_group" "apigw" {
+  name   = var.secgroup_name
+  vpc_id = data.aws_vpc.vpc.id
+}
+
 resource "aws_apigatewayv2_api" "Test_API" {
   name                         = "Test_API"
   protocol_type                = "HTTP"
@@ -23,7 +42,7 @@ resource "aws_apigatewayv2_integration" "Test_API_http" {
   integration_type   = "HTTP_PROXY"
   integration_method = "ANY"
   # TODO: 書き換え
-  integration_uri = "/{proxy}"
+  integration_uri = "${var.uri}/{proxy}"
 }
 
 resource "aws_apigatewayv2_route" "Test_API_rt" {
@@ -39,4 +58,10 @@ resource "aws_apigatewayv2_route" "Test_API_rt_auth_user" {
 resource "aws_apigatewayv2_route" "Test_API_rt_auth_manager" {
   api_id    = aws_apigatewayv2_api.Test_API.id
   route_key = "ANY /manager_auth/{proxy+}"
+}
+
+resource "aws_apigatewayv2_vpc_link" "Test_API_vpc" {
+  name               = "${var.name}-link"
+  security_group_ids = [data.aws_security_group.apigw.id]
+  subnet_ids         = [data.aws_subnet.apigw.id]
 }
