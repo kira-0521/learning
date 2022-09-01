@@ -2,6 +2,8 @@ import { GetStaticProps, NextPage } from 'next'
 import { Notice, Task } from '../@types/types'
 import { Layout } from '../components/Layout'
 import { supabase } from '../utils/supabase'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 export const getStaticProps: GetStaticProps = async () => {
   console.log('getStaticProps invoked')
@@ -25,6 +27,7 @@ type StaticProps = {
 }
 
 const Ssg: NextPage<StaticProps> = ({ tasks, notices }) => {
+  const router = useRouter()
   return (
     <Layout title="SSG">
       <p className="mb-3 text-blue-500">SSG</p>
@@ -42,6 +45,12 @@ const Ssg: NextPage<StaticProps> = ({ tasks, notices }) => {
           </li>
         ))}
       </ul>
+      <Link href="/ssr" prefetch={false}>
+        <a className="my-3 text-xs"> Link to ssr</a>
+      </Link>
+      <button className="mb-3 text-xs" onClick={() => router.push('/ssr')}>
+        Route to ssr
+      </button>
     </Layout>
   )
 }
